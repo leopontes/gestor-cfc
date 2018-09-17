@@ -9,12 +9,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@Configuration
+/*@Configuration
 @EnableJpaRepositories(basePackages = {"br.com.cfc.gestor.repository"})
-@EnableTransactionManagement
+@EnableTransactionManagement*/
 public class JpaProfileConfiguration {
 	
-	@Bean
+	/*@Bean
     @Profile("dev")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -24,6 +24,6 @@ public class JpaProfileConfiguration {
         dataSource.setPassword("");
  
         return dataSource;
-    }
+    }*/
 	
 }

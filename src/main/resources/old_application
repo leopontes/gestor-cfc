@@ -1,0 +1,53 @@
+logging:
+  level:
+    .: error
+    org.springframework: ERROR
+    com.br.cfc.gestor: ERROR
+
+spring:
+  profiles:
+    active: "dev"
+  main:
+    banner-mode: "off"
+
+server:
+  email: default@gestor.com
+
+---
+
+spring:
+  profiles: dev
+server:
+  port: 8090
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/cfc-gestor
+    username: root
+    password:
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        ddl-auto: create
+    show-sql: true
+  
+
+---
+
+spring:
+  profiles: prod
+server:
+  port: 8090
+  datasource:
+    url: jdbc:postgresql://ec2-54-83-50-145.compute-1.amazonaws.com:5432/d5u533i8ioga09
+    username: tlpnnevmmxstjs
+    password: ccab05f52a517b8ff6b92a980e7a8b599747bd36dd8f322b9806c9fe75a48e8f
+    driver-class-name: org.postgresql.Driver  
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update
+        temp.use_jdbc_metadata_defaults: false
+    show-sql: true
