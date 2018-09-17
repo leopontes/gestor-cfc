@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorator="layout">
+
+    <body>
+    	<div class="page-content"  layout:fragment="content"  style="width:100%;">
+	    	<div class="mdl-card"  style="width: 90%;margin-left: 6%;">
+			    <div class="mdl-layout-spacer"></div>
+	    		<div class="mdl-card__title">
+	    			<div class="mdl-card__title-text">Lista de processos</div>
+	    		</div>
+	    		<div class="mdl-card__menu">
+		    		<a th:href="@{'/gestao/aluno/' + ${aluno.id} +'/processos/new/'}">
+			    		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Novo processo</button>
+		    		</a>
+				</div>
+				
+				<div class="form-row">
+					<label th:text="'Aluno: ' + ${aluno.nome}" style="margin-left: 5%;"></label>
+				</div>
+				
+	    		<div class="mdl-card--border">
+	    			<table class="mdl-data-table mdl-js-data-table" style="width: 90%; margin-left: 5%; margin-bottom: 20px;">
+						<thead>
+							<tr>
+								<th class="mdl-data-table__cell--non-numeric">Serviço</th>
+								<th class="mdl-data-table__cell--non-numeric">Categoria</th>
+								<th class="mdl-data-table__cell--non-numeric">Veículos</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:if="${aluno.processos.empty}">
+								<td class="mdl-data-table__cell--non-numeric" colspan="3">O aluno não possui nenhum processo.</td>
+							</tr>
+							<tr th:each="processo : ${aluno.processos}">
+								<td class="mdl-data-table__cell--non-numeric" th:text="${processo.servico.descricao}"></td>
+								<td class="mdl-data-table__cell--non-numeric" th:text="${processo.categoria.descricao}"></td>
+								<td class="mdl-data-table__cell--non-numeric">
+									<span th:each="${veiculo : ${processo.veiculos}}" th:text="${veiculo}"></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			    <div class="mdl-layout-spacer"></div>
+			</div>
+    	</div>
+    	
+    </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+	<head th:replace="fragments/header :: header">
+	<title>Header</title>
+	</head>
+	<body>
+		<div class="mdl-layout-spacer mdl-js-layout mdl-layout--fixed-header">
+		  <header class="mdl-layout__header">
+		    <div class="mdl-layout__header-row">
+		      <!-- Title -->
+		      <span class="mdl-layout-title">Gestão CFC</span>
+		      <!-- Add spacer, to align navigation to the right -->
+		      <div class="mdl-layout-spacer"></div>
+		      <!-- Navigation. We hide it in small screens. -->
+		      <nav class="mdl-navigation mdl-layout--large-screen-only">
+		        <a class="mdl-navigation__link" th:href="@{/gestao/aluno}">Matrículas</a>
+		        <a class="mdl-navigation__link" th:href="@{/gestao/escala}">Escala</a>
+		        <a class="mdl-navigation__link" th:href="@{/gestao/veiculo}">Veículos</a>
+		      </nav>
+		    </div>
+		  </header>
+		  <main class="mdl-layout__content" style="width:100%;">
+			<div layout:fragment="content"></div>
+		  </main>
+		  <footer th:replace="fragments/footer :: footer"></footer>
+		</div>
+	</body>
+	<script src="/webjars/material-design-lite/1.3.0/material.min.js"></script>
+	<script src="/webjars/jquery/2.1.4/jquery.min.js"></script>
+	<script src="/webjars/jquery-mask-plugin/1.13.4/dist/jquery.mask.min.js"></script>
+	<script src="/webjars/jquery-ui/1.12.0/jquery-ui.min.js"></script>
+	<script th:href="@{/js/main.js}"></script>
+	<script th:href="@{/js/ui.datepicker-pt-BR.js}"></script>
+	<script th:href="@{/js/main.js}" href="../../js/main.js"></script>
+</html>

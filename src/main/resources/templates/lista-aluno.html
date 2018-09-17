@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorator="layout">
+
+    <body>
+    	<div class="page-content"  layout:fragment="content"  style="width:100%;">
+	    	<div class="mdl-card"  style="width: 90%;margin-left: 6%;">
+			    <div class="mdl-layout-spacer"></div>
+	    		<div class="mdl-card__title">
+	    			<div class="mdl-card__title-text">Lista de alunos</div>
+	    		</div>
+	    		<div class="mdl-card__menu">
+	    		<a th:href="@{/gestao/aluno/new}">
+		    		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Nova matrícula</button>
+	    		</a>
+			  </div>
+	    		<div class="mdl-card--border">
+	    			<table class="mdl-data-table mdl-js-data-table" style="width: 95%; margin-left: 2.5%;">
+	    				<thead>
+	    					<tr>
+	    						<th class="mdl-data-table__cell--non-numeric" style="width: 10%;">Matrícula</th>
+	    						<th class="mdl-data-table__cell--non-numeric" style="width: 60%;">Nome</th>
+	    						<th class="mdl-data-table__cell--non-numeric" style="width: 10%;">Prazo</th>
+	    						<th class="mdl-data-table__cell--non-numeric" style="width: 20%;"colspan="3"></th>
+	    					</tr>
+	    				</thead>
+	    				<tbody>
+	    					<tr th:if="${alunos.empty}">
+	    						<td class="mdl-data-table__cell--non-numeric" colspan="5">Nenhum registro foi encontrado</td>
+	    					</tr>
+	    					<tr th:each="aluno : ${alunos}">
+	    						<td class="mdl-data-table__cell--non-numeric" th:text="${aluno.codigoMatricula}"  style="width: 10%;"></td>
+	    						<td class="mdl-data-table__cell--non-numeric" th:text="${aluno.nome}"  style="width: 65%;"></td>
+	    						<td class="mdl-data-table__cell--non-numeric" th:text="${aluno.prazo} + ' dias'"  style="width: 10%;"></td>
+	    						<td class="mdl-data-table__cell--non-numeric"  style="width: 5%;">
+	    							<a th:href="@{'/gestao/aluno/edit/' + ${aluno.id}}">
+		    							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+										  <i class="material-icons">edit</i>
+										</button>
+	    							</a>
+	    						</td>
+	    						<td class="mdl-data-table__cell--non-numeric"  style="width: 5%;">
+	    							<a th:href="@{'/gestao/aluno/delete/' + ${aluno.id}}">
+		    							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+										  <i class="material-icons">delete</i>
+										</button>
+	    							</a>
+	    						</td>
+	    						<td class="mdl-data-table__cell--non-numeric"  style="width: 5%;">
+	    							<a th:href="@{'/gestao/aluno/processos/' + ${aluno.id}}">
+		    							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+											Processos
+										</button>
+	    							</a>
+	    						</td>
+	    					</tr>
+	    				</tbody>
+	    			</table>
+				</div>
+			    <div class="mdl-layout-spacer"></div>
+			</div>
+    	</div>
+    </body>
+</html>
