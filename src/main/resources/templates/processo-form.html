@@ -6,7 +6,7 @@
 <body>
 	<div class="page-content" layout:fragment="content" style="width: 100%;">
 		<div id="mycard">
-			<div class="demo-card-wide mdl-card mdl-shadow--2dp" style="width: 70%;">
+			<div class="demo-card-wide mdl-card mdl-shadow--2dp" style="width: 63%;">
 				<div class="mdl-card__title">
 					<h2 class="mdl-card__title-text">Processo</h2>
 				</div>
@@ -45,30 +45,6 @@
 							<div class="form-cel-30">
 							    <label class="components-form">Renach:</label> 
 							    <input type="text" class="components-form"  autocomplete="off" style="width: 97%;"/>
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-cel-100">
-							    <div>
-							    	<label class="components-form">Veículos:</label> 
-							    </div>
-							    <div style="width: 45%; float: left;">
-								    <select class="components-form" style="width: 95%;" multiple="multiple">
-								    	<option th:each="veiculo : ${veiculos}" th:value="${veiculo.id}" th:text="${veiculo}"></option>
-								    </select>
-							    </div>
-						    	<div style="width: 5%; float: left;">
-						    		<a>
-						    			<i class="material-icons">skip_next</i>
-						    		</a>
-						    		<a>
-						    			<i class="material-icons">skip_previous</i>
-						    		</a>
-						    	</div>
-							    <div style="width: 45%; float: left;">
-								    <select class="components-form" style="width: 95%;" multiple="multiple">
-								    </select>
-							    </div>
 							</div>
 						</div>
 						<div class="form-row">
@@ -131,7 +107,7 @@
 						</div>
 						<div class="form-cel-20">
 							<label class="components-form">Número de parcelas:</label> 
-							<input id="quantidade" type="number">
+							<input id="quantidade" type="number" style="width: 90%;">
 						</div>
 						<div class="form-cel-30">
 							<label class="components-form">Valor parcela:</label> 

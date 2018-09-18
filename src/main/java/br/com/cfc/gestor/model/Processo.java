@@ -37,9 +37,6 @@ public class Processo implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private CategoriaEnum categoria;
 
-	@OneToMany(fetch=FetchType.LAZY)
-	private Collection<Veiculo> veiculos;
-	
 	@Column(name="dataInicio", nullable=true)
 	private LocalDate dataInicio;
 	
@@ -82,14 +79,6 @@ public class Processo implements Serializable{
 
 	public void setCategoria(CategoriaEnum categoria) {
 		this.categoria = categoria;
-	}
-
-	public Collection<Veiculo> getVeiculos() {
-		return veiculos;
-	}
-
-	public void setVeiculos(Collection<Veiculo> veiculos) {
-		this.veiculos = veiculos;
 	}
 
 	public String getObservacao() {

@@ -42,7 +42,7 @@ public class AlunoController {
 	}
 	
 	@PostMapping("/gestao/aluno")
-	public String cadastrarAluno(@ModelAttribute("aluno") @Valid Aluno aluno, BindingResult bindResult) {
+	public String cadastrarAluno(@ModelAttribute("aluno") @Valid Aluno aluno, BindingResult bindResult, Model model) {
 		
 		if(bindResult.hasErrors()) {
 			return "aluno-form";
@@ -50,7 +50,14 @@ public class AlunoController {
 		
 		alunoService.save(aluno);
 		
-		return "lista-aluno";
+		Collection<Veiculo> veiculos = (Collection<Veiculo>) veiculoService.findAll();
+		
+		model.addAttribute("aluno", aluno);
+		model.addAttribute("veiculos", veiculos);
+		model.addAttribute("processo", new Processo());
+		
+		
+		return "processo-form";
 	}
 	
 	@PutMapping("/gestao/aluno")
@@ -58,7 +65,7 @@ public class AlunoController {
 		
 		alunoService.save(aluno);
 		
-		return "lista-aluno";
+		return "processo-form";
 	}
 	
 	@RequestMapping(value="/gestao/aluno/delete/{id}", method=RequestMethod.GET)

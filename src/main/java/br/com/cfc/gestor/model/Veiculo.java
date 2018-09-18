@@ -21,7 +21,7 @@ public class Veiculo implements Serializable{
 
 	@Id
 	@GeneratedValue
-	@Column(name="id", nullable=false)
+	@Column(name="veiculo_id", nullable=false)
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)
