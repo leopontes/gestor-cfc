@@ -10,21 +10,21 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="app_user", uniqueConstraints={@UniqueConstraint(name="app_user_uk", columnNames="user_name")})
+@Table(name="usuario", uniqueConstraints={@UniqueConstraint(name="usuario_uk", columnNames="username")})
 public class Usuario implements Serializable{
 
 	private static final long serialVersionUID = -3062821197028921723L;
 
 	@Id
 	@GeneratedValue
-	@Column(name="user_id", nullable=false)
+	@Column(name="usuario_id", nullable=false)
 	private Long id;
 	
-	@Column(name="user_name", length=80, nullable=false)
+	@Column(name="username", length=80, nullable=false)
 	private String username;
 	
-	@Column(name="encrypted_password", length=200, nullable=false)
-	private String encryptedPassword;
+	@Column(name="password", length=200, nullable=false)
+	private String password;
 	
 	@Column(name="enabled", length=1, nullable=false)
 	private boolean enabled;
@@ -45,12 +45,12 @@ public class Usuario implements Serializable{
 		this.username = username;
 	}
 
-	public String getEncryptedPassword() {
-		return encryptedPassword;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setEncryptedPassword(String encryptedPassword) {
-		this.encryptedPassword = encryptedPassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public boolean isEnabled() {

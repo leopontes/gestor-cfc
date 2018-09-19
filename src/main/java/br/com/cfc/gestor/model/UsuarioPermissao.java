@@ -13,8 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="user_role", uniqueConstraints= {@UniqueConstraint(name="user_role_uk", columnNames= {"user_id", "role_id"})})
-public class UserRole implements Serializable{
+@Table(name="usuario_permissao", uniqueConstraints= {@UniqueConstraint(name="usuario_permissao_uk", columnNames= {"usuario_id", "permissao_id"})})
+public class UsuarioPermissao implements Serializable{
 
 	private static final long serialVersionUID = 8638317259898690072L;
 
@@ -24,12 +24,12 @@ public class UserRole implements Serializable{
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="user_id", nullable=false)
+	@JoinColumn(name="usuario_id", nullable=false)
 	private Usuario user;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="role_id", nullable=false)
-	private Role role;
+	@JoinColumn(name="permissao_id", nullable=false)
+	private Permissao permissao;
 
 	public Long getId() {
 		return id;
@@ -47,11 +47,11 @@ public class UserRole implements Serializable{
 		this.user = user;
 	}
 
-	public Role getRole() {
-		return role;
+	public Permissao getPermissao() {
+		return permissao;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setPermissao(Permissao permissao) {
+		this.permissao = permissao;
 	}
 }

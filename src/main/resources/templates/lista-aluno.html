@@ -30,7 +30,7 @@
 	    						<td class="mdl-data-table__cell--non-numeric" colspan="5">Nenhum registro foi encontrado</td>
 	    					</tr>
 	    					<tr th:each="aluno : ${alunos}">
-	    						<td class="mdl-data-table__cell--non-numeric" th:text="${aluno.codigoMatricula}"  style="width: 10%;"></td>
+	    						<td class="mdl-data-table__cell--non-numeric" th:text="${aluno.matricula}"  style="width: 10%;"></td>
 	    						<td class="mdl-data-table__cell--non-numeric" th:text="${aluno.nome}"  style="width: 65%;"></td>
 	    						<td class="mdl-data-table__cell--non-numeric" th:text="${aluno.prazo} + ' dias'"  style="width: 10%;"></td>
 	    						<td class="mdl-data-table__cell--non-numeric"  style="width: 5%;">

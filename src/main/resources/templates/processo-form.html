@@ -22,7 +22,7 @@
 						<div class="form-row">
 							<div class="form-cel-30">
 							    <label class="components-form">Matrícula:</label> 
-								<input type="text" th:field="*{codigoMatricula}" disabled="disabled" class="components-form" style="width: 95%;"/>
+								<input type="text" th:field="*{matricula}" disabled="disabled" class="components-form" style="width: 95%;"/>
 							</div>
 							<div class="form-cel-70" th:classappend="${#fields.hasErrors('nome')} ? has-error">
 							    <label class="components-form">Nome:</label> 
@@ -66,18 +66,18 @@
 						<div class="has-error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('pai')}" th:errors="*{pai}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('mae')}" th:errors="*{mae}"></div>
-						<div class="has-error" th:if="${#fields.hasErrors('CEP')}" th:errors="*{CEP}"></div>
+						<div class="has-error" th:if="${#fields.hasErrors('cep')}" th:errors="*{cep}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('complemento')}" th:errors="*{complemento}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('bairro')}" th:errors="*{bairro}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('cidade')}" th:errors="*{cidade}"></div>
-						<div class="has-error" th:if="${#fields.hasErrors('UF')}" th:errors="*{UF}"></div>
+						<div class="has-error" th:if="${#fields.hasErrors('uf')}" th:errors="*{uf}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('identidade')}" th:errors="*{identidade}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('orgaoEmissor')}" th:errors="*{orgaoEmissor}"></div>
-						<div class="has-error" th:if="${#fields.hasErrors('dataExpedicao')}" th:errors="*{dataExpedicao}"></div>
-						<div class="has-error" th:if="${#fields.hasErrors('CPF')}" th:errors="*{CPF}"></div>
+						<div class="has-error" th:if="${#fields.hasErrors('dataEmissao')}" th:errors="*{dataEmissao}"></div>
+						<div class="has-error" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('contato1')}" th:errors="*{contato1}"></div>
 						<div class="has-error" th:if="${#fields.hasErrors('contato2')}" th:errors="*{contato2}"></div>
@@ -89,36 +89,40 @@
 					<div class="form-row">
 						<div class="form-cel-100">
 							<label class="components-form">Valor total:</label> 
-							<input id="valorTotal" type="number">
+							<input id="valorTotal" type="text">
 						</div>
 					</div>
                		<div class="form-row">
 						<div class="form-cel-20">
 							<label class="components-form">Tipo de pagamento:</label> 
 							<select id="tipoPagamento" class="components-form" style="width: 95%;">
-						    	<option th:each="tipoPagamento : ${T(br.com.cfc.gestor.model.enuns.TipoPagamentoEnum).values()}" th:value="${tipoPagamento}" th:text="${tipoPagamento.descricao}"></option>
+						    	<option th:each="tipoPagamento : ${T(br.com.cfc.gestor.model.enuns.TipoPagamentoEnum).values()}" 
+						    	        th:value="${tipoPagamento}" th:text="${tipoPagamento.descricao}"
+						    	        th:selected="${tipoPagamento == CARNE}"></option>
 							</select>
 						</div>
 						<div class="form-cel-20">
 							<label class="components-form">Forma de pagamento:</label> 
 							<select id="formaPagamento" class="components-form" style="width: 95%;">
-								<option th:each="formaPagamento : ${T(br.com.cfc.gestor.model.enuns.FormaDePagamentoEnum).values()}" th:value="${formaPagamento}" th:text="${formaPagamento.descricao}"></option>
+								<option th:each="formaPagamento : ${T(br.com.cfc.gestor.model.enuns.FormaDePagamentoEnum).values()}" 
+								        th:value="${formaPagamento}" th:text="${formaPagamento.descricao}"
+								        th:selected="${formaPagamento == A_VISTA}"></option>
 							</select>
 						</div>
 						<div class="form-cel-20">
 							<label class="components-form">Número de parcelas:</label> 
-							<input id="quantidade" type="number" style="width: 90%;">
+							<input id="quantidade" type="text" style="width: 90%;">
 						</div>
 						<div class="form-cel-30">
 							<label class="components-form">Valor parcela:</label> 
 							<div>
-								<input id="valorParcela" type="number">
-								<button>Gerar</button>
+								<input id="valorParcela" type="text">
+								<button id="btnGerarPagamento">Gerar</button>
 							</div>
 						</div>
 					</div>
                
-               		<table class="mdl-data-table mdl-js-data-table" style="width: 100%; margin-bottom: 20px; margin-top: 20px;">
+               		<table id="tb-pagamentos" class="mdl-data-table mdl-js-data-table" style="width: 100%; margin-bottom: 20px; margin-top: 20px;">
 						<thead>
 							<tr>
 								<th class="mdl-data-table__cell--non-numeric">Parcela</th>

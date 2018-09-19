@@ -15,17 +15,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.cfc.gestor.model.Usuario;
-import br.com.cfc.gestor.repository.RoleRepository;
-import br.com.cfc.gestor.repository.UserRepository;
+import br.com.cfc.gestor.repository.PermissaoRepository;
+import br.com.cfc.gestor.repository.UsuarioRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
 
 	@Resource
-	private UserRepository userRepository;
+	private UsuarioRepository userRepository;
 	
 	@Resource
-	private RoleRepository roleRepository;
+	private PermissaoRepository roleRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -47,7 +47,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 			}
 		}
 		
-		UserDetails userDetails = new User(user.getUsername(), user.getEncryptedPassword(), grants);
+		UserDetails userDetails = new User(user.getUsername(), user.getPassword(), grants);
 		
 		return userDetails;
 	}
