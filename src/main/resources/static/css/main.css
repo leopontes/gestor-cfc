@@ -139,3 +139,15 @@
     font-style: italic;
     border-color: red;
 }
+
+.cell:hover{
+	background-color: #81BEF7;
+}
+
+th, td {
+   border: 1px solid black;
+}
+
+table{
+	border-collapse: collapse;
+}

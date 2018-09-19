@@ -1,7 +1,7 @@
 package br.com.cfc.gestor.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +18,8 @@ import javax.persistence.UniqueConstraint;
 import br.com.cfc.gestor.model.enuns.TipoAulaEnum;
 
 @Entity
-@Table(name="aula", uniqueConstraints= {@UniqueConstraint(name="aula_uk", columnNames= {"aluno_id", "data", "veiculo_id"})})
-public class Aula implements Serializable{
+@Table(name="aula", uniqueConstraints= {@UniqueConstraint(name="aula_uk", columnNames= {"data", "veiculo_id"})})
+public class AulaProcessoVeiculo implements Serializable, Comparable<AulaProcessoVeiculo>{
 
 	private static final long serialVersionUID = 3171423919791304083L;
 
@@ -29,11 +29,11 @@ public class Aula implements Serializable{
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="aluno_id", nullable=false)
-	private Aluno aluno;
+	@JoinColumn(name="processo_id", nullable=false)
+	private Processo processo;
 	
 	@Column(name="data", nullable=false)
-	private LocalDate data;
+	private LocalDateTime data;
 
 	@Enumerated(EnumType.STRING)
 	private TipoAulaEnum tipo;
@@ -41,7 +41,20 @@ public class Aula implements Serializable{
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="veiculo_id", nullable=false)
 	private Veiculo veiculo;
-
+	
+	public AulaProcessoVeiculo() {
+		super();
+	}
+	
+	public AulaProcessoVeiculo(Processo processo, LocalDateTime data, TipoAulaEnum tipo, Veiculo veiculo) {
+		super();
+		
+		this.processo = processo;
+		this.data = data;
+		this.tipo = tipo;
+		this.veiculo = veiculo;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -50,19 +63,11 @@ public class Aula implements Serializable{
 		this.id = id;
 	}
 
-	public Aluno getAluno() {
-		return aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
-	public LocalDate getData() {
+	public LocalDateTime getData() {
 		return data;
 	}
 
-	public void setData(LocalDate data) {
+	public void setData(LocalDateTime data) {
 		this.data = data;
 	}
 
@@ -81,14 +86,25 @@ public class Aula implements Serializable{
 	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo = veiculo;
 	}
+	
+	public Processo getProcesso() {
+		return processo;
+	}
+
+	public void setProcesso(Processo processo) {
+		this.processo = processo;
+	}
+
+	@Override
+	public int compareTo(AulaProcessoVeiculo other) {
+		return this.data.compareTo(other.getData());
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((aluno == null) ? 0 : aluno.hashCode());
 		result = prime * result + ((data == null) ? 0 : data.hashCode());
-		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 		result = prime * result + ((veiculo == null) ? 0 : veiculo.hashCode());
 		return result;
 	}
@@ -101,18 +117,11 @@ public class Aula implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Aula other = (Aula) obj;
-		if (aluno == null) {
-			if (other.aluno != null)
-				return false;
-		} else if (!aluno.equals(other.aluno))
-			return false;
+		AulaProcessoVeiculo other = (AulaProcessoVeiculo) obj;
 		if (data == null) {
 			if (other.data != null)
 				return false;
 		} else if (!data.equals(other.data))
-			return false;
-		if (tipo != other.tipo)
 			return false;
 		if (veiculo == null) {
 			if (other.veiculo != null)
@@ -121,4 +130,11 @@ public class Aula implements Serializable{
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "AulaProcessoVeiculo [processo=" + processo + ", data=" + data + ", tipo=" + tipo + ", veiculo="
+				+ veiculo + "]";
+	}
+	
 }

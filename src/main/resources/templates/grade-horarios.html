@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorator="layout">
+
+    <body>
+    	<div class="page-content"  layout:fragment="content"  style="width:100%;">
+	    	<div class="mdl-card"  style="width: 90%;margin-left: 6%;">
+			    <div class="mdl-layout-spacer"></div>
+	    		<div class="mdl-card__title">
+	    			<div class="mdl-card__title-text">Lista de processos</div>
+	    		</div>
+				
+				<div class="form-row">
+					<label th:text="'Aluno: ' + ${aluno.nome}" style="margin-left: 5%;"></label>
+				</div>
+				
+	    		<div class="mdl-card--border">
+	    			<table id="tb-grade" style="width: 90%; margin-left: 5%; margin-bottom: 20px;">
+	    				<caption>Grade de Horario</caption>
+    					<thead>
+	    					<tr style="background-color:  #000">
+	    						<th style="background-color: #F2F2F2"></th>
+	    						<th th:each="data : ${periodo}" th:text="${data}"  style="text-align: center;background-color: #F2F2F2"></th>
+	    					</tr>
+    					</thead>
+	    				<tbody>
+	    					<tr th:each="horario : ${keys}">
+	    						<td th:text="${horario}" style="background-color: #F2F2F2"></td>
+	    						<td th:each="agendamento : ${grade.get(horario)}" style="text-align: center">
+	    							<a th:text="${agendamento.processo != null ? agendamento.processo.aluno.matricula : ''}" href="#"></a>
+	    						</td>
+	    					</tr>
+	    				</tbody>
+					</table>
+				</div>
+			    <div class="mdl-layout-spacer"></div>
+			</div>
+    	</div>
+    	
+    </body>
+</html>
