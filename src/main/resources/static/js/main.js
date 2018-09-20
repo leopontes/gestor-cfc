@@ -7,26 +7,25 @@ $(document).ready(function(){
 	$("#cep").mask("99999-999");
 	$("#quantidade").mask("99");
 
-	$("#aluno-matricula").blur(function(){
-		var matricula = $("#aluno-matricula").val();
+	$("#matricula").blur(function(){
 		
 		$.ajax({
-			url: '/gestao/aluno/' + matricula,
+			url: '/gestor/gestao/aluno/' + $("#matricula").val(),
 			method: 'GET',
 			success: function(data){
 				if(data){
-					$("#aluno-nome").val(data.nome);
-					$("#veiculos").removeAttr("disabled");
+					$("#nome").val(data.nome);
+					$("#veiculo").removeAttr("disabled");
 				}
 			}
 		});
 	});
 	
-	$("#veiculos").change(function(){
-		$("#periodoAgendamentos").removeAttr("disabled");
+	$("#veiculo").change(function(){
+		$("#mesAno").removeAttr("disabled");
 	});
 	
-	$("#periodoAgendamentos").datepicker({
+	$("#mesAno").datepicker({
 		dateFormat: 'mm/yy',
 		changeMonth: true,
 	    changeYear: true,
@@ -35,7 +34,6 @@ $(document).ready(function(){
             var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val(); 
             var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val(); 
             $(this).datepicker('setDate', new Date(year, month, 1)); 
-            carregarEscalas(month, year, $("#veiculos").val(), $("#aluno-matricula").val());
 	    }
 	});
 	
@@ -95,6 +93,9 @@ $(document).ready(function(){
 	});
 	
 	$("#cep").blur(function(){
+		
+		$("#loader").show();
+		
 		$.ajax({
 			type: 'GET',
 			url: 'http://viacep.com.br/ws/'+$(this).val()+'/json/',
@@ -104,6 +105,8 @@ $(document).ready(function(){
 				$("#bairro").val(cep.bairro);
 				$("#cidade").val(cep.localidade);
 				$("#uf").val(cep.uf);
+				
+				$("#loader").hide();
 			}
 		});
 	});
@@ -162,5 +165,3 @@ $(document).ready(function(){
 		}
 	});
 });
-
-};

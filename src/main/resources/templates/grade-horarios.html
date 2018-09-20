@@ -13,42 +13,39 @@
 					<h2 class="mdl-card__title-text">Cadastrar Aluno</h2>
 				</div>
 				<div class="mdl-card__supporting-text" style="overflow: scroll;">
-					<form method="post" th:action="@{/gestao/aluno}">
+					<form method="post" th:action="@{/gestao/escala}" th:object="${filtro}">
 						<div class="form-cel-70" style="margin-left: 5%; margin-bottom: 10px;">
 							<label class="components-form">Matricula:</label> 
-							<input type="text" id="matricula" name="matricula" class="components-form" autocomplete="off" style="width: 10%;" /> 
+							<input type="text" th:field="*{matricula}" class="components-form" autocomplete="off" style="width: 10%;" /> 
 							<label class="components-form">Nome:</label> 
-							<input type="text" id="aluno-nome" disabled="disabled" class="components-form" autocomplete="off" style="width: 30%;" />						
+							<input type="text"  th:field="*{nome}" disabled="disabled" class="components-form" autocomplete="off" style="width: 30%;" />						
 						</div>
 						<div class="form-cel-70" style="margin-left: 5%; margin-bottom: 10px;">
 							<label class="components-form">Veiculos:</label> 
-							<select id="veiculos" name="veiculo"  disabled="disabled">
-								<option>Selecione</option>
+							<select  th:field="*{veiculo}"  disabled="disabled">
+								<option value="0">Selecione</option>
 								<option th:each="veiculo : ${veiculos}" th:value=${veiculo.id} th:text="${veiculo}"></option>
 							</select> 
-							<label>Mes/Ano</label>
-							<input type="text" id="periodoAgendamentos" disabled="disabled" name="mesAno"/>
+							<label class="components-form">Mes/Ano</label>
+							<input type="text"  th:field="*{mesAno}" disabled="disabled"/>
 							<button id="findUsuario">Buscar</button>
 						</div>
 					</form>
 					
-					<div class="mdl-card--border">
-						<table id="tb-grade"
-							style="width: 90%; margin-left: 5%; margin-bottom: 20px;">
+					<div class="mdl-card--border" th:if="${keys != null && !keys.empty}">
+						<table id="tb-grade" style="width: 90%; margin-left: 5%; margin-bottom: 20px;">
 							<thead>
 								<tr style="background-color: #000">
 									<th style="background-color: #F2F2F2"></th>
-									<th th:each="data : ${periodo}" th:text="${data}"
-										style="text-align: center; background-color: #F2F2F2"></th>
+									<th th:each="data : ${periodo}" th:text="${data}" style="text-align: center; background-color: #F2F2F2"></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:each="horario : ${keys}">
 									<td th:text="${horario}" style="background-color: #F2F2F2"></td>
-									<td th:each="agendamento : ${grade.get(horario)}"
-										style="text-align: center"><a
-										th:text="${agendamento.processo != null ? agendamento.processo.aluno.matricula : ''}"
-										href="#"></a></td>
+									<td th:each="agendamento : ${grade.get(horario)}" style="text-align: center">
+										<a class="" th:text="${agendamento.processo != null ? agendamento.processo.aluno.matricula : ''}" href="#"></a>
+									</td>
 								</tr>
 							</tbody>
 						</table>

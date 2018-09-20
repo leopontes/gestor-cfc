@@ -17,7 +17,7 @@ public class AulaProcessoVeiculoServiceImpl implements AulaProcessoVeiculoServic
 	private AulaProcessoVeiculoRepository aulaProcessoVeiculoRepository;
 	
 	@Override
-	public Collection<AulaProcessoVeiculo> find(Long codigoVeiculo, LocalDateTime dataHora) {
+	public AulaProcessoVeiculo find(Long codigoVeiculo, LocalDateTime dataHora) {
 		return aulaProcessoVeiculoRepository.findByVeiculoData(codigoVeiculo, dataHora);
 	}
 

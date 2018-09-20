@@ -6,4 +6,6 @@ public interface VeiculoService {
 
 	Iterable<Veiculo> findAll();
 
+	Veiculo get(Long veiculo);
+
 }

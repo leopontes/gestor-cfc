@@ -2,17 +2,13 @@ package br.com.cfc.gestor.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -107,9 +103,6 @@ public class Aluno implements Serializable, Comparable<Aluno>{
 	
 	@Column(name="cadastrado_em", nullable=false)
 	private LocalDate cadastradoEm;
-	
-	@OneToMany(fetch=FetchType.LAZY)
-	private Collection<Processo> processos;
 	
 	public Aluno() {
 		super();
@@ -288,14 +281,6 @@ public class Aluno implements Serializable, Comparable<Aluno>{
 		this.cadastradoEm = cadastradoEm;
 	}
 
-	public Collection<Processo> getProcessos() {
-		return processos;
-	}
-
-	public void setProcessos(Collection<Processo> processos) {
-		this.processos = processos;
-	}
-	
 	public Integer getPrazo() {
 		return this.cadastradoEm.getYear() - 12;
 	}

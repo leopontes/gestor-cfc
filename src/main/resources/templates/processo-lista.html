@@ -30,15 +30,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:if="${aluno.processos.empty}">
+							<tr th:if="${processos == null || processos.empty}">
 								<td class="mdl-data-table__cell--non-numeric" colspan="3">O aluno não possui nenhum processo.</td>
 							</tr>
-							<tr th:each="processo : ${aluno.processos}">
+							<tr th:each="processo : ${processos}">
 								<td class="mdl-data-table__cell--non-numeric" th:text="${processo.servico.descricao}"></td>
 								<td class="mdl-data-table__cell--non-numeric" th:text="${processo.categoria.descricao}"></td>
-								<td class="mdl-data-table__cell--non-numeric">
-									<span th:each="${veiculo : ${processo.veiculos}}" th:text="${veiculo}"></span>
-								</td>
 							</tr>
 						</tbody>
 					</table>

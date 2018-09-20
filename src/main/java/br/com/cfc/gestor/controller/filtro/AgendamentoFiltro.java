@@ -6,11 +6,13 @@ public class AgendamentoFiltro implements Serializable{
 
 	private static final long serialVersionUID = 7449171409092050843L;
 	
-	private Long matricula;
+	private Long matricula = Long.valueOf(0);
 	
-	private Long veiculo;
+	private Long veiculo = Long.valueOf(0);
 	
-	private String mesAno;
+	private String mesAno = "";
+	
+	private String nome = "";
 
 	public Long getMatricula() {
 		return matricula;
@@ -34,5 +36,13 @@ public class AgendamentoFiltro implements Serializable{
 
 	public void setMesAno(String mesAno) {
 		this.mesAno = mesAno;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 }

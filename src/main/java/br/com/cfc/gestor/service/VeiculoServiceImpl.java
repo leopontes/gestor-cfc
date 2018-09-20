@@ -1,5 +1,7 @@
 package br.com.cfc.gestor.service;
 
+import java.util.Optional;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -16,6 +18,18 @@ public class VeiculoServiceImpl implements VeiculoService {
 	@Override
 	public Iterable<Veiculo> findAll() {
 		return veiculoRepositiry.findAll();
+	}
+
+	@Override
+	public Veiculo get(Long veiculoId) {
+		
+		Optional<Veiculo> veiculo = veiculoRepositiry.findById(veiculoId);
+		
+		if(veiculo.isPresent()) {
+			return veiculo.get();
+		}
+		
+		return null;
 	}
 
 }

@@ -1,8 +1,10 @@
 package br.com.cfc.gestor.controller;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import br.com.cfc.gestor.model.Aluno;
 import br.com.cfc.gestor.model.Processo;
 import br.com.cfc.gestor.model.Veiculo;
 import br.com.cfc.gestor.service.AlunoService;
+import br.com.cfc.gestor.service.ProcessoService;
 import br.com.cfc.gestor.service.VeiculoService;
 
 @Controller
@@ -33,6 +36,9 @@ public class AlunoController {
 	
 	@Resource
 	private VeiculoService veiculoService;
+	
+	@Resource
+	private ProcessoService processoService;
 	
 	@GetMapping("/gestao/aluno")
 	public String matriculas(Model model) {
@@ -54,6 +60,7 @@ public class AlunoController {
 	}
 	
 	@PostMapping("/gestao/aluno")
+	@Transactional
 	public String cadastrarAluno(@ModelAttribute("aluno") @Valid Aluno aluno, BindingResult bindResult, Model model) {
 		
 		if(bindResult.hasErrors()) {
@@ -73,6 +80,7 @@ public class AlunoController {
 	}
 	
 	@PutMapping("/gestao/aluno")
+	@Transactional
 	public String atualizarAluno(@Valid Aluno aluno) {
 		
 		alunoService.save(aluno);
@@ -81,6 +89,7 @@ public class AlunoController {
 	}
 	
 	@RequestMapping(value="/gestao/aluno/delete/{id}", method=RequestMethod.GET)
+	@Transactional
 	public String removerAluno(@PathVariable("id") Long id) {
 		
 		Aluno aluno = alunoService.get(id);
@@ -113,7 +122,10 @@ public class AlunoController {
 		
 		Aluno aluno = alunoService.get(id);
 		
+		Collection<Processo> processos = processoService.find(aluno);
+		
 		model.addAttribute("aluno", aluno);
+		model.addAttribute("processos", processos);
 		
 		return "processo-lista";
 	}
@@ -130,5 +142,24 @@ public class AlunoController {
 		model.addAttribute("processo", new Processo());
 		
 		return "processo-form";
+	}
+	
+	@PostMapping("/gestao/aluno/{id}/processos/")
+	@Transactional
+	public String cadastrarProcesso(@PathVariable("id") Long id, @ModelAttribute("processo") @Valid Processo processo, BindingResult bindResult, Model model) {
+		
+		Aluno aluno = alunoService.get(id);
+		
+		processo.setDataInicio(LocalDate.now());
+		processo.setAluno(aluno);
+		
+		processoService.save(processo);
+		
+		Collection<Processo> processos = processoService.find(aluno);
+		
+		model.addAttribute("aluno", aluno);
+		model.addAttribute("processos", processos);
+		
+		return "processo-lista";
 	}
 }

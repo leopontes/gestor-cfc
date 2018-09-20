@@ -2,7 +2,6 @@ package br.com.cfc.gestor.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.com.cfc.gestor.model.enuns.CategoriaEnum;
@@ -48,11 +46,8 @@ public class Processo implements Serializable, Comparable<Processo>{
 	@Column(name="observacao", length=255, nullable=false)
 	private String observacao;
 	
-	@OneToMany(fetch=FetchType.LAZY)
-	private Collection<Pagamento> pagamentos;
-	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="aluno_id", nullable=false)
+	@JoinColumn(name="aluno_id")
 	private Aluno aluno;
 	
 	public Long getId() {
@@ -111,14 +106,6 @@ public class Processo implements Serializable, Comparable<Processo>{
 		this.dataTermino = dataTermino;
 	}
 
-	public Collection<Pagamento> getPagamentos() {
-		return pagamentos;
-	}
-
-	public void setPagamentos(Collection<Pagamento> pagamentos) {
-		this.pagamentos = pagamentos;
-	}
-
 	public Aluno getAluno() {
 		return aluno;
 	}
@@ -160,7 +147,7 @@ public class Processo implements Serializable, Comparable<Processo>{
 	@Override
 	public String toString() {
 		return "Processo [renach=" + renach + ", servico=" + servico + ", categoria=" + categoria + ", dataInicio="
-				+ dataInicio + ", dataTermino=" + dataTermino + ", aluno=" + aluno + "]";
+				+ dataInicio + ", dataTermino=" + dataTermino + "]";
 	}
 	
 	
