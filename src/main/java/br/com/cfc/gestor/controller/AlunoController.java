@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import br.com.cfc.gestor.model.Aluno;
 import br.com.cfc.gestor.model.Processo;
@@ -39,6 +42,15 @@ public class AlunoController {
 		model.addAttribute("alunos", alunos);
 		
 		return "lista-aluno";
+	}
+	
+	@GetMapping("/gestao/aluno/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public @ResponseBody Aluno matriculas(@PathVariable("id") Long id) {
+		
+		Aluno aluno = alunoService.get(id);
+		
+		return aluno;
 	}
 	
 	@PostMapping("/gestao/aluno")

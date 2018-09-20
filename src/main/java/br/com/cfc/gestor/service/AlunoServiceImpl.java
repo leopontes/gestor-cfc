@@ -1,5 +1,7 @@
 package br.com.cfc.gestor.service;
 
+import java.util.Optional;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -31,7 +33,14 @@ public class AlunoServiceImpl implements AlunoService{
 
 	@Override
 	public Aluno get(Long id) {
-		return alunoRepository.findById(id).get();
+		
+		Optional<Aluno> retorno = alunoRepository.findById(id);
+		
+		if(retorno.isPresent()) {
+			return retorno.get();
+		}
+		
+		return null;
 	}
 
 }

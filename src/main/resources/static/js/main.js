@@ -1,12 +1,53 @@
 
 $(document).ready(function(){
-	
 
 	var anoLimite = (new Date().getFullYear() - 18);
 	
 	$("#cpf").mask("999.999.999-99");
 	$("#cep").mask("99999-999");
 	$("#quantidade").mask("99");
+
+	$("#aluno-matricula").blur(function(){
+		var matricula = $("#aluno-matricula").val();
+		
+		$.ajax({
+			url: '/gestao/aluno/' + matricula,
+			method: 'GET',
+			success: function(data){
+				if(data){
+					$("#aluno-nome").val(data.nome);
+					$("#veiculos").removeAttr("disabled");
+				}
+			}
+		});
+	});
+	
+	$("#veiculos").change(function(){
+		$("#periodoAgendamentos").removeAttr("disabled");
+	});
+	
+	$("#periodoAgendamentos").datepicker({
+		dateFormat: 'mm/yy',
+		changeMonth: true,
+	    changeYear: true,
+	    showButtonPanel: true,
+	    onClose: function(dateText, inst) {  
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val(); 
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val(); 
+            $(this).datepicker('setDate', new Date(year, month, 1)); 
+            carregarEscalas(month, year, $("#veiculos").val(), $("#aluno-matricula").val());
+	    }
+	});
+	
+	$("#periodoAgendamentos").focus(function () {
+		$(".ui-datepicker-calendar").hide();
+		$("#ui-datepicker-div").position({
+			  my: "center top",
+			  at: "center bottom",
+			  of: $(this)
+			});
+		
+	});
 	
 	$("#valorTotal").maskMoney({
 		prefix:'R$ ', 
@@ -121,3 +162,5 @@ $(document).ready(function(){
 		}
 	});
 });
+
+};

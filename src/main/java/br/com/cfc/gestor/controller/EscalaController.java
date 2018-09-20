@@ -5,16 +5,20 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import br.com.cfc.gestor.controller.filtro.AgendamentoFiltro;
 import br.com.cfc.gestor.model.Aluno;
 import br.com.cfc.gestor.model.AulaProcessoVeiculo;
 import br.com.cfc.gestor.model.Processo;
@@ -22,10 +26,63 @@ import br.com.cfc.gestor.model.Veiculo;
 import br.com.cfc.gestor.model.enuns.MarcaEnum;
 import br.com.cfc.gestor.model.enuns.SemanaEnum;
 import br.com.cfc.gestor.model.enuns.TipoAulaEnum;
+import br.com.cfc.gestor.service.AulaProcessoVeiculoService;
+import br.com.cfc.gestor.service.VeiculoService;
 
 @Controller
 public class EscalaController {
 
+	@Resource
+	private VeiculoService veiculoSerice;
+	
+	@Resource
+	private AulaProcessoVeiculoService aulaProcessoVeiculoService;
+	
+	@RequestMapping(value="/gestao/escala", method=RequestMethod.POST)
+	public String find(AgendamentoFiltro filtro, Model model) {
+		
+		DateTimeFormatter formatterDT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		
+		String[] mesAno = filtro.getMesAno().split("/");
+		
+		LocalDate dataInicio = LocalDate.of(Integer.valueOf(mesAno[1]), Integer.valueOf(mesAno[0]), 1);
+		
+		while(!SemanaEnum.SEGUNDA.equals(SemanaEnum.fromCodigo(dataInicio.getDayOfWeek().getValue()))){
+			dataInicio = dataInicio.minusDays(1);
+		}
+		
+		Collection<LocalDate> periodo       = new ArrayList<>();
+		Collection<String>    periodoLabels = new ArrayList<>();
+		
+		Map<String, Collection<AulaProcessoVeiculo>> gradeHorarios = new HashMap<>();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		
+		for(int i=0; i < 7; i++) {
+			periodoLabels.add(dataInicio.format(formatterDT) + " (" + SemanaEnum.fromCodigo(dataInicio.getDayOfWeek().getValue()).getSigla() + ")");
+			periodo.add(dataInicio);
+			dataInicio = dataInicio.plusDays(1);
+		}
+		
+		int hora = 8;
+		
+		for(int i =0 ; i < 13 ; i++) {
+			for(LocalDate dataReferencia : periodo) {
+				LocalTime horario = LocalTime.of(hora++, 0);
+				Collection<AulaProcessoVeiculo> aulas = aulaProcessoVeiculoService.find(filtro.getVeiculo(), dataReferencia.atTime(horario));
+				gradeHorarios.put(horario.format(formatter), aulas);
+			}
+		}
+		
+		model.addAttribute("veiculos", veiculoSerice.findAll());
+		model.addAttribute("periodo", periodoLabels);
+		model.addAttribute("aluno", new Aluno());
+		model.addAttribute("grade", gradeHorarios);
+		model.addAttribute("keys",  new TreeSet<>(gradeHorarios.keySet()));
+		
+		
+		return "grade-horarios";
+	}
+	
 	@RequestMapping(value="/gestao/escala", method=RequestMethod.GET)
 	public String init(Model model) {
 		
@@ -188,8 +245,6 @@ public class EscalaController {
 		
 		DateTimeFormatter formatterDT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
-		
-		
 		Collection<String> periodo = new ArrayList<>();
 		
 		for(int i=0; i < 7; i++) {
@@ -197,8 +252,9 @@ public class EscalaController {
 			dataInicio = dataInicio.plusDays(1);
 		}
 		
+		model.addAttribute("veiculos", veiculoSerice.findAll());
 		model.addAttribute("periodo", periodo);
-		model.addAttribute("aluno", aluno);
+		model.addAttribute("aluno", new Aluno());
 		model.addAttribute("grade", gradeHorarios);
 		model.addAttribute("keys",  new TreeSet<>(gradeHorarios.keySet()));
 		
