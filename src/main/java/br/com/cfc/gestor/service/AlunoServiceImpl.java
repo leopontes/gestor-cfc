@@ -8,15 +8,22 @@ import org.springframework.stereotype.Service;
 
 import br.com.cfc.gestor.model.Aluno;
 import br.com.cfc.gestor.repository.AlunoRepository;
+import br.com.cfc.gestor.utils.MessageContext;
 
 @Service
 public class AlunoServiceImpl implements AlunoService{
 
 	@Resource
+	private MessageContext messageContext;
+	
+	@Resource
 	private AlunoRepository alunoRepository;
 	
 	@Override
 	public Iterable<Aluno> findAll() {
+		
+		messageContext.add("Teste de mensagem de contexto [service]");
+		
 		return alunoRepository.findAll();
 	}
 

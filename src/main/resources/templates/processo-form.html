@@ -18,7 +18,7 @@
                </div>
             
                <div class = "mdl-tabs__panel is-active" id = "tab1-panel">
-					<form method="post" th:action="@{'/gestao/aluno/' + ${aluno.id} + '/processos/'}" th:object="${processo}">
+					<form method="post" th:action="@{'/aluno/' + ${aluno.id} + '/processos/'}" th:object="${processo}">
 						<div class="form-row">
 							<div class="form-cel-30">
 							    <label class="components-form">Matrícula:</label> 

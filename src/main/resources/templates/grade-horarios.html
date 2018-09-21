@@ -13,7 +13,7 @@
 					<h2 class="mdl-card__title-text">Cadastrar Aluno</h2>
 				</div>
 				<div class="mdl-card__supporting-text" style="overflow: scroll;">
-					<form method="post" th:action="@{/gestao/escala}" th:object="${filtro}">
+					<form method="post" th:action="@{/escala}" th:object="${filtro}">
 						<div class="form-cel-70" style="margin-left: 5%; margin-bottom: 10px;">
 							<label class="components-form">Matricula:</label> 
 							<input type="text" th:field="*{matricula}" class="components-form" autocomplete="off" style="width: 10%;" /> 

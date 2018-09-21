@@ -34,7 +34,7 @@ public class EscalaController {
 	@Resource
 	private AulaProcessoVeiculoService aulaProcessoVeiculoService;
 	
-	@RequestMapping(value="/gestao/escala", method=RequestMethod.POST)
+	@RequestMapping(value="/escala", method=RequestMethod.POST)
 	public String find(AgendamentoFiltro filtro, Model model) {
 		
 		DateTimeFormatter formatterDT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -90,7 +90,7 @@ public class EscalaController {
 		return "grade-horarios";
 	}
 	
-	@RequestMapping(value="/gestao/escala", method=RequestMethod.GET)
+	@RequestMapping(value="/escala", method=RequestMethod.GET)
 	public String init(Model model) {
 		
 		model.addAttribute("veiculos", veiculoService.findAll());

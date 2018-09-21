@@ -27,10 +27,14 @@ import br.com.cfc.gestor.model.Veiculo;
 import br.com.cfc.gestor.service.AlunoService;
 import br.com.cfc.gestor.service.ProcessoService;
 import br.com.cfc.gestor.service.VeiculoService;
+import br.com.cfc.gestor.utils.MessageContext;
 
 @Controller
 public class AlunoController {
 
+	@Resource
+	private MessageContext messageContext;
+	
 	@Resource
 	private AlunoService alunoService;
 	
@@ -40,8 +44,10 @@ public class AlunoController {
 	@Resource
 	private ProcessoService processoService;
 	
-	@GetMapping("/gestao/aluno")
+	@GetMapping("/aluno")
 	public String matriculas(Model model) {
+		
+		messageContext.add("Teste de mensagem de contexto [controller]");
 		
 		Collection<Aluno> alunos = (Collection<Aluno>) alunoService.findAll();
 		
@@ -50,7 +56,7 @@ public class AlunoController {
 		return "lista-aluno";
 	}
 	
-	@GetMapping("/gestao/aluno/{id}")
+	@GetMapping("/aluno/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody Aluno matriculas(@PathVariable("id") Long id) {
 		
@@ -59,7 +65,7 @@ public class AlunoController {
 		return aluno;
 	}
 	
-	@PostMapping("/gestao/aluno")
+	@PostMapping("/aluno")
 	@Transactional
 	public String cadastrarAluno(@ModelAttribute("aluno") @Valid Aluno aluno, BindingResult bindResult, Model model) {
 		
@@ -79,7 +85,7 @@ public class AlunoController {
 		return "processo-form";
 	}
 	
-	@PutMapping("/gestao/aluno")
+	@PutMapping("/aluno")
 	@Transactional
 	public String atualizarAluno(@Valid Aluno aluno) {
 		
@@ -88,7 +94,7 @@ public class AlunoController {
 		return "processo-form";
 	}
 	
-	@RequestMapping(value="/gestao/aluno/delete/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/aluno/delete/{id}", method=RequestMethod.GET)
 	@Transactional
 	public String removerAluno(@PathVariable("id") Long id) {
 		
@@ -99,7 +105,7 @@ public class AlunoController {
 		return "lista-aluno";
 	}
 	
-	@RequestMapping(value="/gestao/aluno/new", method=RequestMethod.GET)
+	@RequestMapping(value="/aluno/new", method=RequestMethod.GET)
 	public String newAluno(Model model) {
 		
 		model.addAttribute("aluno", new Aluno());
@@ -107,7 +113,7 @@ public class AlunoController {
 		return "aluno-form";
 	}
 	
-	@RequestMapping(value="/gestao/aluno/edit/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/aluno/edit/{id}", method=RequestMethod.GET)
 	public String editAluno(@PathVariable("id") Long id, Model model) {
 		
 		Aluno aluno = alunoService.get(id);
@@ -117,7 +123,7 @@ public class AlunoController {
 		return "aluno-form";
 	}
 	
-	@GetMapping("/gestao/aluno/processos/{id}")
+	@GetMapping("/aluno/processos/{id}")
 	public String processos(@PathVariable("id") Long id, Model model) {
 		
 		Aluno aluno = alunoService.get(id);
@@ -130,7 +136,7 @@ public class AlunoController {
 		return "processo-lista";
 	}
 	
-	@RequestMapping(value="/gestao/aluno/{id}/processos/new", method=RequestMethod.GET)
+	@RequestMapping(value="/aluno/{id}/processos/new", method=RequestMethod.GET)
 	public String newProcesso(@PathVariable("id") Long id, Model model) {
 		
 		Aluno aluno = alunoService.get(id);
@@ -144,7 +150,7 @@ public class AlunoController {
 		return "processo-form";
 	}
 	
-	@PostMapping("/gestao/aluno/{id}/processos/")
+	@PostMapping("/aluno/{id}/processos/")
 	@Transactional
 	public String cadastrarProcesso(@PathVariable("id") Long id, @ModelAttribute("processo") @Valid Processo processo, BindingResult bindResult, Model model) {
 		

@@ -7,7 +7,11 @@
 	<div class="container"  layout:fragment="content">
   		<h4 th:text="#{label.titulo.cadastro.aluno}"></h4>
    		<div class="content">
-   			<form method="post" th:action="@{/gestao/aluno}" th:object="${aluno}">
+   			<form method="post" th:action="@{/aluno}" th:object="${aluno}">
+   				<div id="foto" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;width: 23%;background-color: #fff;border-radius: 5px;margin-top: 1%;">
+   					<img alt="" src="/gestao-cfc/images/useravatar.png" style="width: 180px;">
+    				<input type="file">
+   				</div>
 				<div class="form-row">
 					<div class="form-cel-30">
 					    <label class="components-form" th:text="#{label.matricula}">:</label> 
@@ -105,8 +109,8 @@
 				</div>
 				<div class="form-row">
 					<div class="form-control" style="float: right;padding: 10px;">
-						<input type="submit" value="#{label.btn.gravar}"/>
-						<input type="reset" value="#{label.btn.limpar}">
+						<input type="submit" th:value="#{label.btn.gravar}"/>
+						<input type="reset" th:value="#{label.btn.limpar}">
 					</div>
 				</div>
 				<div class="has-error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>

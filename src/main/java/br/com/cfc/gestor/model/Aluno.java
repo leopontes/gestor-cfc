@@ -104,6 +104,9 @@ public class Aluno implements Serializable, Comparable<Aluno>{
 	@Column(name="cadastrado_em", nullable=false)
 	private LocalDate cadastradoEm;
 	
+	@Column(name="path_foto")
+	private String pathFoto;
+	
 	public Aluno() {
 		super();
 		this.cadastradoEm = LocalDate.now();
@@ -283,6 +286,14 @@ public class Aluno implements Serializable, Comparable<Aluno>{
 
 	public Integer getPrazo() {
 		return this.cadastradoEm.getYear() - 12;
+	}
+	
+	public String getPathFoto() {
+		return pathFoto;
+	}
+
+	public void setPathFoto(String pathFoto) {
+		this.pathFoto = pathFoto;
 	}
 
 	@Override
