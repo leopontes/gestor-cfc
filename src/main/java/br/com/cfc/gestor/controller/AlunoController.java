@@ -1,12 +1,26 @@
 package br.com.cfc.gestor.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.xml.bind.DatatypeConverter;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +32,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import br.com.cfc.gestor.controller.form.AlunoForm;
 import br.com.cfc.gestor.model.Aluno;
 import br.com.cfc.gestor.model.Processo;
 import br.com.cfc.gestor.model.Veiculo;
@@ -31,6 +47,13 @@ import br.com.cfc.gestor.utils.MessageContext;
 
 @Controller
 public class AlunoController {
+	
+	private static final String ABSOLUTE_PATH_SHARED_FOLDER = "C:\\Desenvolvimento\\servidores\\shared_folder\\images\\";
+	
+	private static final String RELATIVE_PATH_SHARED_FOLDER = "/gestao-cfc/files/images/";
+	
+	private static int currentPage = 1;
+	private static int pageSize = 7;
 
 	@Resource
 	private MessageContext messageContext;
@@ -44,14 +67,45 @@ public class AlunoController {
 	@Resource
 	private ProcessoService processoService;
 	
+	@PostMapping("/aluno/search")
+	public String fullSearch(Model model, 
+			 @RequestParam("page") Optional<Integer> page, 
+			 @RequestParam("size") Optional<Integer> size,
+			 @RequestParam("nomeCpf") Optional<String> findBy) {
+		
+		return matriculas(model, page, size, findBy);
+	}
+	
 	@GetMapping("/aluno")
-	public String matriculas(Model model) {
+	public String matriculas(Model model, 
+							 @RequestParam("page") Optional<Integer> page, 
+							 @RequestParam("size") Optional<Integer> size,
+							 @RequestParam("nomeCpf") Optional<String> findBy) {
 		
-		messageContext.add("Teste de mensagem de contexto [controller]");
+		page.ifPresent(p -> currentPage = p);
+		size.ifPresent(s -> pageSize = s);
 		
-		Collection<Aluno> alunos = (Collection<Aluno>) alunoService.findAll();
+		if(currentPage <= 0) {
+			currentPage = 1;
+		}
 		
-		model.addAttribute("alunos", alunos);
+		Page<Aluno> alunosPage = alunoService.findPaginated(findBy, PageRequest.of(currentPage-1, pageSize));
+		
+		model.addAttribute("alunos", alunosPage);
+
+		int totalPages = alunosPage.getTotalPages();
+
+		if(totalPages > 0) {
+			
+			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+			SortedSet<Integer> colecao = new TreeSet<>(pageNumbers);
+			
+			model.addAttribute("pageNumbers", pageNumbers);
+			model.addAttribute("firstPageNumber", colecao.first());
+			model.addAttribute("lastPageNumber", colecao.last());
+			model.addAttribute("nextPageNumber", currentPage+1);
+			model.addAttribute("previusPageNumber", currentPage-1);
+		}
 		
 		return "lista-aluno";
 	}
@@ -67,20 +121,40 @@ public class AlunoController {
 	
 	@PostMapping("/aluno")
 	@Transactional
-	public String cadastrarAluno(@ModelAttribute("aluno") @Valid Aluno aluno, BindingResult bindResult, Model model) {
+	public String cadastrarAluno(@ModelAttribute("aluno") @Valid AlunoForm alunoForm, BindingResult bindResult, Model model) {
 		
 		if(bindResult.hasErrors()) {
 			return "aluno-form";
 		}
 		
-		alunoService.save(aluno);
-		
-		Collection<Veiculo> veiculos = (Collection<Veiculo>) veiculoService.findAll();
-		
-		model.addAttribute("aluno", aluno);
-		model.addAttribute("veiculos", veiculos);
-		model.addAttribute("processo", new Processo());
-		
+		try {
+			
+			Aluno aluno = alunoForm.toAluno();
+			aluno.setCadastradoEm(LocalDate.now());
+			
+			alunoService.save(aluno);
+			
+			aluno.setPathFoto(RELATIVE_PATH_SHARED_FOLDER+"foto-" + aluno.getId()+".png");
+			
+			alunoService.save(aluno);
+			
+	        byte[] decodedBytes = DatatypeConverter.parseBase64Binary(alunoForm.getFoto().replaceAll("data:image/.+;base64,", ""));
+	        
+	        File foto1 = new File(ABSOLUTE_PATH_SHARED_FOLDER+"foto-" + aluno.getId() +".png");
+	        
+	        BufferedImage bfi = ImageIO.read(new ByteArrayInputStream(decodedBytes));
+	        ImageIO.write(bfi , "png", foto1);
+	        bfi.flush();
+	        
+			Collection<Veiculo> veiculos = (Collection<Veiculo>) veiculoService.findAll();
+			
+			model.addAttribute("aluno", aluno);
+			model.addAttribute("veiculos", veiculos);
+			model.addAttribute("processo", new Processo());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		return "processo-form";
 	}
@@ -108,7 +182,7 @@ public class AlunoController {
 	@RequestMapping(value="/aluno/new", method=RequestMethod.GET)
 	public String newAluno(Model model) {
 		
-		model.addAttribute("aluno", new Aluno());
+		model.addAttribute("aluno", new AlunoForm());
 		
 		return "aluno-form";
 	}
@@ -118,7 +192,10 @@ public class AlunoController {
 		
 		Aluno aluno = alunoService.get(id);
 		
-		model.addAttribute("aluno", aluno);
+		AlunoForm alunoForm = new AlunoForm();
+		alunoForm.toForm(aluno);
+		
+		model.addAttribute("aluno", alunoForm);
 		
 		return "aluno-form";
 	}

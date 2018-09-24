@@ -7,53 +7,65 @@
     	<div class="container"  layout:fragment="content">
 	  		<h4 th:text="#{label.titulo.aluno.listagem}"></h4>
 	   		<div class="content">
-	   			<div class="form-row">
-	   				<div class="form-cell-100">
-		    			<a th:href="@{/aluno/new}" class="btn" th:text="#{label.aluno.novo}" style="float: right;margin-right: 3%;"></a>
-	   				</div>
-			  	</div>
+	   			<form method="post" th:action="@{/aluno/search}">
+		   			<div class="form-row">
+	    				<div class="form-cel-70">
+	        				<input type="text" th:name="${nomeCpf}" th:placeholder="#{mensagem.campo.find}" style="margin-left: 3.5%;float: left;width: 80%;padding: 3px 9px 4px 9px;"> 
+			    			<input type="submit" style="float: left;margin-left: 5px;" th:value="#{label.btn.buscar}">
+		   				</div>
+		   				<div class="form-cel-30">
+			    			<a th:href="@{/aluno/new}" class="btn" th:text="#{label.aluno.novo}" style="float: right;margin-right: 3%;"></a>
+		   				</div>
+				  	</div>
+	   			</form>
 			  	<div class="form-row">
 		    		<div class="form-cell-100">
 			    			<table class="mdl-data-table mdl-js-data-table" style="width: 95%; margin-left: 2.5%;">
 			    				<thead>
 			    					<tr>
-			    						<th style="width: 10%;">Matrícula</th>
-			    						<th style="width: 60%;">Nome</th>
-			    						<th style="width: 10%;">Prazo</th>
-			    						<th style="width: 20%;"colspan="3"></th>
+			    						<th style="width: 10%;" th:text="#{label.matricula}"></th>
+			    						<th style="width: 50%;" th:text="#{label.nome}"></th>
+			    						<th style="width: 20%;" th:text="#{label.cpf}"></th>
+			    						<th style="width: 20%;" colspan="3"></th>
 			    					</tr>
 			    				</thead>
 			    				<tbody>
-			    					<tr th:if="${alunos.empty}">
-			    						<td colspan="5">Nenhum registro foi encontrado</td>
+			    					<tr th:if="${alunos.content.empty}">
+			    						<td colspan="5" th:text="#{label.msg.registros.nao.encontrados}"></td>
 			    					</tr>
-			    					<tr th:each="aluno : ${alunos}">
-			    						<td th:text="${aluno.matricula}"  style="width: 10%;"></td>
-			    						<td th:text="${aluno.nome}"  style="width: 65%;"></td>
-			    						<td th:text="${aluno.prazo} + ' dias'"  style="width: 10%;"></td>
+			    					<tr th:each="aluno : ${alunos.content}">
+			    						<td th:text="${aluno.matricula}" style="width: 10%;"></td>
+			    						<td th:text="${aluno.nome}" style="width: 50%;"></td>
+			    						<td th:text="${aluno.cpf}" style="width: 20%;"></td>
 			    						<td  style="width: 5%;">
 			    							<a th:href="@{'/aluno/edit/' + ${aluno.id}}">
-				    							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-												  <i class="material-icons">edit</i>
-												</button>
+				    							<button th:text="#{label.btn.editar}"></button>
 			    							</a>
 			    						</td>
 			    						<td class="mdl-data-table__cell--non-numeric"  style="width: 5%;">
 			    							<a th:href="@{'/aluno/delete/' + ${aluno.id}}">
-				    							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-												  <i class="material-icons">delete</i>
-												</button>
+				    							<button th:text="#{label.btn.excluir}"></button>
 			    							</a>
 			    						</td>
 			    						<td class="mdl-data-table__cell--non-numeric"  style="width: 5%;">
 			    							<a th:href="@{'/aluno/processos/' + ${aluno.id}}">
-				    							<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-													Processos
-												</button>
+				    							<button th:text="#{label.processos}"></button>
 			    							</a>
 			    						</td>
 			    					</tr>
 			    				</tbody>
+			    				<tfoot>
+			    					<tr>
+			    						<td colspan="6">
+			    							<div style="float: right" th:if="${alunos.totalPages > 0}">
+			    								<a class="btn" th:text="#{label.btn.first}"   th:href="@{/aluno(size=${alunos.size}, page=${firstPageNumber})}"></a>
+			    								<a class="btn" th:text="#{label.btn.previus}" th:href="@{/aluno(size=${alunos.size}, page=${previusPageNumber})}"></a>
+			    								<a class="btn" th:text="#{label.btn.next}"    th:href="@{/aluno(size=${alunos.size}, page=${nextPageNumber})}"></a>
+			    								<a class="btn" th:text="#{label.btn.last}"    th:href="@{/aluno(size=${alunos.size}, page=${lastPageNumber})}"></a>
+			    							</div>
+			    						</td>
+			    					</tr>
+			    				</tfoot>
 			    			</table>
 						</div>
 			  		</div>

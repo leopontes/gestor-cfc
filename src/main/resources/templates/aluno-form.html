@@ -7,13 +7,27 @@
 	<div class="container"  layout:fragment="content">
   		<h4 th:text="#{label.titulo.cadastro.aluno}"></h4>
    		<div class="content">
-   			<form method="post" th:action="@{/aluno}" th:object="${aluno}">
-   				<div id="foto" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;width: 23%;background-color: #fff;border-radius: 5px;margin-top: 1%;">
-   					<img alt="" src="/gestao-cfc/images/useravatar.png" style="width: 180px;">
-    				<input type="file">
-   				</div>
-				<div class="form-row">
-					<div class="form-cel-30">
+   			<form method="post" th:action="@{/aluno}" th:object="${aluno}" enctype="multipart/form-data">
+		   		<input type="hidden" th:field="*{foto}">
+   				<div class="form-row" style="height: 139px;">
+   					<div class="form-cel-25" style="height: 140px;">
+		   				<div th:if="*{pathFoto != null}" id="foto_moldura" class="moldura_foto">
+		   					<img alt="" th:src="*{pathFoto}" style="width: 180px;">
+		   				</div>
+		   				<div th:if="*{pathFoto == null}" id="foto_moldura" class="moldura_foto">
+		   					<video id="video" width="200" height="140" autoplay src=""></video>
+		   					<canvas id="canvas" width="300" height="250" style="width: 186px;height: 136px;"></canvas>
+		   					<nav class="menu">
+			   					<a href="#" id="camera" style="position: absolute;top: 162px;left: 348px;">
+			   						<img alt="Ativar câmera" src="/gestao-cfc/img/48-48-camera.png">
+								</a>
+			   					<a href="#" id="capturar"style="position: absolute;top: 162px;left: 348px;display: none">
+			   						<img alt="" width="48" height="48" src="/gestao-cfc/img/snap.png">
+			   					</a>
+		   					</nav>
+		   				</div>
+   					</div>
+   					<div class="form-cel-20">
 					    <label class="components-form" th:text="#{label.matricula}">:</label> 
 						<input type="text" th:field="*{matricula}" disabled="disabled" class="components-form" style="width: 95%;"/>
 					</div>
@@ -21,7 +35,18 @@
 					    <label class="components-form" th:text="#{label.nome}">:</label> 
 						<input type="text" th:field="*{nome}" class="components-form" autocomplete="off"  style="width: 97%;"/>
 					</div>
-				</div>
+   				</div>
+   			
+   				<!-- <div th:if="*{pathFoto == null}" id="webcam">
+	   				<canvas id="canvas" width="320" height="240"></canvas>
+	   				<a href="#" id="camera">Camera</a>
+	   				<video id="video" width="250" height="300" autoplay src=""></video>
+					<a href="#" id="capturar">Capturar</a>
+	   				<canvas id="canvas" width="300" height="300" style="width: 250px;height: 180px;"></canvas>
+	   				<input type="hidden" th:field="*{foto}"/>
+	   				<input type="hidden" th:field="*{foto}">
+   				</div> -->
+					
 				<div class="form-row" th:classappend="${#fields.hasErrors('pai')} ? has-error">
 					<div class="form-cel-50">
 					    <label class="components-form" th:text="#{label.pai}">:</label> 
@@ -110,7 +135,7 @@
 				<div class="form-row">
 					<div class="form-control" style="float: right;padding: 10px;">
 						<input type="submit" th:value="#{label.btn.gravar}"/>
-						<input type="reset" th:value="#{label.btn.limpar}">
+						<a class="btn" th:href="@{/aluno}"   th:text="#{label.btn.voltar}"></a>
 					</div>
 				</div>
 				<div class="has-error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>

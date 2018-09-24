@@ -1,45 +1,9 @@
+var localStream;
 
 $(document).ready(function(){
+
+	$("#camera").click(ativarWebCam);
 	
-	$("#webcam").webcam({
-
-		width: 100,
-		height: 100,
-		mode: "callback",
-		swffile: "/gestao-cfc/js/jquery-webcam/jscam_canvas_only.swf", // canvas only doesn't implement a jpeg encoder, so the file is much smaller
-
-		onTick: function(remain) {
-
-			if (0 == remain) {
-				jQuery("#status").text("Cheese!");
-			} else {
-				jQuery("#status").text(remain + " seconds remaining...");
-			}
-		},
-
-		onSave: function(data) {
-			var col = data.split(";");
-	    // Work with the picture. Picture-data is encoded as an array of arrays... Not really nice, though =/
-		},
-
-		onCapture: function () {
-			webcam.save();
-	 	  // Show a flash for example
-		},
-
-		debug: function (type, string) {
-			// Write debug information to console.log() or a div, ...
-		},
-
-		onLoad: function () {
-	    // Page load
-			var cams = webcam.getCameraList();
-			for(var i in cams) {
-				jQuery("#cams").append("<li>" + cams[i] + "</li>");
-			}
-		}
-	});
-
 	$( "#dialog-alert" ).dialog({
 		  resizable: false,
 	      height: "auto",
@@ -90,7 +54,6 @@ $(document).ready(function(){
 			  at: "center bottom",
 			  of: $(this)
 			});
-		
 	});
 	
 	$("#valorTotal").maskMoney({
@@ -211,3 +174,58 @@ $(document).ready(function(){
 		}
 	});
 });
+
+var desativarWebCam = function(){
+	var video   = document.getElementById("video");
+	video.pause();
+	video.src = "";
+	localStream.getTracks()[0].stop();
+};
+
+var ativarWebCam = function(){
+	var canvas  = document.getElementById("canvas");
+	var context = canvas.getContext('2d');
+	var video   = document.getElementById("video");
+	var mediaConfig = {video: true};
+	
+	// Put video listeners into place
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia(mediaConfig).then(function(stream) {
+            video.src = window.URL.createObjectURL(stream);
+            video.play();
+            localStream = stream;
+        });
+    }else if(navigator.getUserMedia) { // Standard
+		navigator.getUserMedia(mediaConfig, function(stream) {
+			video.src = stream;
+			video.play();
+			localStream = stream;
+		}, errBack);
+	} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+		navigator.webkitGetUserMedia(mediaConfig, function(stream){
+			video.src = window.webkitURL.createObjectURL(stream);
+			video.play();
+			localStream = stream;
+		}, errBack);
+	} else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+		navigator.mozGetUserMedia(mediaConfig, function(stream){
+			video.src = window.URL.createObjectURL(stream);
+			video.play();
+			localStream = stream;
+		}, errBack);
+	}
+    
+    $("#capturar").show();
+    $("#camera").hide();
+
+	// Trigger photo take
+	document.getElementById('capturar').addEventListener('click', function() {
+		context.drawImage(video, 0, 0, 300, 250);
+		var imagem = document.getElementById('canvas');
+		document.getElementById("foto").value = imagem.toDataURL("image/jpeg", 0.85);
+		desativarWebCam();
+		$("#capturar").hide();
+		$("#video").hide();
+		return false;
+	});
+};

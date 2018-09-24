@@ -1,9 +1,17 @@
 package br.com.cfc.gestor.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.cfc.gestor.model.Aluno;
@@ -21,9 +29,6 @@ public class AlunoServiceImpl implements AlunoService{
 	
 	@Override
 	public Iterable<Aluno> findAll() {
-		
-		messageContext.add("Teste de mensagem de contexto [service]");
-		
 		return alunoRepository.findAll();
 	}
 
@@ -48,6 +53,39 @@ public class AlunoServiceImpl implements AlunoService{
 		}
 		
 		return null;
+	}
+
+	@Override
+	public Page<Aluno> findPaginated(Optional<String> findBy, Pageable pageable) {
+		
+		int pageSize    = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem   = currentPage*pageSize;
+		
+		List<Aluno> alunos = null;
+		
+		if(findBy.isPresent()) {
+			alunos = (List<Aluno>) findFullSearch(findBy.get().toLowerCase());
+		}else {
+			alunos = (List<Aluno>) findAll();
+		}
+		
+		List<Aluno> list;
+		
+		if(alunos.size() < startItem) {
+			list = new ArrayList<Aluno>();
+		}else {
+			int toIndex = Math.min(startItem+pageSize, alunos.size());
+			list = alunos.subList(startItem, toIndex);
+		}
+		
+		Page<Aluno> alunoPage = new PageImpl<Aluno>(list, PageRequest.of(currentPage, pageSize), alunos.size());
+		
+		return alunoPage;
+	}
+
+	private List<Aluno> findFullSearch(String findBy) {
+		return alunoRepository.fullSearch(findBy);
 	}
 
 }
