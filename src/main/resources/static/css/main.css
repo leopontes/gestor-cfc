@@ -1,7 +1,10 @@
 
 *{
-   font-family: 'Roboto', sans-serif !important;
-   font-size: 13px !important;
+   font-family: Verdana,Arial,Helvetica,sans-serif !important;
+   font-size: 10px !important;
+   font-style: normal;
+   list-style: none outside none;
+   text-decoration: none;
 }
 
 body{
@@ -48,14 +51,25 @@ nav.menu a {
     color: #fff;
 }
 
+.small{
+	width: 20%;
+}
+
+.medium{
+	width: 40%;
+}
+
+.big{
+	width: 80%;
+}
+
 .container{
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-	border: 1px solid #999;
+    border: 1px solid #999;
     transition: 0.3s;
-    width: 60%;
-    margin-left: 20%;
+    margin-left: 10%;
     background-color: #fff;
-    min-height: 523px;
+    min-height: 584px;
     border-radius: 5px;
     margin-top: 1%;
 }
@@ -242,4 +256,17 @@ span.pagination, a.pagination{
     color: #fff;
     font-weight: bold;
     text-decoration: none;
+}
+
+.agendamento-link{
+	color: #000;
+    font-weight: bold;
+}
+
+.agendado{
+    background-color: #AFEEEE;
+}
+
+.disponivel{
+	background-color: #d3d3d3;
 }

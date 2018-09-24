@@ -4,7 +4,7 @@
 	layout:decorator="layout">
 
 <body>
-	<div class="container"  layout:fragment="content">
+	<div class="container medium"  layout:fragment="content">
   		<h4 th:text="#{label.titulo.cadastro.aluno}"></h4>
    		<div class="content">
    			<form method="post" th:action="@{'/aluno/' + ${aluno.id} + '/processos/'}" th:object="${processo}">
@@ -36,7 +36,7 @@
 					    <input type="text" class="components-form"  autocomplete="off" style="width: 97%;" th:field="*{renach}"/>
 					</div>
 				</div>
-				<div class="form-row">
+				<div class="form-row" style="height: 156px;">
 					<div class="form-cel-100">
 						<label class="components-form" th:text="#{label.observacoes}">:</label> 
 						<textarea rows="10" cols="30" style="width: 100%;" th:field="*{observacao}"></textarea>
@@ -44,7 +44,7 @@
 				</div>
 				<div class="form-row">
 					<div class="form-control" style="float: right;padding: 10px;">
-						<input type="submit" th:value="#{label.btn.salvar}">
+						<input type="submit" th:value="#{label.btn.gravar}">
 					</div>
 				</div>
 				<!-- <div class="form-row">

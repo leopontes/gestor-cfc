@@ -8,4 +8,6 @@ public interface AulaProcessoVeiculoService {
 
 	AulaProcessoVeiculo find(Long codigoVeiculo, LocalDateTime dataHora);
 
+	void save(AulaProcessoVeiculo agendamento);
+
 }

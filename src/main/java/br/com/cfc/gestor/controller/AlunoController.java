@@ -24,6 +24,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -134,17 +135,20 @@ public class AlunoController {
 			
 			alunoService.save(aluno);
 			
-			aluno.setPathFoto(RELATIVE_PATH_SHARED_FOLDER+"foto-" + aluno.getId()+".png");
+			if(!StringUtils.isEmpty(alunoForm.getFoto())) {
+				aluno.setPathFoto(RELATIVE_PATH_SHARED_FOLDER+"foto-" + aluno.getId()+".png");
+				
+				alunoService.save(aluno);
+				
+				byte[] decodedBytes = DatatypeConverter.parseBase64Binary(alunoForm.getFoto().replaceAll("data:image/.+;base64,", ""));
+				
+				File foto1 = new File(ABSOLUTE_PATH_SHARED_FOLDER+"foto-" + aluno.getId() +".png");
+				
+				BufferedImage bfi = ImageIO.read(new ByteArrayInputStream(decodedBytes));
+				ImageIO.write(bfi , "png", foto1);
+				bfi.flush();
+			}
 			
-			alunoService.save(aluno);
-			
-	        byte[] decodedBytes = DatatypeConverter.parseBase64Binary(alunoForm.getFoto().replaceAll("data:image/.+;base64,", ""));
-	        
-	        File foto1 = new File(ABSOLUTE_PATH_SHARED_FOLDER+"foto-" + aluno.getId() +".png");
-	        
-	        BufferedImage bfi = ImageIO.read(new ByteArrayInputStream(decodedBytes));
-	        ImageIO.write(bfi , "png", foto1);
-	        bfi.flush();
 	        
 			Collection<Veiculo> veiculos = (Collection<Veiculo>) veiculoService.findAll();
 			

@@ -4,7 +4,7 @@
 	layout:decorator="layout">
 
 <body>
-	<div class="container"  layout:fragment="content">
+	<div class="container medium"  layout:fragment="content">
   		<h4 th:text="#{label.titulo.cadastro.aluno}"></h4>
    		<div class="content">
    			<form method="post" th:action="@{/aluno}" th:object="${aluno}" enctype="multipart/form-data">

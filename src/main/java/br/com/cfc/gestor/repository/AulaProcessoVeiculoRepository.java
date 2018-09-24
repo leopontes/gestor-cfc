@@ -11,7 +11,7 @@ import br.com.cfc.gestor.model.AulaProcessoVeiculo;
 @Repository
 public interface AulaProcessoVeiculoRepository extends CrudRepository<AulaProcessoVeiculo, Long>{
 
-	@Query(value="select apv from AulaProcessoVeiculo apv where apv.veiculo.id = :codigoVeiculo and apv.data = :dataHora")
+	@Query(value="select apv from AulaProcessoVeiculo apv where apv.veiculo.id = ?1 and apv.data = ?2")
 	AulaProcessoVeiculo findByVeiculoData(Long codigoVeiculo, LocalDateTime dataHora);
 
 }

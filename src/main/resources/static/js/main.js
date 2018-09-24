@@ -35,7 +35,9 @@ $(document).ready(function(){
 		$("#mesAno").removeAttr("disabled");
 	});
 	
-	$("#mesAno").datepicker({
+	$("#mesAno").monthpicker({changeYear:true, minDate: "-3 M", maxDate: "+2 Y" });
+	
+	/*$("#mesAno").datepicker({
 		dateFormat: 'mm/yy',
 		changeMonth: true,
 	    changeYear: true,
@@ -45,7 +47,7 @@ $(document).ready(function(){
             var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val(); 
             $(this).datepicker('setDate', new Date(year, month, 1)); 
 	    }
-	});
+	});*/
 	
 	$("#periodoAgendamentos").focus(function () {
 		$(".ui-datepicker-calendar").hide();

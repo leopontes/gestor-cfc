@@ -4,7 +4,7 @@
 	layout:decorator="layout">
 
 <body>
-	<div class="container"  layout:fragment="content">
+	<div class="container big"  layout:fragment="content">
   		<h4 th:text="#{label.titulo.aluno.agendamento}"></h4>
    		<div class="content">
    			<form method="post" th:action="@{/escala}" th:object="${filtro}">
@@ -33,16 +33,17 @@
 				<div class="form-cel-100">
 					<table id="tb-grade" style="width: 90%; margin-left: 5%; margin-bottom: 20px;">
 						<thead>
-							<tr style="background-color: #000">
-								<th></th>
-								<th th:each="data : ${periodo}" th:text="${data}" style="text-align: center;"></th>
+							<tr style="background-color: #4f4f4f; ">
+								<th style="color:#fff"></th>
+								<th th:each="data : ${periodo}" th:text="${data}" style="text-align: center;color:#fff"></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="horario : ${keys}">
 								<td th:text="${horario}"></td>
-								<td th:each="agendamento : ${grade.get(horario)}" style="text-align: center">
-									<a class="" th:text="${agendamento.processo != null ? agendamento.processo.aluno.matricula : ''}" href="#"></a>
+								<td th:each="agendamento : ${grade.get(horario)}" th:class="${agendamento.processo != null ? 'agendado' : 'disponivel'}" style="text-align: center">
+									<span th:if="${agendamento.processo != null}" th:text="${agendamento.processo.aluno.matricula}"></span>
+									<a th:if="${agendamento.processo == null}" th:text="#{label.agendar}" th:href="@{/escala/agendar(aluno=${aluno.id}, data=${agendamento.data}, veiculo=${agendamento.veiculo.id}, mesAno=${filtro.mesAno})}" class="agendamento-link" ></a>
 								</td>
 							</tr>
 						</tbody>

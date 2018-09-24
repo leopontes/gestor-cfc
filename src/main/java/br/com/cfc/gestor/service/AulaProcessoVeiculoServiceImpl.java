@@ -1,7 +1,6 @@
 package br.com.cfc.gestor.service;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 
 import javax.annotation.Resource;
 
@@ -19,6 +18,11 @@ public class AulaProcessoVeiculoServiceImpl implements AulaProcessoVeiculoServic
 	@Override
 	public AulaProcessoVeiculo find(Long codigoVeiculo, LocalDateTime dataHora) {
 		return aulaProcessoVeiculoRepository.findByVeiculoData(codigoVeiculo, dataHora);
+	}
+
+	@Override
+	public void save(AulaProcessoVeiculo agendamento) {
+		aulaProcessoVeiculoRepository.save(agendamento);
 	}
 
 }
