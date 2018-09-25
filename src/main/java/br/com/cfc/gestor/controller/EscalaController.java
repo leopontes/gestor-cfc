@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import br.com.cfc.gestor.controller.filtro.AgendamentoFiltro;
 import br.com.cfc.gestor.model.Aluno;
 import br.com.cfc.gestor.model.AulaProcessoVeiculo;
+import br.com.cfc.gestor.model.Instrutor;
 import br.com.cfc.gestor.model.Processo;
 import br.com.cfc.gestor.model.Veiculo;
 import br.com.cfc.gestor.model.enuns.NavigationEnum;
@@ -32,9 +33,11 @@ import br.com.cfc.gestor.model.enuns.SemanaEnum;
 import br.com.cfc.gestor.model.enuns.TipoAulaEnum;
 import br.com.cfc.gestor.service.AlunoService;
 import br.com.cfc.gestor.service.AulaProcessoVeiculoService;
+import br.com.cfc.gestor.service.InstrutorService;
 import br.com.cfc.gestor.service.ProcessoService;
 import br.com.cfc.gestor.service.VeiculoService;
 import br.com.cfc.gestor.utils.BusinessUtils;
+import br.com.cfc.gestor.utils.MessageContext;
 
 @Controller
 public class EscalaController {
@@ -50,6 +53,12 @@ public class EscalaController {
 	
 	@Resource
 	private AulaProcessoVeiculoService aulaProcessoVeiculoService;
+	
+	@Resource
+	private InstrutorService instrutorService;
+	
+	@Resource
+	private MessageContext messageContext;
 	
 	@RequestMapping(value="/escala", method=RequestMethod.POST)
 	public String find(AgendamentoFiltro filtro, Model model) {
@@ -116,6 +125,7 @@ public class EscalaController {
 		
 		filtro.setNavigation(NavigationEnum.CURRENT);
 		
+		model.addAttribute("instrutores", instrutorService.findAll());
 		model.addAttribute("veiculos", veiculoService.findAll());
 		model.addAttribute("periodo", periodoLabels);
 		model.addAttribute("aluno", aluno);
@@ -161,15 +171,29 @@ public class EscalaController {
 	
 	@RequestMapping(value="/escala/agendar", method=RequestMethod.GET)
 	@Transactional
-	public String agendar(@RequestParam("aluno") Long alunoId, @RequestParam("data") String data, @RequestParam("veiculo") Long veiculoId, @RequestParam("mesAno") String mesAno, Model model) {
+	public String agendar(
+			Model model,
+			@RequestParam("aluno") Long alunoId, 
+			@RequestParam("data") String data, 
+			@RequestParam("veiculo") Long veiculoId, 
+			@RequestParam("mesAno") String mesAno, 
+			@RequestParam("instrutor") Long instrutorId) {
 		
 		AgendamentoFiltro   filtro    = new AgendamentoFiltro();
 		AulaProcessoVeiculo aula      = new AulaProcessoVeiculo();
 		Aluno               aluno     = alunoService.get(alunoId);
 		Veiculo             veiculo   = veiculoService.get(veiculoId);
 		List<Processo>      processos = (List<Processo>) processoService.find(aluno);
+		Instrutor           instrutor = instrutorService.get(instrutorId);
 		
 		LocalDateTime dataAgendamento = LocalDateTime.parse(data, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		
+		AulaProcessoVeiculo aulaInstrutor = aulaProcessoVeiculoService.findByInstrutor(instrutor, dataAgendamento);
+		
+		if(aulaInstrutor != null) {
+			messageContext.add("O instrutor selecionado não esta disponível neste dia e horário!");
+			return null;
+		}
 		
 		filtro.setMatricula(alunoId);
 		filtro.setMesAno(mesAno);

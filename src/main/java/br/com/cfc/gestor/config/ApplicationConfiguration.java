@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import br.com.cfc.gestor.converters.PagamentoConverter;
 import br.com.cfc.gestor.interceptors.MessageContextInterceptor;
@@ -50,7 +51,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 		MessageContextInterceptor messageContextInterceptor = new MessageContextInterceptor();
 		return messageContextInterceptor;
 	}
-
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");

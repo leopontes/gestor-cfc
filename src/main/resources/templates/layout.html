@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head th:replace="fragments/header :: header">
 	<title>Header</title>
 	</head>
@@ -8,11 +10,7 @@
 		  <header class="header">
 		      <!-- Title -->
 		      <span class="title" th:text="#{nome}"></span>
-		      <nav class="menu">
-		        <a th:href="@{/aluno}"   th:text="#{label.menu.matriculas}"></a>
-		        <a th:href="@{/escala}"  th:text="#{label.menu.escalas}"></a>
-		        <a th:href="@{/veiculo}" th:text="#{label.menu.veiculos}"></a>
-		      </nav>
+		      <div th:replace="fragments/menu :: menu"></div>
 		  </header>
 		  <section>
 			<div layout:fragment="content"></div>

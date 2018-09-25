@@ -19,13 +19,13 @@ import javax.persistence.UniqueConstraint;
 import br.com.cfc.gestor.model.enuns.TipoAulaEnum;
 
 @Entity
-@Table(name="aula", uniqueConstraints= {@UniqueConstraint(name="aula_uk", columnNames= {"data", "veiculo_id"})})
+@Table(name="aula", uniqueConstraints= {@UniqueConstraint(name="aula_uk", columnNames= {"data", "veiculo_id", "instrutor_id"})})
 public class AulaProcessoVeiculo implements Serializable, Comparable<AulaProcessoVeiculo>{
 
 	private static final long serialVersionUID = 3171423919791304083L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="aula_id", nullable=false)
 	private Long id;
 	
@@ -42,6 +42,10 @@ public class AulaProcessoVeiculo implements Serializable, Comparable<AulaProcess
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="veiculo_id", nullable=false)
 	private Veiculo veiculo;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="instrutor_id")
+	private Instrutor instrutor;
 	
 	public AulaProcessoVeiculo() {
 		super();
@@ -94,6 +98,14 @@ public class AulaProcessoVeiculo implements Serializable, Comparable<AulaProcess
 
 	public void setProcesso(Processo processo) {
 		this.processo = processo;
+	}
+	
+	public Instrutor getInstrutor() {
+		return instrutor;
+	}
+
+	public void setInstrutor(Instrutor instrutor) {
+		this.instrutor = instrutor;
 	}
 
 	@Override

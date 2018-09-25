@@ -25,7 +25,7 @@ public class Processo implements Serializable, Comparable<Processo>{
 	private static final long serialVersionUID = 3503914035781250871L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="processo_id", nullable=false)
 	private Long id;
 	
@@ -38,10 +38,10 @@ public class Processo implements Serializable, Comparable<Processo>{
 	@Enumerated(EnumType.STRING)
 	private CategoriaEnum categoria;
 
-	@Column(name="dataInicio", nullable=true)
+	@Column(name="data_inicio", nullable=true)
 	private LocalDate dataInicio;
 	
-	@Column(name="dataTermino", nullable=true)
+	@Column(name="data_termino", nullable=true)
 	private LocalDate dataTermino;
 	
 	@Column(name="observacao", length=255, nullable=false)

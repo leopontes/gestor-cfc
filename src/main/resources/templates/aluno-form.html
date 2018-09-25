@@ -134,8 +134,8 @@
 				</div>
 				<div class="form-row">
 					<div class="form-control" style="float: right;padding: 10px;">
-						<input type="submit" th:value="#{label.btn.gravar}"/>
-						<a class="btn" th:href="@{/aluno}"   th:text="#{label.btn.voltar}"></a>
+						<input type="submit" th:value="#{label.proximo}"/>
+						<a class="btn" th:href="@{/aluno}"   th:text="#{label.cancelar}"></a>
 					</div>
 				</div>
 				<div class="has-error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>

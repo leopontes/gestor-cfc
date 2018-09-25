@@ -13,22 +13,33 @@
    				<input type="hidden" th:field="*{navigation}">
    				<div class="form-row">
 					<div class="form-cel-100" style="margin-left: 5%;">
-						<label class="components-form">Matricula:</label> 
+						<label class="components-form" th:text="#{label.matricula}">:</label> 
 						<input type="text" th:field="*{matricula}" class="components-form" style="width: 10%;" /> 
-						<label class="components-form">Nome:</label> 
+						<label class="components-form" th:text="#{label.nome}">:</label> 
 						<input type="text"  th:field="*{nome}" class="components-form" style="width: 30%;" />						
 					</div>
 				</div>
 				<div class="form-row">
-					<div class="form-cel-100" style="margin-left: 5%;">
-						<label class="components-form">Veiculos:</label> 
+					<div class="form-cel-50" style="margin-left: 5%;">
+						<label class="components-form" th:text="#{label.veiculo}">:</label> 
 						<select  th:field="*{veiculo}">
 							<option value="0">Selecione</option>
 							<option th:each="veiculo : ${veiculos}" th:value=${veiculo.id} th:text="${veiculo}"></option>
-						</select> 
-						<label class="components-form">Mes/Ano</label>
+						</select>
+					</div>
+					<div class="form-cel-50">
+						<label class="components-form" th:text="#{label.instrutor}">:</label> 
+						<select  th:field="*{instrutor}">
+							<option value="0">Selecione</option>
+							<option th:each="instrutor : ${instrutores}" th:value=${instrutor.id} th:text="${instrutor.nome}"></option>
+						</select>
+					</div>
+					<div class="form-cel-50"> 
+						<label class="components-form" th:text="#{label.mesano}">:</label>
 						<input type="text"  th:field="*{mesAno}"/>
-						<button id="findUsuario">Buscar</button>
+					</div>
+					<div class="form-cel-10"> 
+						<button id="findUsuario" th:text="#{label.btn.buscar}"></button>
 					</div>
    				</div>
 			</form>
@@ -57,7 +68,7 @@
 									
 									<a th:if="${agendamento.processo == null}" 
 									   th:text="#{label.agendar}" 
-									   th:href="@{/escala/agendar(aluno=${aluno.id}, data=${agendamento.data}, veiculo=${agendamento.veiculo.id}, mesAno=${filtro.mesAno})}" class="agendamento-link" ></a>
+									   th:href="@{/escala/agendar(aluno=${aluno.id}, data=${agendamento.data}, veiculo=${agendamento.veiculo.id}, instrutor=${instrutor.id}, mesAno=${filtro.mesAno})}" class="agendamento-link" ></a>
 								</td>
 							</tr>
 						</tbody>

@@ -5,7 +5,7 @@
 
 <body>
 	<div class="container medium"  layout:fragment="content">
-  		<h4 th:text="#{label.titulo.cadastro.aluno}"></h4>
+  		<h4 th:text="#{label.titulo.cadastro.processo}"></h4>
    		<div class="content">
    			<form method="post" th:action="@{'/aluno/' + ${aluno.id} + '/processos/'}" th:object="${processo}">
 				<div class="form-row">
@@ -44,7 +44,7 @@
 				</div>
 				<div class="form-row">
 					<div class="form-control" style="float: right;padding: 10px;">
-						<input type="submit" th:value="#{label.btn.gravar}">
+						<input type="submit" th:value="#{label.concluir}">
 					</div>
 				</div>
 				<!-- <div class="form-row">

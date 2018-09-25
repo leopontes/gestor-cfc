@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import br.com.cfc.gestor.model.AulaProcessoVeiculo;
+import br.com.cfc.gestor.model.Instrutor;
 import br.com.cfc.gestor.repository.AulaProcessoVeiculoRepository;
 
 @Service
@@ -21,6 +22,11 @@ public class AulaProcessoVeiculoServiceImpl implements AulaProcessoVeiculoServic
 		return aulaProcessoVeiculoRepository.findByVeiculoData(codigoVeiculo, dataHora);
 	}
 
+	@Override
+	public AulaProcessoVeiculo findByInstrutor(Instrutor instrutor, LocalDateTime dataAgendamento) {
+		return aulaProcessoVeiculoRepository.findByInstrutor(instrutor, dataAgendamento);
+	}
+	
 	@Override
 	public void save(AulaProcessoVeiculo agendamento) {
 		aulaProcessoVeiculoRepository.save(agendamento);
@@ -43,5 +49,4 @@ public class AulaProcessoVeiculoServiceImpl implements AulaProcessoVeiculoServic
 	public void delete(AulaProcessoVeiculo aula) {
 		aulaProcessoVeiculoRepository.delete(aula);
 	}
-
 }

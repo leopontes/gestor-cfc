@@ -23,7 +23,7 @@ public class Aluno implements Serializable, Comparable<Aluno>{
 	private static final long serialVersionUID = 1536751681511240271L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="aluno_id", nullable=false)
 	private Long id;
 	

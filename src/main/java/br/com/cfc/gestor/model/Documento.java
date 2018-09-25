@@ -23,7 +23,7 @@ public class Documento implements Serializable{
 	private static final long serialVersionUID = -5298146236310332447L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="contrato_id", nullable=false)
 	private Long id;
 	

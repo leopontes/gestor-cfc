@@ -15,6 +15,8 @@ public class AgendamentoFiltro implements Serializable{
 	
 	private Long veiculo = Long.valueOf(0);
 	
+	private Long instrutor = Long.valueOf(0);
+	
 	private String mesAno = "";
 	
 	private String nome = "";
@@ -81,5 +83,13 @@ public class AgendamentoFiltro implements Serializable{
 
 	public void setNavigation(NavigationEnum navigation) {
 		this.navigation = navigation;
+	}
+
+	public Long getInstrutor() {
+		return instrutor;
+	}
+
+	public void setInstrutor(Long instrutor) {
+		this.instrutor = instrutor;
 	}
 }

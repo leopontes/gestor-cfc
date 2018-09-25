@@ -26,7 +26,7 @@ public class Pagamento implements Serializable{
 	private static final long serialVersionUID = 3117909466368518900L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="pagamento_id", nullable=false)
 	private Long id;
 	

@@ -43,14 +43,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.csrf().disable();
 		 
         // The pages does not require login
-        http.authorizeRequests().antMatchers("/gestao-cfc/images/", "/login", "/logout").permitAll();
- 
-        // /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
-        // If no login, it will redirect to /login page.
-        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/login", "/logout").permitAll();
  
         // For ADMIN only.
-        http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/").access("hasRole('ROLE_USER')");
         
        /* http.authorizeRequests().antMatchers("/gestao/aluno").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");*/
  
