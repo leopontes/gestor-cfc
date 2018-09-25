@@ -10,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,8 +26,8 @@ public class Pagamento implements Serializable{
 	private static final long serialVersionUID = 3117909466368518900L;
 
 	@Id
-	@GeneratedValue
-	@Column(name="id", nullable=false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="pagamento_id", nullable=false)
 	private Long id;
 	
 	@Enumerated(EnumType.STRING)

@@ -9,6 +9,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,8 +25,8 @@ public class AulaProcessoVeiculo implements Serializable, Comparable<AulaProcess
 	private static final long serialVersionUID = 3171423919791304083L;
 
 	@Id
-	@GeneratedValue
-	@Column(name="id", nullable=false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="aula_id", nullable=false)
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

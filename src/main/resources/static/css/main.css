@@ -1,7 +1,7 @@
 
 *{
    font-family: Verdana,Arial,Helvetica,sans-serif !important;
-   font-size: 10px !important;
+   font-size: 11px !important;
    font-style: normal;
    list-style: none outside none;
    text-decoration: none;
@@ -19,16 +19,29 @@ span.title {
 nav.menu {
     float: right;
     color: #fff !important;
-    padding: 9px 32px 0px 0px;
+    padding: 5px 32px 0px 0px;
     display: inline;
 }
 
 nav.menu a {
     color: #fff;
     font-weight: bold;
-    padding: 10px;
-    font-size: 14px !important;
+    padding: 9px;
+    font-size: 12px !important;
     text-decoration: none;
+}
+
+nav.navigation{
+	float: right;
+    color: #fff !important;
+    padding: 5px 32px 0px 0px;
+    display: inline;
+}
+
+nav.navigation a{
+	color: #fff;
+    font-weight: bold;
+    padding: 9px;
 }
 
 .wrapper{
@@ -37,15 +50,15 @@ nav.menu a {
 
 .header {
     background-color: #4f4f4f;
-    min-height: 45px;
+    min-height: 28px;
     padding: 10px 0px 1px 40px;
     color: #fff;
 }
 
 .container h4 {
     background-color: #4f4f4f;
-    height: 35px;
-    font-size: 20px !important;
+    height: 22px;
+    font-size: 15px !important;
     font-weight: bold;
     padding: 8px 0px 0px 13px;
     color: #fff;
@@ -53,25 +66,27 @@ nav.menu a {
 
 .small{
 	width: 20%;
+	margin-left: 40%;
 }
 
 .medium{
-	width: 40%;
+	width: 60%;
+	margin-left: 20%;
 }
 
 .big{
 	width: 80%;
+	margin-left: 10%;
 }
 
 .container{
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     border: 1px solid #999;
     transition: 0.3s;
-    margin-left: 10%;
     background-color: #fff;
-    min-height: 584px;
+    min-height: 573px;
     border-radius: 5px;
-    margin-top: 1%;
+    margin-top: 0.5%;
 }
 
 .content {
@@ -263,10 +278,21 @@ span.pagination, a.pagination{
     font-weight: bold;
 }
 
+.link{
+    color: #000;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 .agendado{
     background-color: #AFEEEE;
 }
 
 .disponivel{
 	background-color: #d3d3d3;
+}
+
+fiedset{
+	border: solid 1px #3f3f3f;
+    padding: 1px 3px 0px 3px;
 }

@@ -14,7 +14,7 @@
 			    			<input type="submit" style="float: left;margin-left: 5px;" th:value="#{label.btn.buscar}">
 		   				</div>
 		   				<div class="form-cel-30">
-			    			<a th:href="@{/aluno/new}" class="btn" th:text="#{label.aluno.novo}" style="float: right;margin-right: 3%;"></a>
+			    			<a th:href="@{/aluno/new}" class="btn" th:text="#{label.aluno.novo}" style="float: right;margin-right: 8%;"></a>
 		   				</div>
 				  	</div>
 	   			</form>
@@ -34,7 +34,9 @@
 			    						<td colspan="5" th:text="#{label.msg.registros.nao.encontrados}"></td>
 			    					</tr>
 			    					<tr th:each="aluno : ${alunos.content}">
-			    						<td th:text="${aluno.matricula}" style="width: 10%;"></td>
+			    						<td style="width: 10%;">
+			    							<a class="link" th:text="${aluno.matricula}" th:href="@{/escala(matricula=${aluno.id})}"></a>
+			    						</td>
 			    						<td th:text="${aluno.nome}" style="width: 50%;"></td>
 			    						<td th:text="${aluno.cpf}" style="width: 20%;"></td>
 			    						<td  style="width: 5%;">

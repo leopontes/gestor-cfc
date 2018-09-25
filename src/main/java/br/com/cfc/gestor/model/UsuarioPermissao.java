@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,8 +20,8 @@ public class UsuarioPermissao implements Serializable{
 	private static final long serialVersionUID = 8638317259898690072L;
 
 	@Id
-	@GeneratedValue
-	@Column(name="id", nullable=false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="usuario_permissao_id", nullable=false)
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

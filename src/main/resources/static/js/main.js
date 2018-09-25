@@ -4,6 +4,10 @@ $(document).ready(function(){
 
 	$("#camera").click(ativarWebCam);
 	
+	$("#next").click(findNext);
+	
+	$("#previous").click(findPrevious);
+	
 	$( "#dialog-alert" ).dialog({
 		  resizable: false,
 	      height: "auto",
@@ -35,7 +39,14 @@ $(document).ready(function(){
 		$("#mesAno").removeAttr("disabled");
 	});
 	
-	$("#mesAno").monthpicker({changeYear:true, minDate: "-3 M", maxDate: "+2 Y" });
+	$("#mesAno").monthpicker({
+		dateFormat: 'mm/yy',
+		changeYear:true, 
+		minDate: "-3 M", 
+		maxDate: "+2 Y",
+		monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho', 'Julho','Agosto','Setembro','Outubro', 'Novembro','Dezembro'],
+		monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+	});
 	
 	/*$("#mesAno").datepicker({
 		dateFormat: 'mm/yy',
@@ -230,4 +241,16 @@ var ativarWebCam = function(){
 		$("#video").hide();
 		return false;
 	});
+};
+
+var findPrevious = function(){
+	find('PREVIOUS');
+};
+
+var findNext = function(){
+	find('NEXT');
+};
+var find = function(navigation){
+	$("#navigation").val(navigation);
+	$("form").submit();
 };
