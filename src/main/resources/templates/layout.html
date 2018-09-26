@@ -10,6 +10,9 @@
 		  <header class="header">
 		      <!-- Title -->
 		      <span class="title" th:text="#{nome}"></span>
+		      <div sec:authorize="isAuthenticated()">
+			    Ola, <span sec:authentication="name">Username</span>     
+			  </div>
 		      <div th:replace="fragments/menu :: menu"></div>
 		  </header>
 		  <section>

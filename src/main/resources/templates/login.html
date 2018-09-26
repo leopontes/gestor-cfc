@@ -1,63 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout">
-	
-   <head>
-      <title th:text="#{label.login}"></title>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+     <title th:text="#{label.login}"></title>
+      
+      	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/jquery-ui/1.12.0/jquery-ui.min.css}" />
+		<link rel="stylesheet" th:href="@{/css/reset.css}" href="../../css/reset.css" />
+		<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />	
    </head>
    <body>
-     <div class="wrapper">
-     	<div class="container medium"  layout:fragment="content">
-  			<h4>Enter user name and password</h4>
-	     	<div class="content">
-		      <h1 th:text="#{label.login}"></h1>
-		      <form name='f' th:action="@{/j_spring_security_check}" method='POST'>
-		         <div class="form-row">
-		            <div class="form-cel-100">
-		               <label>User:</label>
-		               <input type='text' name='username' value=''>
-		            </div>
-		         </div>
-		         <div class="form-row">
-		            <div class="form-cel-100">
-		               <label>Password:</label>
-		               <input type='password' name='password' />
-		            </div>
-		         </div>
-		         <div class="form-row">
-		         	<div class="form-cel-100">
-		               <label>Remember Me?</label>
-		               <input type="checkbox" name="remember-me" />
-		            </div>            
-		         </div>
-		         <div class="form-row">
-		         	<div class="form-cel-100">
-		               <input name="submit" type="submit" value="submit" />
-		            </div>
-		         </div>
-		      </form>
-	     	</div>
-	     </div>
-     </div>
-       
-      <!-- /login?error=true -->
-      <div th:if="${#request.getParameter('error') == 'true'}" style="color:red;margin:10px 0px;">
-         Login Failed!!!<br />
-         Reason :
-         <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
-            th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
-                Static summary
-         </span>
-      </div>
-       
-      <br>
-      Username/pass:
-      <ul>
-        <li>dbuser1/123</li>
-        <li>dbadmin1/123</li>
-      </ul>  
-       
-   </body>
-    
+    <div class="wrapper">
+        <header>
+    		<div class="login_header"></div>   
+        </header>
+        <section>
+            <div class="main">
+    			<h4 th:text="#{nome}"></h4>
+                <form name="f" action="/gestao-cfc/j_spring_security_check" method="POST">
+      				<input type="text" class="form-login" name="username" th:placeholder="#{label.usuario}" value="">
+      				<input type="password"  class="form-login" name="password" th:placeholder="#{label.senha}">
+                 	<label th:text="#{label.lembrar.senha}"></label>
+      				<input type="checkbox" name="remember-me">
+      				<input name="submit" class="form-login" type="submit" th:value="#{label.login}">
+                 </form>
+            </div>
+        </section>
+    </div>
+	<script src="/gestao-cfc/webjars/jquery/2.1.4/jquery.min.js"></script>
+	<script src="/gestao-cfc/webjars/jquery-mask-plugin/1.13.4/dist/jquery.mask.min.js"></script>
+	<script src="/gestao-cfc/webjars/jquery-ui/1.12.0/jquery-ui.min.js"></script>
+	<script src="/gestao-cfc/webjars/jquery-maskmoney/3.0.2/dist/jquery.maskMoney.js"></script>
+	<script src="/gestao-cfc/js/ui.datepicker-pt-BR.js"></script>
+	<script src="/gestao-cfc/js/jquery.ui.monthpicker/jquery.ui.monthpicker.js"></script>
+	<script src="/gestao-cfc/js/main.js"></script> 
+</body>
 </html>

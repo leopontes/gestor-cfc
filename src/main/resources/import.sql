@@ -24,4 +24,13 @@ insert into processo (	renach,	servico,	categoria,	data_inicio,	data_termino,	ob
 	
 insert into processo (	renach,	servico,	categoria,	data_inicio,	data_termino,	observacao,	aluno_id) values( 'RJ-78945151', 'PRIMEIRA_HABILITACAO', 'A', now(), null, '', 3);	
 
+insert into permissao (role_name) values('ROLE_USER');
+insert into permissao (role_name) values('ROLE_ADMIN');
+
+insert into usuario (username, password, enabled, provisional_password) values('user1', '$2a$10$KG2ynpjBGCKvYUIjDYduTuFrTeBky1S3FDzcaVFtWu8R9HhXmMDWu', 1, 1);
+insert into usuario (username, password, enabled, provisional_password) values('user2', '$2a$10$KG2ynpjBGCKvYUIjDYduTuFrTeBky1S3FDzcaVFtWu8R9HhXmMDWu', 1, 1);
+
+insert into usuario_permissao(usuario_id, permissao_id) values(1, 1);
+insert into usuario_permissao(usuario_id, permissao_id) values(2, 2);
+
 commit;

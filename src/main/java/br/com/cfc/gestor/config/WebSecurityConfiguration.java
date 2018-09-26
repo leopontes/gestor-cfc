@@ -1,7 +1,5 @@
 package br.com.cfc.gestor.config;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import br.com.cfc.gestor.service.UserDetailsServiceImpl;
@@ -21,9 +19,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
-	
-	@Autowired
-    private DataSource dataSource;
 	
 	@Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -60,12 +55,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
                 // Submit URL of login page.
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
                 .loginPage("/login")//
-                .defaultSuccessUrl("/userAccountInfo")//
+                .defaultSuccessUrl("/")//
                 .failureUrl("/login?error=true")//
                 .usernameParameter("username")//
                 .passwordParameter("password")
                 // Config for Logout Page
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
  
         // Config Remember Me.
         http.authorizeRequests().and() //
@@ -75,9 +70,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	@Bean
     public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-        db.setDataSource(dataSource);
-        return db;
+		InMemoryTokenRepositoryImpl token = new InMemoryTokenRepositoryImpl();
+        return token;
     }
 	
 }

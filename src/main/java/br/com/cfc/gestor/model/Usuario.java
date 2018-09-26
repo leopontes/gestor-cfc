@@ -29,6 +29,9 @@ public class Usuario implements Serializable{
 	
 	@Column(name="enabled", length=1, nullable=false)
 	private boolean enabled;
+	
+	@Column(name="provisional_password", length=1, nullable=false)
+	private boolean provisionalPassword;
 
 	public Long getId() {
 		return id;
@@ -60,5 +63,13 @@ public class Usuario implements Serializable{
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public boolean isProvisionalPassword() {
+		return provisionalPassword;
+	}
+
+	public void setProvisionalPassword(boolean provisionalPassword) {
+		this.provisionalPassword = provisionalPassword;
 	}
 }
