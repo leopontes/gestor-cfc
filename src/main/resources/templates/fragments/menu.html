@@ -17,13 +17,6 @@
 	<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
 </head>
 <body>
-	<nav th:fragment="menu" class="menu">
-		<div sec:authorize="isAuthenticated()">
-			  <a th:href="@{/aluno}"   th:text="#{label.menu.matriculas}"></a>
-			  <a th:href="@{/escala}"  th:text="#{label.menu.escalas}"></a>
-			  <a th:href="@{/veiculo}" th:text="#{label.menu.veiculos}"></a>
-		</div>
-		<a th:href="@{/logout}" th:text="#{label.logout}"></a>
-	</nav>
+	
 </body>
 </html>

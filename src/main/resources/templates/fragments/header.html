@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="header">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title th:text="#{titulo}"></title>
-	
-	<!-- this is header-css -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" type="text/css" th:href="@{/webjars/jquery-ui/1.12.0/jquery-ui.min.css}" />
-	<!-- <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.3.1/css/fontawesome.min.css}"/> -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" th:href="@{/css/reset.css}" href="../../css/reset.css" />
-	<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
-</head>
-<body></body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head></head>
+<body>
+	<header th:fragment="header">
+		<div class="header">
+			<div class="logo">
+				<span class="title" th:text="#{nome}"></span>
+			</div>
+			<div class="user" sec:authorize="isAuthenticated()">
+				<span th:text="#{label.saudacao}"></span><span sec:authentication="name">Name</span> - <a th:href="@{/logout}" th:text="#{label.logout}"></a>
+			</div>
+		</div>
+		<nav class="menu" sec:authorize="isAuthenticated()">
+		  <a th:href="@{/aluno}"   th:text="#{label.menu.matriculas}"></a>
+		  <a th:href="@{/escala}"  th:text="#{label.menu.escalas}"></a>
+		  <a th:href="@{/veiculo}" th:text="#{label.menu.veiculos}"></a>
+		</nav>
+	</header>
+
+</body>
 </html>

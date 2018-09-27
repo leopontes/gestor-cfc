@@ -11,6 +11,22 @@ body{
 	background-color: #f3f3f3;
 }
 
+.logo{
+	width: 60%;
+	float: left;
+}
+
+.user{
+	float: right;
+    margin-right: 1%;
+    margin-top: 1%;
+}
+
+.user a{
+    color: #fff;
+    text-decoration: underline;
+}
+
 span.title {
     font-size: 20px !important;
     font-weight: bold;
@@ -19,8 +35,11 @@ span.title {
 nav.menu {
     float: right;
     color: #fff !important;
-    padding: 5px 32px 0px 0px;
+    padding: 10px 0px 10px 0px;
     display: inline;
+    width: 100%;
+    background-color: #646464;
+    border: solid 1px #000;
 }
 
 nav.menu a {
@@ -84,9 +103,9 @@ nav.navigation a{
     border: 1px solid #999;
     transition: 0.3s;
     background-color: #fff;
-    min-height: 573px;
+    min-height: 533px;
     border-radius: 5px;
-    margin-top: 0.5%;
+    margin-top: 3%;
 }
 
 .content {
@@ -101,12 +120,16 @@ input[type="submit"],
 input[type="reset"],
 input[type="file"],
 button{
-	border: none;
+    border: none;
     padding: 7px 9px 6px 9px;
     color: #fff;
     background: #4f4f4f;
     cursor: pointer;
     text-align: center;
+    border-radius: 3px;
+    -moz-box-shadow: inset 0px 1px 0px 0px #d3d3d3;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #d3d3d3;
+    box-shadow: inset 0px 1px 0px 0px #d3d3d3;
 }
 
 .btn{
@@ -116,7 +139,10 @@ button{
     background: #4f4f4f;
     cursor: pointer;
     text-align: center;
-    text-decoration: none;
+    border-radius: 3px;
+    -moz-box-shadow: inset 0px 1px 0px 0px #d3d3d3;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #d3d3d3;
+    box-shadow: inset 0px 1px 0px 0px #d3d3d3;
 }
 
 .form-row{
@@ -353,4 +379,3 @@ input[type='submit'].form-login{
 	height: 100px;
     padding: 16px;
 }
-

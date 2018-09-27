@@ -24,6 +24,9 @@ public class Usuario implements Serializable{
 	@Column(name="username", length=80, nullable=false)
 	private String username;
 	
+	@Column(name="name", length=200, nullable=false)
+	private String name;
+	
 	@Column(name="password", length=200, nullable=false)
 	private String password;
 	
@@ -71,5 +74,13 @@ public class Usuario implements Serializable{
 
 	public void setProvisionalPassword(boolean provisionalPassword) {
 		this.provisionalPassword = provisionalPassword;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

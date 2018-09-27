@@ -2,19 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org" 
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	<head th:replace="fragments/header :: header">
-	<title>Header</title>
+	<head>
+	    <title th:text="#{titulo}"></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		
+		<!-- this is header-css -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/jquery-ui/1.12.0/jquery-ui.min.css}" />
+		<!-- <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.3.1/css/fontawesome.min.css}"/> -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" th:href="@{/css/reset.css}" href="../../css/reset.css" />
+		<link rel="stylesheet" th:href="@{/css/main.css}" href="../../css/main.css" />
 	</head>
 	<body>
 		<div class="wrapper">
-		  <header class="header">
-		      <!-- Title -->
-		      <span class="title" th:text="#{nome}"></span>
-		      <div sec:authorize="isAuthenticated()">
-			    Ola, <span sec:authentication="name">Username</span>     
-			  </div>
-		      <div th:replace="fragments/menu :: menu"></div>
-		  </header>
+		  <header th:replace="fragments/header :: header"></header>
 		  <section>
 			<div layout:fragment="content"></div>
 		  </section>
