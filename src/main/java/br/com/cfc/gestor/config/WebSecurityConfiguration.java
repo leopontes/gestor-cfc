@@ -28,7 +28,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        // Setting Service to find User in the database.
+        // Setting Service to find User in the database.	
         // And Setting PassswordEncoder
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
@@ -38,10 +38,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.csrf().disable();
 		 
         // The pages does not require login
-        http.authorizeRequests().antMatchers("/login", "/logout").permitAll();
+        http.authorizeRequests().antMatchers("/img/**", "/js/**", "/css/**", "/webjars/**", "/login", "/logout").permitAll();
  
         // For ADMIN only.
-        http.authorizeRequests().antMatchers("/").access("hasRole('ROLE_USER')");
+        http.authorizeRequests().antMatchers("/**").access("hasRole('ROLE_USER')");
         
        /* http.authorizeRequests().antMatchers("/gestao/aluno").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");*/
  

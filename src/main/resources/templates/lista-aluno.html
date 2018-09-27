@@ -10,7 +10,7 @@
 	   			<form method="post" th:action="@{/aluno/search}">
 		   			<div class="form-row">
 	    				<div class="form-cel-70">
-	        				<input type="text" th:name="${nomeCpf}" th:placeholder="#{mensagem.campo.find}" style="margin-left: 3.5%;float: left;width: 80%;padding: 3px 9px 4px 9px;"> 
+	        				<input type="text" name="search" th:placeholder="#{mensagem.campo.find}" style="margin-left: 3.5%;float: left;width: 80%;padding: 3px 9px 4px 9px;"> 
 			    			<input type="submit" style="float: left;margin-left: 5px;" th:value="#{label.btn.buscar}">
 		   				</div>
 		   				<div class="form-cel-30">

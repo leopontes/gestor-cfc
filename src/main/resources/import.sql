@@ -33,4 +33,12 @@ insert into usuario (username, name, password, enabled, provisional_password) va
 insert into usuario_permissao(usuario_id, permissao_id) values(1, 1);
 insert into usuario_permissao(usuario_id, permissao_id) values(2, 2);
 
+INSERT INTO `aluno` (`aluno_id`, `bairro`, `cadastrado_em`, `cep`, `cidade`, `complemento`, `contato1`, `contato2`, `contato3`, `cpf`, `data_expedicao`, `data_nacimento`, `email`, `endereco`, `identidade`, `mae`, `nome`, `numero`, `orgao_emissor`, `pai`, `path_foto`, `uf`) VALUES ('1', 'Pacheco', now(), '24736-180', 'Sao goncalo', 'casa', '(21) 2233-2222', '(21) 9752828632', '', '088.470.917-56', now(), now(), 'lopespontesleonardo@gmail.com', 'Rua cesar machado', '123270936', 'valdileia', 'Leonardo Lopes Pontes', '120', 'DIC', 'Jose', NULL, 'RJ')
+
+INSERT INTO `aluno` (`aluno_id`, `bairro`, `cadastrado_em`, `cep`, `cidade`, `complemento`, `contato1`, `contato2`, `contato3`, `cpf`, `data_expedicao`, `data_nacimento`, `email`, `endereco`, `identidade`, `mae`, `nome`, `numero`, `orgao_emissor`, `pai`, `path_foto`, `uf`) VALUES ('2', 'Pacheco', now(), '24736-180', 'Sao goncalo', 'casa', '(21) 2233-2222', '(21) 9752828632', '', '744.666.123-44', now(), now(), 'lopespontesleonardo@gmail.com', 'Rua cesar machado', '123270936', 'valdileia', 'Ronaldo Gaucho', '120', 'DIC', 'Jose', NULL, 'RJ');
+
+INSERT INTO `aluno` (`aluno_id`, `bairro`, `cadastrado_em`, `cep`, `cidade`, `complemento`, `contato1`, `contato2`, `contato3`, `cpf`, `data_expedicao`, `data_nacimento`, `email`, `endereco`, `identidade`, `mae`, `nome`, `numero`, `orgao_emissor`, `pai`, `path_foto`, `uf`) VALUES ('3', 'Pacheco', now(), '24736-180', 'Sao goncalo', 'casa', '(21) 2233-2222', '(21) 9752828632', '', '666.222.222-77', now(), now(), 'lopespontesleonardo@gmail.com', 'Rua cesar machado', '123270936', 'valdileia', 'Mauro Galvao', '120', 'DIC', 'Jose', NULL, 'RJ');
+
+INSERT INTO `aluno` (`aluno_id`, `bairro`, `cadastrado_em`, `cep`, `cidade`, `complemento`, `contato1`, `contato2`, `contato3`, `cpf`, `data_expedicao`, `data_nacimento`, `email`, `endereco`, `identidade`, `mae`, `nome`, `numero`, `orgao_emissor`, `pai`, `path_foto`, `uf`) VALUES ('4', 'Pacheco', now(), '24736-180', 'Sao goncalo', 'casa', '(21) 2233-2222', '(21) 9752828632', '', '678.098.543-77', now(), now(), 'lopespontesleonardo@gmail.com', 'Rua cesar machado', '123270936', 'valdileia', 'Mario Estrela', '120', 'DIC', 'Jose', NULL, 'RJ');
+
 commit;

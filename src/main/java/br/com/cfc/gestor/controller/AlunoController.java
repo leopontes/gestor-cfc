@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,19 +70,20 @@ public class AlunoController {
 	private ProcessoService processoService;
 	
 	@PostMapping("/aluno/search")
+	
 	public String fullSearch(Model model, 
 			 @RequestParam("page") Optional<Integer> page, 
 			 @RequestParam("size") Optional<Integer> size,
-			 @RequestParam("nomeCpf") Optional<String> findBy) {
+			 @RequestParam("search") Optional<String> search) {
 		
-		return matriculas(model, page, size, findBy);
+		return matriculas(model, page, size, search);
 	}
 	
 	@GetMapping("/aluno")
 	public String matriculas(Model model, 
 							 @RequestParam("page") Optional<Integer> page, 
 							 @RequestParam("size") Optional<Integer> size,
-							 @RequestParam("nomeCpf") Optional<String> findBy) {
+							 @RequestParam("search") Optional<String> search) {
 		
 		page.ifPresent(p -> currentPage = p);
 		size.ifPresent(s -> pageSize = s);
@@ -90,7 +92,7 @@ public class AlunoController {
 			currentPage = 1;
 		}
 		
-		Page<Aluno> alunosPage = alunoService.findPaginated(findBy, PageRequest.of(currentPage-1, pageSize));
+		Page<Aluno> alunosPage = alunoService.findPaginated(search, PageRequest.of(currentPage-1, pageSize));
 		
 		model.addAttribute("alunos", alunosPage);
 
@@ -107,6 +109,8 @@ public class AlunoController {
 			model.addAttribute("nextPageNumber", currentPage+1);
 			model.addAttribute("previusPageNumber", currentPage-1);
 		}
+		
+		model.addAttribute("search", search);
 		
 		return "lista-aluno";
 	}

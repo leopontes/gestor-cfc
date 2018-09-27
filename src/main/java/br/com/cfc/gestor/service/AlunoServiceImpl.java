@@ -65,7 +65,7 @@ public class AlunoServiceImpl implements AlunoService{
 		List<Aluno> alunos = null;
 		
 		if(findBy.isPresent()) {
-			alunos = (List<Aluno>) findFullSearch(findBy.get().toLowerCase());
+			alunos = (List<Aluno>) findFullSearch("%" + findBy.get().toString().toLowerCase() + "%");
 		}else {
 			alunos = (List<Aluno>) findAll();
 		}
