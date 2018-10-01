@@ -41,7 +41,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.authorizeRequests().antMatchers("/img/**", "/js/**", "/css/**", "/webjars/**", "/login", "/logout").permitAll();
  
         // For ADMIN only.
-        http.authorizeRequests().antMatchers("/**").access("hasRole('ROLE_USER')");
+        http.authorizeRequests().antMatchers("/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
         
        /* http.authorizeRequests().antMatchers("/gestao/aluno").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");*/
  

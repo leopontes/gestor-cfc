@@ -2,6 +2,7 @@ package br.com.cfc.gestor.service;
 
 import java.time.LocalDateTime;
 
+import br.com.cfc.gestor.model.Aluno;
 import br.com.cfc.gestor.model.AulaProcessoVeiculo;
 import br.com.cfc.gestor.model.Instrutor;
 
@@ -16,5 +17,7 @@ public interface AulaProcessoVeiculoService {
 	void delete(AulaProcessoVeiculo aula);
 
 	AulaProcessoVeiculo findByInstrutor(Instrutor instrutor, LocalDateTime dataAgendamento);
+
+	Iterable<AulaProcessoVeiculo> findByAluno(Aluno aluno);
 
 }

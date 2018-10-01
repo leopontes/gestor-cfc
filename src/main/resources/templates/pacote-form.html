@@ -2,49 +2,65 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layout">
+<!-- 
+
+45 teoricas
+20 praticas
+5 simulador
+
+950.00 a vista
+4x 300
+ -->
 
 <body>
-	<div class="container w_medium h_medium"  layout:fragment="content">
-  		<h4 th:text="#{label.titulo.cadastro.processo}"></h4>
+	<div class="container w_normal h_normal"  layout:fragment="content">
+  		<h4 th:text="#{label.pacote.novo}"></h4>
    		<div class="content">
-   			<form method="post" th:action="@{'/aluno/' + ${aluno.id} + '/processos/'}" th:object="${processo}">
+   			<form method="post" th:action="@{/pacote}" th:object="${pacote}">
 				<div class="form-row">
-					<div class="form-cel-30">
-					    <label class="components-form" th:text="#{label.matricula}">:</label> 
-						<input type="text" th:field="${aluno.matricula}" disabled="disabled" class="components-form" style="width: 95%;"/>
-					</div>
-					<div class="form-cel-70">
-					    <label class="components-form"  th:text="#{label.nome}">:</label> 
-						<input type="text" th:field="${aluno.nome}" disabled="disabled" class="components-form" autocomplete="off"  style="width: 97%;"/>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="form-cel-30">
-					    <label class="components-form" th:text="#{label.servico}">:</label> 
-					    <select class="components-form" style="width: 95%;" th:field="*{servico}">
-					    	<option th:each="servico : ${T(br.com.cfc.gestor.model.enuns.ServicoEnum).values()}" th:value="${servico}" th:text="${servico.descricao}"></option>
-					    </select>
-					</div>
-					<div class="form-cel-30">
-					    <label class="components-form"  th:text="#{label.categoria}">:</label> 
-					    <select class="components-form" style="width: 95%;" th:field="*{categoria}">
-					    	<option th:each="categoria : ${T(br.com.cfc.gestor.model.enuns.CategoriaEnum).values()}" th:value="${categoria}" th:text="${categoria.descricao}"></option>
-					    </select>
-					</div>
-					<div class="form-cel-30">
-					    <label class="components-form"  th:text="#{label.renach}">:</label> 
-					    <input type="text" class="components-form"  autocomplete="off" style="width: 97%;" th:field="*{renach}"/>
-					</div>
-				</div>
-				<div class="form-row" style="height: 156px;">
 					<div class="form-cel-100">
-						<label class="components-form" th:text="#{label.observacoes}">:</label> 
-						<textarea rows="10" cols="30" style="width: 100%;" th:field="*{observacao}"></textarea>
+					    <label class="components-form" th:text="#{label.pacote}">:</label> 
+						<input type="text" th:field="*{nome}" class="components-form" style="width: 95%;"/>
+					</div>
+				</div>
+				<div class="form-row" style="height: 64px;">
+					<fieldset style="width: 93%;">
+						<legend th:text="#{label.quantidade.aulas}"></legend>
+						<div class="form-cel-25">
+						    <label class="components-form"  th:text="#{label.total.aulas.praticas}">:</label> 
+							<input type="number" th:field="*{totalAulasPraticas}" class="components-form" autocomplete="off"  style="width: 70%;"/>
+						</div>
+						<div class="form-cel-25">
+						    <label class="components-form"  th:text="#{label.total.aulas.teoricas}">:</label> 
+							<input type="number" th:field="*{totalAulasTeoricas}" class="components-form" autocomplete="off"  style="width: 70%;"/>
+						</div>
+						<div class="form-cel-25">
+						    <label class="components-form"  th:text="#{label.total.aulas.simulador}">:</label> 
+							<input type="number" th:field="*{totalAulasSimulador}" class="components-form" autocomplete="off"  style="width: 70%;"/>
+						</div>
+						<div class="form-cel-25">
+						    <label class="components-form"  th:text="#{label.total.simulados}">:</label> 
+							<input type="number" th:field="*{totalSimulados}" class="components-form" autocomplete="off"  style="width: 70%;"/>
+						</div>
+					</fieldset>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-25">
+					    <label class="components-form"  th:text="#{label.data.inicio}">:</label> 
+						<input type="text" th:field="*{dataInicio}" class="components-form data" autocomplete="off"  style="width: 70%;"/>
+					</div>
+					<div class="form-cel-25">
+					    <label class="components-form"  th:text="#{label.data.fim}">:</label> 
+						<input type="text" th:field="*{dataFim}" class="components-form data" autocomplete="off"  style="width: 70%;"/>
+					</div>
+					<div class="form-cel-20">
+					    <label class="components-form"  th:text="#{label.valor}">:</label> 
+						<input type="text" th:field="*{valor}" class="components-form money" autocomplete="off"  style="width: 88%;"/>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-control" style="float: right;padding: 10px;">
-						<input type="submit" th:value="#{label.proximo}"/>
+						<input type="submit" th:value="#{label.btn.gravar}"/>
 					</div>
 				</div>
 				<!-- <div class="form-row">

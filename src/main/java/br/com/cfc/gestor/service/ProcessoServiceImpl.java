@@ -26,4 +26,14 @@ public class ProcessoServiceImpl implements ProcessoService {
 		return processoRepository.findByAluno(aluno);
 	}
 
+	@Override
+	public Processo getVigente(Aluno aluno) {
+		return processoRepository.getVigente(aluno);
+	}
+
+	@Override
+	public Processo getId(Long id) {
+		return processoRepository.findById(id).orElse(null);
+	}
+
 }

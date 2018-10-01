@@ -17,7 +17,7 @@
    						<input th:value="${aluno.nome}" disabled="disabled" style="width: 85%;"/>
    					</div>
    					<div class="form-cel-20">
-   						<a class="btn" th:text="#{label.processo.novo}" th:href="@{'/aluno/' + ${aluno.id} +'/processos/new/'}"></a>	
+   						<a class="btn" th:text="#{label.pagamento.novo}" th:href="@{'/aluno/' + {idAluno} + '/pagamento/new'}"></a>	
    					</div>
    				</div>
 	    		<div class="form-row">
@@ -25,19 +25,19 @@
 	    				<table style="width: 90%; margin-left: 5%; margin-bottom: 20px;">
 							<thead>
 								<tr>
-									<th th:text="#{label.servico}"></th>
-									<th th:text="#{label.categoria}"></th>
-									<th th:text="#{label.renach}"></th>
+									<th th:text="#{label.parcela}"></th>
+									<th th:text="#{label.vencimento}"></th>
+									<th th:text="#{label.valor}"></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:if="${processos == null || processos.empty}">
+								<tr th:if="${pagamentos == null || pagamentos.empty}">
 									<td th:text="#{label.msg.registros.nao.encontrados}" colspan="3"></td>
 								</tr>
-								<tr th:each="processo : ${processos}">
-									<td th:text="${processo.servico.descricao}"></td>
-									<td th:text="${processo.categoria.descricao}"></td>
-									<td th:text="${processo.renach}"></td>
+								<tr th:each="processoPagamento,it : ${pagamentos}">
+									<td th:text="${(it.index + 1)}"></td>
+									<td th:text="${#temporals.format(processoPagamento.pagamento.dataVencimento, 'dd/MM/yyyy')}"></td>
+									<td th:text="${processoPagamento.pagamento.valor}"></td>
 								</tr>
 							</tbody>
 						</table>

@@ -15,6 +15,18 @@ $(document).ready(function(){
 	      modal: true
 	});
 	
+	$("#pacote").change(function(){
+		$.ajax({
+			url: '/gestao-cfc/pacote/' + $("#pacote").val(),
+			method: 'GET',
+			success: function(data){
+				if(data){
+					$("#valorTotal").val(data.valor);
+				}
+			}
+		});
+	});
+	
 	var anoLimite = (new Date().getFullYear() - 18);
 	
 	$("#cpf").mask("999.999.999-99");
@@ -69,7 +81,7 @@ $(document).ready(function(){
 			});
 	});
 	
-	$("#valorTotal").maskMoney({
+	$(".money").maskMoney({
 		prefix:'R$ ', 
 		allowNegative: true, 
 		thousands:'.', 
@@ -77,12 +89,10 @@ $(document).ready(function(){
 		affixesStay: false
 	});
 	
-	$("#valorParcela").maskMoney({
-		prefix:'R$ ', 
-		allowNegative: true, 
-		thousands:'.', 
-		decimal:',', 
-		affixesStay: false
+	$(".data").datepicker({
+		changeMonth: true,
+		changeYear: true,
+		yearRange: '1910:+0'
 	});
 	
 	$("#dataNascimento").datepicker({
@@ -132,60 +142,16 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
-	$("#valorTotal, #quantidade").keyup(function(){
+
+	$("#parcela").change(function(){
 		
-		var valorTotal = $("#valorTotal").val().replace("R$", "");
-		valorTotal = valorTotal.replace(".", "");
-		valorTotal = valorTotal.replace(",", ".");
-		var valorParcelado = parseFloat(valorTotal)/parseFloat($("#quantidade").val());
+		var valorTotal    = parseFloat($("#valorTotal").val());
+		var totalParcelas = parseInt($("#parcela").val());
 		
-		$("#valorParcela").val(valorParcelado);
-	});
-	
-	$("#btnGerarPagamento").click(function(){
+		var valorParcela = valorTotal/totalParcelas;
 		
-		var tipoPagamento    = $("#tipoPagamento :selected").text();
-		var formaPagamento   = $("#formaPagamento :selected").text();
-		var numeroDeParcelas = parseInt($("#quantidade").val());
-		var valorParcela     = $("#valorParcela").val();
-		
-		$("#tb-pagamentos tbody tr").remove();
-		
-		for(var i=0; i<numeroDeParcelas; i++){
-			var tr = $(document.createElement('tr'));
-			
-			var td1 = $(document.createElement('td'));
-			var td2 = $(document.createElement('td'));
-			var td3 = $(document.createElement('td'));
-			var td4 = $(document.createElement('td'));
-			var td5 = $(document.createElement('td'));
-			var td6 = $(document.createElement('td'));
-			
-			$(td1).text(i+1);
-			$(td2).text();
-			$(td3).text(tipoPagamento);
-			$(td4).text(formaPagamento);
-			$(td5).text(valorParcela);
-			$(td6).text();
-			
-			$(td1).css({"text-align" : "center"});
-			$(td2).css({"text-align" : "center"});
-			$(td3).css({"text-align" : "center"});
-			$(td4).css({"text-align" : "center"});
-			$(td5).css({"text-align" : "center"});
-			$(td6).css({"text-align" : "center"});
-			
-			$(tr).append(td1);
-			$(tr).append(td2);
-			$(tr).append(td3);
-			$(tr).append(td4);
-			$(tr).append(td5);
-			$(tr).append(td6);
-			
-			$("#tb-pagamentos tbody").append(tr);
-		}
-	});
+		$("#valorParcela").val(valorParcela);
+	})
 });
 
 var desativarWebCam = function(){

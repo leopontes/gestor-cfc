@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorator="layout">
+
+    <body>
+    	<div class="container w_medium h_big"  layout:fragment="content">
+  			<h4 th:text="#{label.pacotes}"></h4>
+   			<div class="content">
+   				<div class="form-row">
+   					<div class="form-cel-100">
+   						<a class="btn" th:text="#{label.processo.novo}" th:href="@{/pacote/new/}"></a>	
+   					</div>
+   				</div>
+	    		<div class="form-row">
+	    			<div class="form-cel-100">
+	    				<table style="width: 90%; margin-left: 5%; margin-bottom: 20px;">
+							<thead>
+								<tr>
+									<th th:text="#{label.pacote}"></th>
+									<th th:text="#{label.data.inicio}"></th>
+									<th th:text="#{label.data.fim}"></th>
+									<th th:text="#{label.valor}"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${pacotes == null || pacotes.empty}">
+									<td th:text="#{label.msg.registros.nao.encontrados}" colspan="4"></td>
+								</tr>
+								<tr th:each="pacote : ${pacotes}">
+									<td th:text="${pacote.nome}"></td>
+									<td th:text="${#temporals.format(pacote.dataInicio, 'dd/MM/yyyy')}"></td>
+									<td th:text="${#temporals.format(pacote.dataFim, 'dd/MM/yyyy')}"></td>
+									<td th:text="${pacote.valor}"></td>
+								</tr>
+							</tbody>
+						</table>
+	    			</div>
+				</div>
+   			</div>
+    	</div>
+    </body>
+</html>

@@ -8,12 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.cfc.gestor.model.enuns.FormaDePagamentoEnum;
@@ -47,10 +44,6 @@ public class Pagamento implements Serializable{
 	@Column(name="valor", nullable=false)
 	private BigDecimal valor;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="processo_id")
-	private Processo processo;
-
 	public Long getId() {
 		return id;
 	}
@@ -99,11 +92,4 @@ public class Pagamento implements Serializable{
 		this.valor = valor;
 	}
 
-	public Processo getProcesso() {
-		return processo;
-	}
-
-	public void setProcesso(Processo processo) {
-		this.processo = processo;
-	}
 }

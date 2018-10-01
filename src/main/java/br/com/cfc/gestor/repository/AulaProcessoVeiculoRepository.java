@@ -18,4 +18,7 @@ public interface AulaProcessoVeiculoRepository extends CrudRepository<AulaProces
 	@Query(value="select apv from AulaProcessoVeiculo apv where apv.instrutor = ?1 and apv.data = ?2")
 	AulaProcessoVeiculo findByInstrutor(Instrutor instrutor, LocalDateTime dataAgendamento);
 
+	@Query(value="select apv from AulaProcessoVeiculo apv where apv.processo.aluno.id = ?1 and apv.processo.dataTermino is null")
+	Iterable<AulaProcessoVeiculo> findByAluno(Long alunoId);
+
 }

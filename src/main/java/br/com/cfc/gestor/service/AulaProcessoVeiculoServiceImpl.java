@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import br.com.cfc.gestor.model.Aluno;
 import br.com.cfc.gestor.model.AulaProcessoVeiculo;
 import br.com.cfc.gestor.model.Instrutor;
 import br.com.cfc.gestor.repository.AulaProcessoVeiculoRepository;
@@ -48,5 +49,10 @@ public class AulaProcessoVeiculoServiceImpl implements AulaProcessoVeiculoServic
 	@Override
 	public void delete(AulaProcessoVeiculo aula) {
 		aulaProcessoVeiculoRepository.delete(aula);
+	}
+
+	@Override
+	public Iterable<AulaProcessoVeiculo> findByAluno(Aluno aluno) {
+		return aulaProcessoVeiculoRepository.findByAluno(aluno.getId());
 	}
 }

@@ -11,4 +11,8 @@ public interface ProcessoService {
 
 	Collection<Processo> find(Aluno aluno);
 
+	Processo getVigente(Aluno aluno);
+
+	Processo getId(Long id);
+
 }

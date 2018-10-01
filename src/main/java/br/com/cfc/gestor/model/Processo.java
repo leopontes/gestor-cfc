@@ -114,7 +114,7 @@ public class Processo implements Serializable, Comparable<Processo>{
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
 	}
-
+	
 	@Override
 	public int compareTo(Processo other) {
 		return this.dataInicio.compareTo(other.getDataInicio());

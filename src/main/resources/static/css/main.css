@@ -11,6 +11,11 @@ body{
 	background-color: #f3f3f3;
 }
 
+fieldset{
+	border: solid 1px #3f3f3f;
+	padding: 7px;
+}
+
 .logo{
 	width: 60%;
 	float: left;
@@ -83,17 +88,38 @@ nav.navigation a{
     color: #fff;
 }
 
-.small{
+.h_small{
+	min-height: 50px;
+}
+
+.h_normal{
+	min-height: 133px;
+}
+
+.h_medium{
+	min-height: 266px;
+}
+
+.h_big{
+	min-height: 551px;
+}
+
+.w_small{
 	width: 20%;
 	margin-left: 40%;
 }
 
-.medium{
+.w_normal{
+	width: 50%;
+	margin-left: 25%;
+}
+
+.w_medium{
 	width: 60%;
 	margin-left: 20%;
 }
 
-.big{
+.w_big{
 	width: 80%;
 	margin-left: 10%;
 }
@@ -103,7 +129,6 @@ nav.navigation a{
     border: 1px solid #999;
     transition: 0.3s;
     background-color: #fff;
-    min-height: 533px;
     border-radius: 5px;
     margin-top: 3%;
 }

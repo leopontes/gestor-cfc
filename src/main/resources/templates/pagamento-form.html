@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+<body>
+	<div class="container w_medium h_medium"  layout:fragment="content">
+  		<h4 th:text="#{label.titulo.cadastro.pagamento}"></h4>
+   		<div class="content">
+   			<form method="post" th:action="@{/pagamento}" th:object="${pagamento}">
+				<div class="form-row">
+					<div class="form-cel-20">
+					    <label class="components-form" th:text="#{label.matricula}">:</label>
+					    <input type="hidden" th:field="*{alunoId}"/> 
+						<input type="text" th:field="*{matricula}" disabled="disabled" class="components-form" style="width: 95%;"/>
+					</div>
+					<div class="form-cel-50">
+					    <label class="components-form"  th:text="#{label.nome}">:</label> 
+						<input type="text" th:field="*{nome}" disabled="disabled" class="components-form" autocomplete="off"  style="width: 97%;"/>
+					</div>
+					<div class="form-cel-30">
+					    <label class="components-form" th:text="#{label.servico}">:</label> 
+					    <input type="text" th:field="*{servico.descricao}" disabled="disabled" class="components-form" autocomplete="off"  style="width: 97%;"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-40">
+						<label class="components-form" th:text="#{label.pacote}">:</label> 
+						<select class="components-form" style="width: 95%;" th:field="*{pacote}">
+					    	<option th:each="pacote : ${pacotes}" th:value="${pacote.id}" th:text="${pacote.nome}"></option>
+						</select>
+					</div>
+					<div class="form-cel-20">
+						<label class="components-form" th:text="#{label.tipo.pagamento}">:</label> 
+						<select th:field="*{tipoPagamento}" class="components-form" style="width: 95%;">
+					    	<option th:each="tipoPagamento : ${T(br.com.cfc.gestor.model.enuns.TipoPagamentoEnum).values()}" 
+					    	        th:value="${tipoPagamento}" th:text="${tipoPagamento.descricao}"
+					    	        th:selected="${tipoPagamento == CARNE}"></option>
+						</select>
+					</div>
+					<div class="form-cel-20">
+						<label class="components-form" th:text="#{label.forma.pagamento}">:</label> 
+						<select th:field="*{formaPagamento}" class="components-form" style="width: 95%;">
+							<option th:each="formaPagamento : ${T(br.com.cfc.gestor.model.enuns.FormaDePagamentoEnum).values()}" 
+							        th:value="${formaPagamento}" th:text="${formaPagamento.descricao}"></option>
+						</select>
+					</div>
+					<div class="form-cel-20">
+						<label class="components-form" th:text="#{label.valor}">:</label> 
+						<input id="valorTotal" type="text" disabled="disabled" style="width: 95%;"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-20">
+						<label class="components-form" th:text="#{label.parcela}">:</label> 
+						<select th:field="*{parcela}">
+							<option th:text="#{label.parcela.1}" value="1"></option>
+							<option th:text="#{label.parcela.2}" value="2"></option>
+							<option th:text="#{label.parcela.3}" value="3"></option>
+						</select>
+					</div>
+					<div class="form-cel-20">
+						<label class="components-form" th:text="#{label.valor.parcela}">:</label> 
+						<input type="text" th:field="*{valorParcela}"/>
+					</div>
+				</div>
+				
+				<div class="form-row">
+					<div class="form-control" style="float: right;padding: 10px;">
+						<input type="submit" th:value="#{label.concluir}">
+					</div>
+				</div>
+			</form>
+   		</div>
+   	</div>
+</body>
+</html>

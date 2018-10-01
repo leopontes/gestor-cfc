@@ -4,44 +4,49 @@
 	layout:decorator="layout">
 
 <body>
-	<div class="container big"  layout:fragment="content">
+	<div class="container w_big h_big"  layout:fragment="content">
   		<h4 th:text="#{label.titulo.aluno.agendamento}"></h4>
    		<div class="content">
    			<form method="post" th:action="@{/escala}" th:object="${filtro}">
-   				<input type="hidden" th:field="*{inicio}"/>
-   				<input type="hidden" th:field="*{fim}"/>
-   				<input type="hidden" th:field="*{navigation}">
-   				<div class="form-row">
-					<div class="form-cel-100" style="margin-left: 5%;">
-						<label class="components-form" th:text="#{label.matricula}">:</label> 
-						<input type="text" th:field="*{matricula}" class="components-form" style="width: 10%;" /> 
-						<label class="components-form" th:text="#{label.nome}">:</label> 
-						<input type="text"  th:field="*{nome}" class="components-form" style="width: 30%;" />						
+   				<fieldset>
+   					<legend th:text="#{label.filtros}"></legend>
+	   				<input type="hidden" th:field="*{inicio}"/>
+	   				<input type="hidden" th:field="*{fim}"/>
+	   				<input type="hidden" th:field="*{navigation}">
+	   				<div class="form-row">
+						<div class="form-cel-20">
+							<label class="components-form" th:text="#{label.matricula}">:</label> 
+							<input type="text" th:field="*{matricula}" class="components-form" style="width: 65%;" /> 
+						</div>
+						<div class="form-cel-40">
+							<label class="components-form" th:text="#{label.nome}">:</label> 
+							<input type="text"  th:field="*{nome}" class="components-form" style="width: 89%;" />						
+						</div>
+						<div class="form-cel-30">
+							<label class="components-form" th:text="#{label.veiculo}">:</label> 
+							<select  th:field="*{veiculo}" style="width: 60%;">
+								<option value="0">Selecione</option>
+								<option th:each="veiculo : ${veiculos}" th:value=${veiculo.id} th:text="${veiculo}"></option>
+							</select>
+						</div>
 					</div>
-				</div>
-				<div class="form-row">
-					<div class="form-cel-50" style="margin-left: 5%;">
-						<label class="components-form" th:text="#{label.veiculo}">:</label> 
-						<select  th:field="*{veiculo}">
-							<option value="0">Selecione</option>
-							<option th:each="veiculo : ${veiculos}" th:value=${veiculo.id} th:text="${veiculo}"></option>
-						</select>
+					<div class="form-row">
+						<div class="form-cel-20">
+							<label class="components-form" th:text="#{label.instrutor}">:</label> 
+							<select  th:field="*{instrutor}">
+								<option value="0">Selecione</option>
+								<option th:each="instrutor : ${instrutores}" th:value=${instrutor.id} th:text="${instrutor.nome}"></option>
+							</select>
+						</div>
+						<div class="form-cel-30"> 
+							<label class="components-form" th:text="#{label.mesano}">:</label>
+							<input type="text"  th:field="*{mesAno}"/>
+						</div>
+						<div class="form-cel-30"> 
+							<button id="findUsuario" th:text="#{label.btn.buscar}"></button>
+						</div>
 					</div>
-					<div class="form-cel-50">
-						<label class="components-form" th:text="#{label.instrutor}">:</label> 
-						<select  th:field="*{instrutor}">
-							<option value="0">Selecione</option>
-							<option th:each="instrutor : ${instrutores}" th:value=${instrutor.id} th:text="${instrutor.nome}"></option>
-						</select>
-					</div>
-					<div class="form-cel-50"> 
-						<label class="components-form" th:text="#{label.mesano}">:</label>
-						<input type="text"  th:field="*{mesAno}"/>
-					</div>
-					<div class="form-cel-10"> 
-						<button id="findUsuario" th:text="#{label.btn.buscar}"></button>
-					</div>
-   				</div>
+   				</fieldset>
 			</form>
 			<div class="form-row" th:if="${keys != null && !keys.empty}">
 				<div class="form-cel-100">

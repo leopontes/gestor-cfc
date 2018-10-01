@@ -107,6 +107,13 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+				<!-- https://mvnrepository.com/artifact/com.lowagie/itext -->
+		<dependency>
+		    <groupId>com.lowagie</groupId>
+		    <artifactId>itext</artifactId>
+		    <version>4.2.2</version>
+		</dependency>
+				
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -122,6 +129,11 @@
             <artifactId>hsqldb</artifactId>
             <scope>runtime</scope>
         </dependency>
+		<dependency>
+		    <groupId>com.sun.jna</groupId>
+		    <artifactId>jna</artifactId>
+		    <version>3.0.9</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

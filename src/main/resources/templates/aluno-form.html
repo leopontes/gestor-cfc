@@ -4,7 +4,7 @@
 	layout:decorator="layout">
 
 <body>
-	<div class="container medium"  layout:fragment="content">
+	<div class="container w_medium h_big"  layout:fragment="content">
   		<h4 th:text="#{label.titulo.cadastro.aluno}"></h4>
    		<div class="content">
    			<form method="post" th:action="@{/aluno}" th:object="${aluno}" enctype="multipart/form-data">
@@ -17,7 +17,7 @@
 		   				<div th:if="*{pathFoto == null}" id="foto_moldura" class="moldura_foto">
 		   					<video id="video" width="200" height="140" autoplay src=""></video>
 		   					<canvas id="canvas" width="300" height="250" style="width: 186px;height: 136px;"></canvas>
-		   					<nav class="menu">
+		   					<nav>
 			   					<a href="#" id="camera" style="position: absolute;top: 128px;left: 348px;">
 			   						<img alt="Ativar câmera" src="/gestao-cfc/img/48-48-camera.png">
 								</a>

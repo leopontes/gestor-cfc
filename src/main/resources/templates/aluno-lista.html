@@ -4,7 +4,7 @@
       layout:decorator="layout">
 
     <body>
-    	<div class="container big"  layout:fragment="content">
+    	<div class="container w_big h_big"  layout:fragment="content">
 	  		<h4 th:text="#{label.titulo.aluno.listagem}"></h4>
 	   		<div class="content">
 	   			<form method="post" th:action="@{/aluno/search}">
@@ -26,12 +26,12 @@
 			    						<th style="width: 10%;" th:text="#{label.matricula}"></th>
 			    						<th style="width: 50%;" th:text="#{label.nome}"></th>
 			    						<th style="width: 20%;" th:text="#{label.cpf}"></th>
-			    						<th style="width: 20%;" colspan="3"></th>
+			    						<th style="width: 20%;" colspan="5"></th>
 			    					</tr>
 			    				</thead>
 			    				<tbody>
 			    					<tr th:if="${alunos.content.empty}">
-			    						<td colspan="5" th:text="#{label.msg.registros.nao.encontrados}"></td>
+			    						<td colspan="8" th:text="#{label.msg.registros.nao.encontrados}"></td>
 			    					</tr>
 			    					<tr th:each="aluno : ${alunos.content}">
 			    						<td style="width: 10%;">
@@ -44,26 +44,36 @@
 				    							<button th:text="#{label.btn.editar}"></button>
 			    							</a>
 			    						</td>
-			    						<td class="mdl-data-table__cell--non-numeric"  style="width: 5%;">
+			    						<td   style="width: 5%;">
 			    							<a th:href="@{'/aluno/delete/' + ${aluno.id}}">
 				    							<button th:text="#{label.btn.excluir}"></button>
 			    							</a>
 			    						</td>
-			    						<td class="mdl-data-table__cell--non-numeric"  style="width: 5%;">
+			    						<td   style="width: 5%;">
 			    							<a th:href="@{'/aluno/processos/' + ${aluno.id}}">
 				    							<button th:text="#{label.processos}"></button>
+			    							</a>
+			    						</td>
+			    						<td   style="width: 5%;">
+			    							<a th:href="@{'/aluno/' + ${aluno.id} + '/processo/pagamento'}">
+				    							<button th:text="#{label.pagamentos}"></button>
+			    							</a>
+			    						</td>
+			    						<td   style="width: 5%;">
+			    							<a th:href="@{'/aluno/' + ${aluno.id} + '/comprovante'}">
+			    								<img alt="" th:src="@{/img/print.png}" width="20" height="20">
 			    							</a>
 			    						</td>
 			    					</tr>
 			    				</tbody>
 			    				<tfoot>
 			    					<tr>
-			    						<td colspan="6">
+			    						<td colspan="8">
 			    							<div style="float: right" th:if="${alunos.totalPages > 0}">
-			    								<a class="btn" th:text="#{label.btn.first}"   th:href="@{/aluno(size=${alunos.size}, page=${firstPageNumber})}"></a>
-			    								<a class="btn" th:text="#{label.btn.previus}" th:href="@{/aluno(size=${alunos.size}, page=${previusPageNumber})}"></a>
-			    								<a class="btn" th:text="#{label.btn.next}"    th:href="@{/aluno(size=${alunos.size}, page=${nextPageNumber})}"></a>
-			    								<a class="btn" th:text="#{label.btn.last}"    th:href="@{/aluno(size=${alunos.size}, page=${lastPageNumber})}"></a>
+			    								<a class="btn" th:text="#{label.btn.first}"   th:href="@{/aluno(size=${alunos.totalPages}, page=${firstPageNumber})}"></a>
+			    								<a class="btn" th:text="#{label.btn.previus}" th:href="@{/aluno(size=${alunos.totalPages}, page=${previusPageNumber})}"></a>
+			    								<a class="btn" th:text="#{label.btn.next}"    th:href="@{/aluno(size=${alunos.totalPages}, page=${nextPageNumber})}"></a>
+			    								<a class="btn" th:text="#{label.btn.last}"    th:href="@{/aluno(size=${alunos.totalPages}, page=${lastPageNumber})}"></a>
 			    							</div>
 			    						</td>
 			    					</tr>

@@ -3,8 +3,10 @@ package br.com.cfc.gestor.controller;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,7 @@ import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.xml.bind.DatatypeConverter;
@@ -24,6 +27,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,20 +35,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.itextpdf.text.DocumentException;
+
 import br.com.cfc.gestor.controller.form.AlunoForm;
 import br.com.cfc.gestor.model.Aluno;
+import br.com.cfc.gestor.model.AulaProcessoVeiculo;
 import br.com.cfc.gestor.model.Processo;
 import br.com.cfc.gestor.model.Veiculo;
 import br.com.cfc.gestor.service.AlunoService;
+import br.com.cfc.gestor.service.AulaProcessoVeiculoService;
 import br.com.cfc.gestor.service.ProcessoService;
 import br.com.cfc.gestor.service.VeiculoService;
+import br.com.cfc.gestor.utils.BematechNFiscal;
 import br.com.cfc.gestor.utils.MessageContext;
 
 @Controller
@@ -69,8 +77,10 @@ public class AlunoController {
 	@Resource
 	private ProcessoService processoService;
 	
-	@PostMapping("/aluno/search")
+	@Resource
+	private AulaProcessoVeiculoService aulaProcessoVeiculoService;
 	
+	@PostMapping("/aluno/search")
 	public String fullSearch(Model model, 
 			 @RequestParam("page") Optional<Integer> page, 
 			 @RequestParam("size") Optional<Integer> size,
@@ -112,7 +122,7 @@ public class AlunoController {
 		
 		model.addAttribute("search", search);
 		
-		return "lista-aluno";
+		return "aluno-lista";
 	}
 	
 	@GetMapping("/aluno/{id}")
@@ -184,7 +194,7 @@ public class AlunoController {
 		
 		alunoService.delete(aluno);
 		
-		return "lista-aluno";
+		return "aluno-lista";
 	}
 	
 	@RequestMapping(value="/aluno/new", method=RequestMethod.GET)
@@ -208,49 +218,75 @@ public class AlunoController {
 		return "aluno-form";
 	}
 	
-	@GetMapping("/aluno/processos/{id}")
-	public String processos(@PathVariable("id") Long id, Model model) {
+	@GetMapping(value="/aluno/{id}/comprovante")
+	public String gerarComprovante(Model model,
+			                       @PathVariable("id") Long id, 
+			                       HttpServletResponse response) throws FileNotFoundException, IOException, DocumentException {
 		
 		Aluno aluno = alunoService.get(id);
 		
-		Collection<Processo> processos = processoService.find(aluno);
+		if(aluno == null) {
+			messageContext.add("Aluno nao encontrado!");
+		}
 		
-		model.addAttribute("aluno", aluno);
-		model.addAttribute("processos", processos);
+		Collection<AulaProcessoVeiculo> aulas = (Collection<AulaProcessoVeiculo>) aulaProcessoVeiculoService.findByAluno(aluno);
 		
-		return "processo-lista";
+		if(CollectionUtils.isEmpty(aulas)) {
+			messageContext.add("As aulas ainda nao foram agendadas!");
+		}
+		
+		enviarComprovanteParaImpressora(aluno, aulas);
+		
+		return matriculas(model, Optional.empty(), Optional.empty(), Optional.empty());
 	}
-	
-	@RequestMapping(value="/aluno/{id}/processos/new", method=RequestMethod.GET)
-	public String newProcesso(@PathVariable("id") Long id, Model model) {
+
+	private void enviarComprovanteParaImpressora(Aluno aluno, Collection<AulaProcessoVeiculo> aulas) {
 		
-		Aluno aluno = alunoService.get(id);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 		
-		Collection<Veiculo> veiculos = (Collection<Veiculo>) veiculoService.findAll();
+		BematechNFiscal cupom = null;
 		
-		model.addAttribute("aluno", aluno);
-		model.addAttribute("veiculos", veiculos);
-		model.addAttribute("processo", new Processo());
+		try {
+			cupom = BematechNFiscal.Instance;
+		}catch(Exception e) {
+			messageContext.add("Erro de configuraçao da impressora!");
+		}
 		
-		return "processo-form";
-	}
-	
-	@PostMapping("/aluno/{id}/processos/")
-	@Transactional
-	public String cadastrarProcesso(@PathVariable("id") Long id, @ModelAttribute("processo") @Valid Processo processo, BindingResult bindResult, Model model) {
+		cupom.ConfiguraModeloImpressora(8);
+		cupom.IniciaPorta("USB");
 		
-		Aluno aluno = alunoService.get(id);
+		if(cupom.Le_Status() == BematechNFiscal.ERRO_NO_COMANDO) {
+			messageContext.add("O sistema não conseguiu se comunicar com a impressora, verifica se o equipamento está ligado!");
+			return;
+		}
 		
-		processo.setDataInicio(LocalDate.now());
-		processo.setAluno(aluno);
+		if(cupom.VerificaPapelPresenter() == BematechNFiscal.ERRO_NO_COMANDO) {
+			messageContext.add("Impressora sem papel!");
+			return;
+		}
+		cupom.AjustaLarguraPapel(80);
 		
-		processoService.save(processo);
+		cupom.FormataTX("CFC Marquinho de Jesus Ltda\r\n", 2, 0, 0, 0, 0);
+		cupom.FormataTX("---------------------------\r\n", 2, 0, 0, 0, 0);
+		cupom.FormataTX("Aluno: " + aluno.getNome() + "\r\n", 2, 0, 0, 0, 0);
 		
-		Collection<Processo> processos = processoService.find(aluno);
+		boolean first = true;
 		
-		model.addAttribute("aluno", aluno);
-		model.addAttribute("processos", processos);
+		for(AulaProcessoVeiculo aula : aulas) {
+			
+			if(first) {
+				cupom.FormataTX("Veiculo: " + aula.getVeiculo().toString() + "\r\n", 2, 0, 0, 0, 0);
+				cupom.FormataTX("Instrutor: " + aula.getInstrutor().getNome() + "\r\n", 2, 0, 0, 0, 0);
+				cupom.FormataTX("===========================\r\n", 2, 0, 0, 0, 0);
+				cupom.FormataTX("Controle de aulas:\r\n", 2, 0, 0, 0, 0);
+				cupom.FormataTX("---------------------------\r\n", 2, 0, 0, 0, 0);
+			}
+			
+			cupom.FormataTX(aula.getData().format(formatter) + "       []\r\n", 2, 0, 0, 0, 0);
+			first = false;
+		}
 		
-		return "processo-lista";
+		cupom.AcionaGuilhotina(BematechNFiscal.CORTE_PARCIAL);
+		cupom.FechaPorta();
 	}
 }

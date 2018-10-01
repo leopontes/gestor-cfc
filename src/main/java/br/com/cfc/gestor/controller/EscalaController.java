@@ -103,8 +103,9 @@ public class EscalaController {
 		
 		int hora = 8;
 		
-		Aluno aluno = alunoService.get(filtro.getMatricula());
-		Veiculo veiculo = veiculoService.get(filtro.getVeiculo());
+		Aluno     aluno     = alunoService.get(filtro.getMatricula());
+		Veiculo   veiculo   = veiculoService.get(filtro.getVeiculo());
+		Instrutor instrutor = instrutorService.get(filtro.getInstrutor());
 		
 		for(int i =0 ; i < 13 ; i++) {
 			
@@ -129,6 +130,7 @@ public class EscalaController {
 		model.addAttribute("veiculos", veiculoService.findAll());
 		model.addAttribute("periodo", periodoLabels);
 		model.addAttribute("aluno", aluno);
+		model.addAttribute("instrutor", instrutor);
 		model.addAttribute("grade", gradeHorarios);
 		model.addAttribute("keys",  new TreeSet<>(gradeHorarios.keySet()));
 		model.addAttribute("filtro", filtro);
@@ -165,6 +167,7 @@ public class EscalaController {
 		model.addAttribute("veiculos", veiculoService.findAll());
 		model.addAttribute("aluno", aluno);
 		model.addAttribute("filtro", filtro);
+		model.addAttribute("instrutores", instrutorService.findAll());
 		
 		return "grade-horarios";
 	}
@@ -183,8 +186,14 @@ public class EscalaController {
 		AulaProcessoVeiculo aula      = new AulaProcessoVeiculo();
 		Aluno               aluno     = alunoService.get(alunoId);
 		Veiculo             veiculo   = veiculoService.get(veiculoId);
-		List<Processo>      processos = (List<Processo>) processoService.find(aluno);
+		Processo            processo  = processoService.getVigente(aluno);
 		Instrutor           instrutor = instrutorService.get(instrutorId);
+		
+		filtro.setMatricula(alunoId);
+		filtro.setMesAno(mesAno);
+		filtro.setVeiculo(veiculoId);
+		filtro.setInstrutor(instrutorId);
+		filtro.setNome(aluno.getNome());
 		
 		LocalDateTime dataAgendamento = LocalDateTime.parse(data, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 		
@@ -192,18 +201,19 @@ public class EscalaController {
 		
 		if(aulaInstrutor != null) {
 			messageContext.add("O instrutor selecionado não esta disponível neste dia e horário!");
-			return null;
+			return find(filtro, model);
 		}
 		
-		filtro.setMatricula(alunoId);
-		filtro.setMesAno(mesAno);
-		filtro.setVeiculo(veiculoId);
-		filtro.setNome(aluno.getNome());
+		if(processo == null) {
+			messageContext.add("O aluno ainda não possui processo cadastrado!");
+			return find(filtro, model);
+		}
 		
 		aula.setData(dataAgendamento);
-		aula.setProcesso(processos.get(0));
+		aula.setProcesso(processo);
 		aula.setTipo(TipoAulaEnum.PRATICA);
 		aula.setVeiculo(veiculo);
+		aula.setInstrutor(instrutor);
 		
 		aulaProcessoVeiculoService.save(aula);
 		
