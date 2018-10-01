@@ -35,6 +35,9 @@
 					    <label class="components-form" th:text="#{label.nome}">:</label> 
 						<input type="text" th:field="*{nome}" class="components-form" autocomplete="off"  style="width: 97%;"/>
 					</div>
+					<div class="form-cel-70">
+						<input class="components-form" style="width: 97%;" th:field="*{documentos}" type="file" multiple="multiple">
+					</div>
    				</div>
    			
    				<!-- <div th:if="*{pathFoto == null}" id="webcam">

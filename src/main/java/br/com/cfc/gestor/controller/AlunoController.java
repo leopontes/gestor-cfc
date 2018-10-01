@@ -40,16 +40,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.itextpdf.text.DocumentException;
 
 import br.com.cfc.gestor.controller.form.AlunoForm;
 import br.com.cfc.gestor.model.Aluno;
 import br.com.cfc.gestor.model.AulaProcessoVeiculo;
+import br.com.cfc.gestor.model.Documento;
 import br.com.cfc.gestor.model.Processo;
 import br.com.cfc.gestor.model.Veiculo;
+import br.com.cfc.gestor.model.enuns.TipoDocumentoEnum;
 import br.com.cfc.gestor.service.AlunoService;
 import br.com.cfc.gestor.service.AulaProcessoVeiculoService;
+import br.com.cfc.gestor.service.DocumentoService;
 import br.com.cfc.gestor.service.ProcessoService;
 import br.com.cfc.gestor.service.VeiculoService;
 import br.com.cfc.gestor.utils.BematechNFiscal;
@@ -58,7 +62,7 @@ import br.com.cfc.gestor.utils.MessageContext;
 @Controller
 public class AlunoController {
 	
-	private static final String ABSOLUTE_PATH_SHARED_FOLDER = "C:\\Desenvolvimento\\servidores\\shared_folder\\images\\";
+	private static final String ABSOLUTE_PATH_SHARED_FOLDER = "C:\\Users\\y9ll\\Desenvolvimento\\Servidores\\shared_folder\\images\\";
 	
 	private static final String RELATIVE_PATH_SHARED_FOLDER = "/gestao-cfc/files/images/";
 	
@@ -79,6 +83,9 @@ public class AlunoController {
 	
 	@Resource
 	private AulaProcessoVeiculoService aulaProcessoVeiculoService;
+	
+	@Resource
+	private DocumentoService documentoService;
 	
 	@PostMapping("/aluno/search")
 	public String fullSearch(Model model, 
@@ -163,7 +170,18 @@ public class AlunoController {
 				bfi.flush();
 			}
 			
-	        
+			if(alunoForm.getDocumentos() != null && alunoForm.getDocumentos().length > 0) {
+				for(MultipartFile documento : alunoForm.getDocumentos()) {
+					File file = new File(ABSOLUTE_PATH_SHARED_FOLDER + documento.getOriginalFilename());
+					documento.transferTo(file);
+					Documento doc = new Documento();
+					doc.setPath(ABSOLUTE_PATH_SHARED_FOLDER + documento.getOriginalFilename());
+					doc.setTipoDocumento(TipoDocumentoEnum.CONTRATO);
+					doc.setAluno(aluno);
+					documentoService.save(doc);
+				}
+			}
+			
 			Collection<Veiculo> veiculos = (Collection<Veiculo>) veiculoService.findAll();
 			
 			model.addAttribute("aluno", aluno);

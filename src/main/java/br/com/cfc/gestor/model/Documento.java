@@ -35,8 +35,8 @@ public class Documento implements Serializable{
 	private TipoDocumentoEnum tipoDocumento;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="usuario_id")
-	private Usuario usuario;
+	@JoinColumn(name="aluno_id")
+	private Aluno aluno;
 
 	public Long getId() {
 		return id;
@@ -62,11 +62,11 @@ public class Documento implements Serializable{
 		this.tipoDocumento = tipoDocumento;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Aluno getAluno() {
+		return aluno;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
 	}
 }
