@@ -45,6 +45,20 @@
 					</fieldset>
 				</div>
 				<div class="form-row">
+					<div class="form-cel-20">
+					    <label class="components-form"  th:text="#{label.valor.vista}">:</label> 
+						<input type="text" th:field="*{valor}" class="components-form money" autocomplete="off"  style="width: 88%;"/>
+					</div>
+					<div class="form-cel-20">
+					    <label class="components-form"  th:text="#{label.valor.parcelado}">:</label> 
+						<input type="text" th:field="*{valorParcelado}" class="components-form money" autocomplete="off"  style="width: 88%;"/>
+					</div>
+					<div class="form-cel-20">
+					    <label class="components-form"  th:text="#{label.total.parcelas}">:</label> 
+						<input type="number" th:field="*{numeroMaximoParcelas}" class="components-form money" autocomplete="off"  style="width: 88%;"/>
+					</div>
+				</div>
+				<div class="form-row">
 					<div class="form-cel-25">
 					    <label class="components-form"  th:text="#{label.data.inicio}">:</label> 
 						<input type="text" th:field="*{dataInicio}" class="components-form data" autocomplete="off"  style="width: 70%;"/>
@@ -53,78 +67,12 @@
 					    <label class="components-form"  th:text="#{label.data.fim}">:</label> 
 						<input type="text" th:field="*{dataFim}" class="components-form data" autocomplete="off"  style="width: 70%;"/>
 					</div>
-					<div class="form-cel-20">
-					    <label class="components-form"  th:text="#{label.valor}">:</label> 
-						<input type="text" th:field="*{valor}" class="components-form money" autocomplete="off"  style="width: 88%;"/>
-					</div>
 				</div>
 				<div class="form-row">
 					<div class="form-control" style="float: right;padding: 10px;">
 						<input type="submit" th:value="#{label.btn.gravar}"/>
 					</div>
 				</div>
-				<!-- <div class="form-row">
-						<div class="form-cel-100">
-							<label class="components-form">Valor total:</label> 
-							<input id="valorTotal" type="text">
-						</div>
-					</div>
-               		<div class="form-row">
-						<div class="form-cel-20">
-							<label class="components-form">Tipo de pagamento:</label> 
-							<select id="tipoPagamento" class="components-form" style="width: 95%;">
-						    	<option th:each="tipoPagamento : ${T(br.com.cfc.gestor.model.enuns.TipoPagamentoEnum).values()}" 
-						    	        th:value="${tipoPagamento}" th:text="${tipoPagamento.descricao}"
-						    	        th:selected="${tipoPagamento == CARNE}"></option>
-							</select>
-						</div>
-						<div class="form-cel-20">
-							<label class="components-form">Forma de pagamento:</label> 
-							<select id="formaPagamento" class="components-form" style="width: 95%;">
-								<option th:each="formaPagamento : ${T(br.com.cfc.gestor.model.enuns.FormaDePagamentoEnum).values()}" 
-								        th:value="${formaPagamento}" th:text="${formaPagamento.descricao}"
-								        th:selected="${formaPagamento == A_VISTA}"></option>
-							</select>
-						</div>
-						<div class="form-cel-20">
-							<label class="components-form">Número de parcelas:</label> 
-							<input id="quantidade" type="text" style="width: 90%;">
-						</div>
-						<div class="form-cel-30">
-							<label class="components-form">Valor parcela:</label> 
-							<div>
-								<input id="valorParcela" type="text">
-								<button id="btnGerarPagamento">Gerar</button>
-							</div>
-						</div>
-					</div>
-               
-               		<table id="tb-pagamentos" style="width: 100%; margin-bottom: 20px; margin-top: 20px;">
-						<thead>
-							<tr>
-								<th th:text="#{label.parcela}"/>
-								<th th:text="#{label.vencimento}"/>
-								<th th:text="#{label.tipo.pagamento}"/>
-								<th th:text="#{label.forma.pagamento}"/>
-								<th th:text="#{label.valor}"/>
-								<th th:text="#{label.status}"/>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:if="${pagamentos == null || pagamentos.empty}">
-								<td colspan="6" th:text="#{label.msg.registros.nao.encontrados}"></td>
-							</tr>
-							<tr th:each="pagamento,iter : ${pagamentos}">
-								<td th:text="${iter.index}"></td>
-								<td th:text="${pagamento.dataVencimento}"></td>
-								<td th:text="${pagamento.tipoPagamento.descricao}"></td>
-								<td th:text="${pagamento.formaPagamento.descricao}"></td>
-								<td th:text="${pagamento.valor}"></td>
-								<td th:text="${pagamento.dataPagamento == null ? 'Pendente' : 'Pago'}"></td>
-							</tr>
-						</tbody>
-					</table>
-               </div> -->
 			</form>
    		</div>
    	</div>

@@ -143,7 +143,6 @@ nav.navigation a{
 input[type="button"], 
 input[type="submit"], 
 input[type="reset"],
-input[type="file"],
 button{
     border: none;
     padding: 7px 9px 6px 9px;

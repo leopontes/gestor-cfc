@@ -3,6 +3,8 @@ package br.com.cfc.gestor.controller.form;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import br.com.cfc.gestor.model.enuns.FormaDePagamentoEnum;
 import br.com.cfc.gestor.model.enuns.ServicoEnum;
 import br.com.cfc.gestor.model.enuns.TipoPagamentoEnum;
@@ -29,6 +31,8 @@ public class PagamentoForm implements Serializable{
 	
 	private BigDecimal valorParcela;
 
+	private MultipartFile[] documentos;
+	
 	public Long getAlunoId() {
 		return alunoId;
 	}
@@ -99,5 +103,13 @@ public class PagamentoForm implements Serializable{
 
 	public void setValorParcela(BigDecimal valorParcela) {
 		this.valorParcela = valorParcela;
+	}
+	
+	public MultipartFile[] getDocumentos() {
+		return documentos;
+	}
+
+	public void setDocumentos(MultipartFile[] documentos) {
+		this.documentos = documentos;
 	}
 }

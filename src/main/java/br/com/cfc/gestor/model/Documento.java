@@ -13,11 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import br.com.cfc.gestor.model.enuns.TipoDocumentoEnum;
 
 @Entity
-@Table(name="documento")
+@Table(name="documento", uniqueConstraints= {@UniqueConstraint(name="documento_nome_uk", columnNames= {"nome"})})
 public class Documento implements Serializable{
 
 	private static final long serialVersionUID = -5298146236310332447L;
@@ -26,6 +27,9 @@ public class Documento implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="contrato_id", nullable=false)
 	private Long id;
+	
+	@Column(name="nome", nullable=false)
+	private String nome;
 	
 	@Column(name="path", nullable=false)
 	private String path;
@@ -68,5 +72,13 @@ public class Documento implements Serializable{
 
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 }

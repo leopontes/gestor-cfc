@@ -35,9 +35,12 @@
 									<td th:text="#{label.msg.registros.nao.encontrados}" colspan="3"></td>
 								</tr>
 								<tr th:each="processo : ${processos}">
-									<td th:text="${processo.servico.descricao}"></td>
+									<td>
+										<a th:text="${processo.servico.descricao}" th:href="@{'/aluno/processo/'+${processo.id}+'/edit'}"></a>
+									</td>
 									<td th:text="${processo.categoria.descricao}"></td>
 									<td th:text="${processo.renach}"></td>
+									<td th:text="${processo.status.descricao}"></td>
 								</tr>
 							</tbody>
 						</table>

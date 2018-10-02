@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 import br.com.cfc.gestor.model.Aluno;
 
@@ -84,7 +83,7 @@ public class AlunoForm implements Serializable{
 	
 	private String pathFoto;
 	
-	private MultipartFile[] documentos;
+	
 
 	public String getMatricula() {
 		return (this.id == null ? "" : this.id) + "/" + (this.cadastradoEm == null ? "" : this.cadastradoEm.getYear());
@@ -274,14 +273,6 @@ public class AlunoForm implements Serializable{
 		this.pathFoto = pathFoto;
 	}
 	
-	public MultipartFile[] getDocumentos() {
-		return documentos;
-	}
-
-	public void setDocumentos(MultipartFile[] documentos) {
-		this.documentos = documentos;
-	}
-
 	public void toForm(Aluno aluno) {
 		setId(aluno.getId());
 		setNome(aluno.getNome());

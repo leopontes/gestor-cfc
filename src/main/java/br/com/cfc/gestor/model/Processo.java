@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import br.com.cfc.gestor.model.enuns.CategoriaEnum;
 import br.com.cfc.gestor.model.enuns.ServicoEnum;
+import br.com.cfc.gestor.model.enuns.StatusProcessoEnum;
 
 @Entity
 @Table(name="processo")
@@ -46,6 +47,10 @@ public class Processo implements Serializable, Comparable<Processo>{
 	
 	@Column(name="observacao", length=255, nullable=false)
 	private String observacao;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="status", nullable=true)
+	private StatusProcessoEnum status;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="aluno_id")
@@ -115,6 +120,14 @@ public class Processo implements Serializable, Comparable<Processo>{
 		this.aluno = aluno;
 	}
 	
+	public StatusProcessoEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusProcessoEnum status) {
+		this.status = status;
+	}
+
 	@Override
 	public int compareTo(Processo other) {
 		return this.dataInicio.compareTo(other.getDataInicio());

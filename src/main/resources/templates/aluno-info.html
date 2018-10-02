@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+<body>
+	<div class="container w_medium h_big"  layout:fragment="content">
+  		<h4 th:text="#{label.titulo.cadastro.aluno}"></h4>
+   		<div class="content">
+   			<form method="post" th:action="@{/aluno}" th:object="${aluno}" enctype="multipart/form-data">
+   				<div class="form-row" style="height: 139px;">
+   					<div class="form-cel-25" style="height: 140px;">
+		   				<div th:if="*{pathFoto != null}" id="foto_moldura" class="moldura_foto">
+		   					<img alt="" th:src="*{pathFoto}" style="width: 180px;">
+		   				</div>
+		   				<div th:if="*{pathFoto == null}" id="foto_moldura" class="moldura_foto">
+		   					<canvas id="canvas" width="300" height="250" style="width: 186px;height: 136px;"></canvas>
+		   				</div>
+   					</div>
+   					<div class="form-cel-20">
+					    <label class="components-form" th:text="#{label.matricula}">:</label> 
+						<input type="text" th:field="*{matricula}" disabled="disabled" class="components-form" style="width: 95%;"/>
+					</div>
+					<div class="form-cel-70" th:classappend="${#fields.hasErrors('nome')} ? has-error">
+					    <label class="components-form" th:text="#{label.nome}">:</label> 
+						<input type="text" th:field="*{nome}" disabled="disabled" class="components-form" autocomplete="off"  style="width: 97%;"/>
+					</div>
+   				</div>
+				<div class="form-row" th:classappend="${#fields.hasErrors('pai')} ? has-error">
+					<div class="form-cel-50">
+					    <label class="components-form" th:text="#{label.pai}">:</label> 
+						<input type="text" disabled="disabled" th:field="*{pai}" class="components-form" autocomplete="off"  style="width: 95%;"/>
+					</div>
+					<div class="form-cel-50" th:classappend="${#fields.hasErrors('mae')} ? has-error">
+					    <label class="components-form">Mãe:</label> 
+						<input type="text" disabled="disabled" th:field="*{mae}" class="components-form" autocomplete="off"  style="width: 95%;"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-20" th:classappend="${#fields.hasErrors('cep')} ? has-error">
+					    <label class="components-form">Cep:</label> 
+						<input type="text" disabled="disabled" th:field="*{cep}" class="components-form" autocomplete="off"  style="width: 91%;"/>
+					</div>
+					<div class="form-cel-60" th:classappend="${#fields.hasErrors('endereco')} ? has-error">
+					    <label class="components-form">Rua:</label> 
+						<input type="text" disabled="disabled" th:field="*{endereco}" class="components-form" autocomplete="off"  style="width: 95%;"/>
+					</div>
+					<div class="form-cel-20" th:classappend="${#fields.hasErrors('numero')} ? has-error">
+					    <label class="components-form">Número:</label> 
+						<input type="text" disabled="disabled" th:field="*{numero}" class="components-form" autocomplete="off"  style="width: 88%;"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-30" th:classappend="${#fields.hasErrors('complemento')} ? has-error">
+					    <label class="components-form">Complemento:</label> 
+						<input type="text" disabled="disabled" th:field="*{complemento}" class="components-form" autocomplete="off"  style="width: 95%;"/>
+					</div>
+					<div class="form-cel-30" th:classappend="${#fields.hasErrors('bairro')} ? has-error">
+					    <label class="components-form">Bairro:</label> 
+						<input type="text" disabled="disabled" th:field="*{bairro}" class="components-form" autocomplete="off"  style="width: 95%;"/>
+					</div>
+					<div class="form-cel-30" th:classappend="${#fields.hasErrors('cidade')} ? has-error">
+					    <label class="components-form">Cidade:</label> 
+						<input type="text" disabled="disabled" th:field="*{cidade}" class="components-form" autocomplete="off" 	style="width: 95%;"/>
+					</div>
+					<div class="form-cel-10" th:classappend="${#fields.hasErrors('uf')} ? has-error">
+					    <label class="components-form">UF:</label> 
+						<input type="text" disabled="disabled" th:field="*{uf}" class="components-form" autocomplete="off"  style="width: 74%;"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-20" th:classappend="${#fields.hasErrors('dataNascimento')} ? has-error">
+					    <label class="components-form">Nascimento:</label> 
+						<input type="text" disabled="disabled" th:field="*{dataNascimento}" class="components-form" autocomplete="off" style="width: 90%;"/>
+					</div>
+					<div class="form-cel-30" th:classappend="${#fields.hasErrors('identidade')} ? has-error">
+					    <label class="components-form">Identidade:</label> 
+						<input type="text" disabled="disabled" th:field="*{identidade}" class="components-form" autocomplete="off"  style="width: 95%;"/>
+					</div>
+					<div class="form-cel-30" th:classappend="${#fields.hasErrors('orgaoEmissor')} ? has-error">
+					    <label class="components-form">Órgão emissor:</label> 
+						<input type="text" disabled="disabled" th:field="*{orgaoEmissor}" class="components-form" autocomplete="off"  style="width: 95%;"/>
+					</div>
+					<div class="form-cel-20" th:classappend="${#fields.hasErrors('dataEmissao')} ? has-error">
+					    <label class="components-form">Emissão:</label> 
+						<input type="text" disabled="disabled" th:field="*{dataEmissao}" class="components-form" autocomplete="off"  style="width: 87%;"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-20" th:classappend="${#fields.hasErrors('cpf')} ? has-error">
+					    <label class="components-form">CPF:</label> 
+						<input type="text" disabled="disabled" th:field="*{cpf}" class="components-form" autocomplete="off"  style="width: 90%;"/>
+					</div>
+					<div class="form-cel-80" th:classappend="${#fields.hasErrors('email')} ? has-error">
+					    <label class="components-form">Email:</label> 
+						<input type="text" disabled="disabled" th:field="*{email}" class="components-form" autocomplete="off"  style="width: 97%;"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-30" th:classappend="${#fields.hasErrors('contato1')} ? has-error">
+					    <label class="components-form">Telefone (Residencial):</label> 
+						<input type="text" disabled="disabled" th:field="*{contato1}" class="components-form" autocomplete="off"  style="width: 90%;"/>
+					</div>
+					<div class="form-cel-30" th:classappend="${#fields.hasErrors('contato2')} ? has-error">
+					    <label class="components-form">Telefone (Celular):</label> 
+						<input type="text" disabled="disabled" th:field="*{contato2}" class="components-form" autocomplete="off"  style="width: 94%;"/>
+					</div>
+					<div class="form-cel-30" th:classappend="${#fields.hasErrors('contato3')} ? has-error">
+					    <label class="components-form">Telefone (Celunar):</label> 
+						<input type="text" disabled="disabled" th:field="*{contato3}" class="components-form" autocomplete="off"  style="width: 97%;"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-100">
+						<fieldset>
+							<legend th:text="#{label.documentos}"></legend>
+							|<a th:text="${documento.nome}" th:href="${documento.path}"></a>|
+						</fieldset>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-control" style="float: right;padding: 10px;">
+						<a class="btn" th:href="@{/aluno}"   th:text="#{label.cancelar}"></a>
+					</div>
+				</div>
+			</form>
+   		</div>
+   	</div>
+</body>
+</html>

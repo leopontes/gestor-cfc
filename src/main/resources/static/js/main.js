@@ -22,6 +22,18 @@ $(document).ready(function(){
 			success: function(data){
 				if(data){
 					$("#valorTotal").val(data.valor);
+					
+					var parcelas = parseInt(data.numeroMaximoParcelas);
+
+					$("#parcela option").remove();
+					
+					for(var i=0; i<parcelas; i++){
+						var option = $(document.createElement('option'));
+						$(option).val(i+1);
+						$(option).text(i+1 + ' parcela(s)');
+						
+						$("#parcela").append(option);
+					}
 				}
 			}
 		});
@@ -150,7 +162,7 @@ $(document).ready(function(){
 		
 		var valorParcela = valorTotal/totalParcelas;
 		
-		$("#valorParcela").val(valorParcela);
+		$("#valorParcela").val(valorParcela.toFixed(2));
 	})
 });
 

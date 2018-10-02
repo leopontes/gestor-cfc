@@ -7,7 +7,7 @@
 	<div class="container w_medium h_medium"  layout:fragment="content">
   		<h4 th:text="#{label.titulo.cadastro.pagamento}"></h4>
    		<div class="content">
-   			<form method="post" th:action="@{/pagamento}" th:object="${pagamento}">
+   			<form method="post" th:action="@{/pagamento}" th:object="${pagamento}" enctype="multipart/form-data">
 				<div class="form-row">
 					<div class="form-cel-20">
 					    <label class="components-form" th:text="#{label.matricula}">:</label>
@@ -27,6 +27,7 @@
 					<div class="form-cel-40">
 						<label class="components-form" th:text="#{label.pacote}">:</label> 
 						<select class="components-form" style="width: 95%;" th:field="*{pacote}">
+							<option th:text="#{label.selecione}" value=""></option>
 					    	<option th:each="pacote : ${pacotes}" th:value="${pacote.id}" th:text="${pacote.nome}"></option>
 						</select>
 					</div>
@@ -50,18 +51,25 @@
 						<input id="valorTotal" type="text" disabled="disabled" style="width: 95%;"/>
 					</div>
 				</div>
+				
 				<div class="form-row">
 					<div class="form-cel-20">
 						<label class="components-form" th:text="#{label.parcela}">:</label> 
 						<select th:field="*{parcela}">
-							<option th:text="#{label.parcela.1}" value="1"></option>
-							<option th:text="#{label.parcela.2}" value="2"></option>
-							<option th:text="#{label.parcela.3}" value="3"></option>
+							<option th:text="#{label.selecione}" value=""></option>
 						</select>
 					</div>
-					<div class="form-cel-20">
+					<div class="form-cel-40">
 						<label class="components-form" th:text="#{label.valor.parcela}">:</label> 
 						<input type="text" th:field="*{valorParcela}"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-70">
+						<fieldset>
+							<legend th:text="#{label.documentos}"></legend>						
+							<input class="components-form" style="width: 97%;" th:field="*{documentos}" type="file" multiple="multiple">
+						</fieldset>
 					</div>
 				</div>
 				

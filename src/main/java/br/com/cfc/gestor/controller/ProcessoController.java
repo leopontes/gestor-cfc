@@ -26,6 +26,7 @@ import br.com.cfc.gestor.service.AulaProcessoVeiculoService;
 import br.com.cfc.gestor.service.PacoteService;
 import br.com.cfc.gestor.service.ProcessoService;
 import br.com.cfc.gestor.service.VeiculoService;
+import br.com.cfc.gestor.utils.MessageContext;
 
 @Controller
 public class ProcessoController {
@@ -44,6 +45,9 @@ public class ProcessoController {
 	
 	@Resource
 	private PacoteService pacoteService;
+	
+	@Resource
+	private MessageContext messageContext;
 	
 	@GetMapping("/aluno/processos/{id}")
 	public String processos(@PathVariable("id") Long id, Model model) {
@@ -73,12 +77,70 @@ public class ProcessoController {
 		return "processo-form";
 	}
 	
+	@RequestMapping(value="/aluno/processo/{id}/edit", method=RequestMethod.GET)
+	public String editarProcesso(@PathVariable("id") Long id, Model model) {
+		
+		Processo processo = processoService.getId(id);
+		
+		Collection<Veiculo> veiculos = (Collection<Veiculo>) veiculoService.findAll();
+		
+		model.addAttribute("aluno", processo.getAluno());
+		model.addAttribute("veiculos", veiculos);
+		model.addAttribute("processo", processo);
+		
+		return "processo-form";
+	}
+	
 
 	@PostMapping("/aluno/{id}/processos/")
 	@Transactional
 	public String cadastrarProcesso(@PathVariable("id") Long id, @ModelAttribute("processo") @Valid Processo processo, BindingResult bindResult, Model model) {
 		
 		Aluno aluno = alunoService.get(id);
+		Processo processoGravado = processoService.getId(processo.getId());
+		
+		if(processoGravado == null) {
+			return cadastrarNovoProcesso(id, processo, model);
+		}else {
+			return editarProcesso(id, processoGravado, aluno, model);
+		}
+		
+	}
+
+	private String editarProcesso(Long id, Processo processo, Aluno aluno, Model model) {
+		
+		if(processo != null) {
+			processo.setDataTermino(processo.getDataTermino());
+			processo.setStatus(processo.getStatus());
+			
+			processoService.save(processo);
+		}
+		
+		Collection<Processo> processos = processoService.find(aluno);
+		
+		model.addAttribute("aluno", aluno);
+		model.addAttribute("processos", processos);
+		
+		return "processo-lista";
+	}
+
+
+	private String cadastrarNovoProcesso(Long id, Processo processo, Model model) {
+		Aluno aluno = alunoService.get(id);
+		
+		Processo processoEmAberto = processoService.getVigente(aluno);
+		
+		if(processoEmAberto != null) {
+			messageContext.add("O aluno possui um processo em aberto, será necessário encerrá-lo primeiro.");
+			
+			Collection<Veiculo> veiculos = (Collection<Veiculo>) veiculoService.findAll();
+			
+			model.addAttribute("processo", processo);
+			model.addAttribute("aluno", aluno);
+			model.addAttribute("veiculos", veiculos);
+			
+			return "processo-form";
+		}
 		
 		processo.setDataInicio(LocalDate.now());
 		processo.setAluno(aluno);

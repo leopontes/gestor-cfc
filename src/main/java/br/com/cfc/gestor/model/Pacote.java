@@ -15,12 +15,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Check;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
 @Entity
 @Table(name="pacote", uniqueConstraints= {@UniqueConstraint(name="pacote_uk", columnNames="nome")})
+@Check(constraints="numero_max_parcelas > 0")
 public class Pacote implements Serializable{
 
 	private static final long serialVersionUID = -6690538504975188709L;
@@ -53,9 +55,16 @@ public class Pacote implements Serializable{
 	@Column(name="data_fim", nullable=true)
 	private LocalDate dataFim;
 
+	@Column(name="numero_max_parcelas", nullable=false)
+	private Integer numeroMaximoParcelas;
+	
 	@NumberFormat(style=Style.CURRENCY)
 	@Column(name="valor", nullable=false)
 	private BigDecimal valor;
+	
+	@NumberFormat(style=Style.CURRENCY)
+	@Column(name="valor_parcelado", nullable=true)
+	private BigDecimal valorParcelado;
 	
 	@OneToMany(fetch=FetchType.LAZY)
 	private Collection<Pagamento> pagamentos;
@@ -138,5 +147,21 @@ public class Pacote implements Serializable{
 
 	public void setPagamentos(Collection<Pagamento> pagamentos) {
 		this.pagamentos = pagamentos;
+	}
+
+	public Integer getNumeroMaximoParcelas() {
+		return numeroMaximoParcelas;
+	}
+
+	public void setNumeroMaximoParcelas(Integer numeroMaximoParcelas) {
+		this.numeroMaximoParcelas = numeroMaximoParcelas;
+	}
+
+	public BigDecimal getValorParcelado() {
+		return valorParcelado;
+	}
+
+	public void setValorParcelado(BigDecimal valorParcelado) {
+		this.valorParcelado = valorParcelado;
 	}
 }
