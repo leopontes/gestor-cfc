@@ -36,14 +36,15 @@
 						<select th:field="*{tipoPagamento}" class="components-form" style="width: 95%;">
 					    	<option th:each="tipoPagamento : ${T(br.com.cfc.gestor.model.enuns.TipoPagamentoEnum).values()}" 
 					    	        th:value="${tipoPagamento}" th:text="${tipoPagamento.descricao}"
-					    	        th:selected="${tipoPagamento == CARNE}"></option>
+					    	        th:selected="${tipoPagamento == DINHEIRO}"></option>
 						</select>
 					</div>
 					<div class="form-cel-20">
 						<label class="components-form" th:text="#{label.forma.pagamento}">:</label> 
 						<select th:field="*{formaPagamento}" class="components-form" style="width: 95%;">
 							<option th:each="formaPagamento : ${T(br.com.cfc.gestor.model.enuns.FormaDePagamentoEnum).values()}" 
-							        th:value="${formaPagamento}" th:text="${formaPagamento.descricao}"></option>
+							        th:value="${formaPagamento}" th:text="${formaPagamento.descricao}"
+							        th:selected="${formaPagamento == A_VISTA}"></option>
 						</select>
 					</div>
 					<div class="form-cel-20">

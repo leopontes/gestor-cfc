@@ -15,13 +15,30 @@ $(document).ready(function(){
 	      modal: true
 	});
 	
+	$("#formaPagamento").change(function(){
+		$.ajax({
+			url: '/gestao-cfc/pacote/' + $("#pacote").val(),
+			method: 'GET',
+			success: function(data){
+				if(data){
+					
+					if($("#formaPagamento").val() == 'PARCELADO'){
+						$("#valorTotal").maskMoney('mask', data.valorParcelado);
+					}else{
+						$("#valorTotal").maskMoney('mask', data.valor);
+					}
+				}
+			}
+		});
+	});
+	
 	$("#pacote").change(function(){
 		$.ajax({
 			url: '/gestao-cfc/pacote/' + $("#pacote").val(),
 			method: 'GET',
 			success: function(data){
 				if(data){
-					$("#valorTotal").val(data.valor);
+					$("#valorTotal").maskMoney('mask', data.valor);
 					
 					var parcelas = parseInt(data.numeroMaximoParcelas);
 

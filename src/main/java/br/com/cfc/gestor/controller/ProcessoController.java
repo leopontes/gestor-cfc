@@ -151,6 +151,7 @@ public class ProcessoController {
 		pagamento.setAlunoId(aluno.getId());
 		pagamento.setServico(processo.getServico());
 		pagamento.setNome(aluno.getNome());
+		pagamento.setMatricula(aluno.getMatricula());
 		
 		model.addAttribute("aluno", aluno);
 		model.addAttribute("processo", processo);
