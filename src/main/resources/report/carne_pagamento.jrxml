@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carne_pagamento" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ca212551-6a10-4134-9aa3-c056469a9ab7">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nome_aluno" class="java.lang.String"/>
+	<parameter name="cpf" class="java.lang.String"/>
+	<parameter name="aluno_id" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select pg.*
+  from processo_pagamento_pacote ppp
+  join processo p on ppp.processo_id = p.processo_id
+  join aluno a on p.aluno_id = a.aluno_id
+  join pagamento pg on ppp.pagamento_id = pg.pagamento_id
+ where a.aluno_id = $P{aluno_id}
+   and p.data_termino is null;]]>
+	</queryString>
+	<field name="pagamento_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data_pagamento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data_vencimento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="forma_pagamento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_pagamento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="parcela" class="java.lang.Integer" incrementType="Report" calculation="Count">
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
+	</variable>
+	<variable name="total" class="java.lang.Integer" resetType="Page" incrementType="Page" calculation="Count">
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
+	</variable>
+	<title>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="182" y="40" width="190" height="32" uuid="aa55a969-c227-4601-bfda-0fea50c63d34"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carnê de pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="186" height="20" uuid="4227664c-cd6a-4888-bf51-1e205db1b792"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CFC Marquinho de Jesus Ltda]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="71" width="555" height="20" uuid="78c7f0ee-6b6d-4662-bb0f-f93c72ff3ece"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Aluno: " + $P{nome_aluno}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="251" y="6" width="189" height="10" uuid="e8eaa555-df56-4214-ab42-e806d3d1ff60"/>
+				<textElement textAlignment="Center">
+					<font size="6" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[CFC Marquinho de Jesus Ltda]]></text>
+			</staticText>
+			<line>
+				<reportElement x="121" y="5" width="1" height="95" uuid="0b2a6257-1767-4627-98b7-092d57722d0c"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="251" y="12" width="189" height="10" uuid="0efac823-fd72-47e4-97c4-acb3b478e859"/>
+				<textElement textAlignment="Center">
+					<font size="6" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Estrada do pacheco 682. Pacheco - SG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="20" width="189" height="10" uuid="753128c9-1400-420b-bd72-dae39cc88733"/>
+				<textElement textAlignment="Center">
+					<font size="6" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Telefone: (21) 9999 -9999 / (21) 9999-9999]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="28" width="555" height="1" uuid="346fe257-8d4e-46c2-b33e-2ac77fe64fea"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="30" width="121" height="14" uuid="8e3e5ec3-e604-46ed-9a1d-6cd353cb491d"/>
+				<textElement>
+					<font size="7" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Vencimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="30" width="124" height="14" uuid="c2aebd86-3e78-4f2e-8d44-8092d68a993e"/>
+				<textElement>
+					<font size="7" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Vencimento]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="42" width="121" height="10" uuid="cfd7a8c1-117f-4e64-bdf3-e4c0da13764e"/>
+				<textElement textAlignment="Center">
+					<font size="7" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[org.joda.time.LocalDate.fromDateFields($F{data_vencimento}).toString("dd/MM/yyyy")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="42" width="124" height="10" uuid="0e650ff1-4840-4fc6-b846-725ecc07df6c"/>
+				<textElement textAlignment="Center">
+					<font size="7" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[org.joda.time.LocalDate.fromDateFields($F{data_vencimento}).toString("dd/MM/yyyy")]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="53" width="555" height="1" uuid="e76da872-774b-41e1-8296-748241631b8e"/>
+			</line>
+			<line>
+				<reportElement x="0" y="2" width="555" height="1" uuid="462c3d72-fdb4-48e3-a109-58633cb8a744"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="431" y="54" width="124" height="10" uuid="d0567425-48da-4119-95d8-7bf16bfa12b6"/>
+				<textElement>
+					<font size="7" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[(=) Valor do documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="54" width="121" height="10" uuid="edfa59b4-7725-4033-b25b-1d2bb8712b88"/>
+				<textElement>
+					<font size="7" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[(=) Valor do documento]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="74" width="555" height="1" uuid="fea57a93-0fe2-4570-bc5f-a09e9a44670e"/>
+			</line>
+			<line>
+				<reportElement x="430" y="2" width="1" height="95" uuid="ca4424fa-3f15-4d61-a81a-e9aa2c397343"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="0" y="64" width="121" height="10" uuid="5e5aa41c-0c6d-4669-9bff-0d8b34a6c3c7"/>
+				<textElement textAlignment="Right">
+					<font size="7" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="64" width="121" height="10" uuid="a259c629-16ed-40a7-8f46-0a6c0d226ff1"/>
+				<textElement textAlignment="Right">
+					<font size="7" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="123" y="29" width="121" height="14" uuid="afe0c28d-92f7-4bf6-8359-212222724350"/>
+				<textElement>
+					<font size="7" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Local de pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="41" width="199" height="10" uuid="cc9ecd1d-023e-4e6d-98fa-b7be687a5cfd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Pagável somente na própria auto escola]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="89" width="555" height="1" uuid="8f100618-369f-4d9f-bcbe-33132a0a6af5"/>
+			</line>
+			<textField>
+				<reportElement x="123" y="89" width="307" height="10" uuid="342e4e2d-3535-45f1-9b69-3706c68d206b"/>
+				<textElement>
+					<font size="7" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nome_aluno} - "CPF:" + $P{cpf}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="434" y="75" width="121" height="14" uuid="6428be95-5378-45db-8536-b4ccf063fef6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Pago em __/__/____]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="75" width="121" height="14" uuid="40686380-0e69-42a7-810e-11f74031d9bd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Pago em __/__/____]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="11" width="95" height="10" uuid="3e6eba5e-911f-44a5-9ddb-ab9fa8ec6598"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Parcela" + $V{parcela} + " de " $V{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
