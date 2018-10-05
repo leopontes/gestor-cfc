@@ -2,9 +2,15 @@ package br.com.cfc.gestor.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +38,13 @@ import br.com.cfc.gestor.service.PacoteService;
 import br.com.cfc.gestor.service.ProcessoPagamentoPacoteService;
 import br.com.cfc.gestor.service.ProcessoService;
 import br.com.cfc.gestor.service.VeiculoService;
+import br.com.cfc.gestor.utils.MessageContext;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @Controller
 public class PagamentoController {
@@ -62,6 +75,9 @@ public class PagamentoController {
 	
 	@Resource
 	private DocumentoService documentoService;
+	
+	@Resource
+	private MessageContext messageContext;
 	
 	@RequestMapping(value="/aluno/{idAluno}/pagamento/new", method=RequestMethod.GET)
 	public String newPagamento(@PathVariable("idAluno") Long idAluno, Model model) {
@@ -141,5 +157,41 @@ public class PagamentoController {
 		return "redirect:aluno";
 		
 		//return lista(model, processo.getId());
+	}
+	
+	@GetMapping("/aluno/{id}/pagamento/boleto")
+	public void emitirCarneDePagamento(@PathVariable("id") Long idAluno, HttpServletResponse response) throws JRException, IOException {
+		
+		Aluno                             aluno      = alunoService.get(idAluno);
+		Processo                          processo   = processoService.getVigente(aluno);
+		Collection<ProcessoPagamentoPacote> pagamentos = (Collection<ProcessoPagamentoPacote>) processoPagamentoPacoteServive.findByProcesso(processo);
+		
+		if(aluno == null) {
+			messageContext.add("Aluno não encontrado!");
+			return;
+		}
+		
+		if(processo == null) {
+			messageContext.add("O aluno não possui processo em andamento!");
+			return;
+		}
+		
+		if(pagamentos == null || pagamentos.isEmpty()) {
+			messageContext.add("O aluno não possui parcelamentos em seu processo!");
+			return;
+		}
+		
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		
+		InputStream  jasperStream = this.getClass().getResourceAsStream("/report/carne_pagamento.jasper");
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+		JasperPrint  jasperPrint  = JasperFillManager.fillReport(jasperReport, parameters);
+				
+		response.setContentType("application/pdf");
+		response.setHeader("Content-Disposition", "inline;filename=carne.pdf");
+				
+		final OutputStream outputStream = response.getOutputStream();
+		
+		JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
 	}
 }

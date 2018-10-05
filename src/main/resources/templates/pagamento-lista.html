@@ -12,12 +12,15 @@
    					    <label th:text="#{label.matricula}"></label>
    						<input th:value="${aluno.matricula}" disabled="disabled" style="width: 72%;"/>
    					</div>
-   					<div class="form-cel-50">
+   					<div class="form-cel-30">
    						<label th:text="#{label.nome}"></label>
    						<input th:value="${aluno.nome}" disabled="disabled" style="width: 85%;"/>
    					</div>
    					<div class="form-cel-20">
-   						<a class="btn" th:text="#{label.pagamento.novo}" th:href="@{'/aluno/' + {idAluno} + '/pagamento/new'}"></a>	
+   						<a class="btn" th:text="#{label.pagamento.novo}" th:href="@{'/aluno/' + ${aluno.id} + '/pagamento/new'}"></a>	
+   					</div>
+   					<div class="form-cel-20">
+   						<a id="btnEmitirBoleto" class="btn" th:text="#{label.emitir.boleto}" th:href="@{'/aluno/' + ${aluno.id} + '/pagamento/boleto'}"></a>
    					</div>
    				</div>
 	    		<div class="form-row">

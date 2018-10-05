@@ -180,7 +180,7 @@ $(document).ready(function(){
 		var valorParcela = valorTotal/totalParcelas;
 		
 		$("#valorParcela").val(valorParcela.toFixed(2));
-	})
+	});
 });
 
 var desativarWebCam = function(){
