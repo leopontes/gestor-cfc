@@ -172,13 +172,13 @@ public class AlunoController {
 			alunoService.save(aluno);
 			
 			if(!StringUtils.isEmpty(alunoForm.getFoto())) {
-				aluno.setPathFoto(relativePath + "/images/foto-" + aluno.getId()+".png");
+				aluno.setPathFoto(relativePath + "/images/foto-" + aluno.getIdentificador()+".png");
 				
 				alunoService.save(aluno);
 				
 				byte[] decodedBytes = DatatypeConverter.parseBase64Binary(alunoForm.getFoto().replaceAll("data:image/.+;base64,", ""));
 				
-				File foto1 = new File(path + "/images/foto-" + aluno.getId() +".png");
+				File foto1 = new File(path + "/images/foto-" + aluno.getIdentificador() +".png");
 				
 				BufferedImage bfi = ImageIO.read(new ByteArrayInputStream(decodedBytes));
 				ImageIO.write(bfi , "png", foto1);

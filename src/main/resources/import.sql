@@ -41,9 +41,4 @@ INSERT INTO `aluno` (`aluno_id`, `bairro`, `cadastrado_em`, `cep`, `cidade`, `co
 
 INSERT INTO `aluno` (`aluno_id`, `bairro`, `cadastrado_em`, `cep`, `cidade`, `complemento`, `contato1`, `contato2`, `contato3`, `cpf`, `data_expedicao`, `data_nacimento`, `email`, `endereco`, `identidade`, `mae`, `nome`, `numero`, `orgao_emissor`, `pai`, `path_foto`, `uf`) VALUES ('4', 'Pacheco', now(), '24736-180', 'Sao goncalo', 'casa', '(21) 2233-2222', '(21) 9752828632', '', '678.098.543-77', now(), now(), 'lopespontesleonardo@gmail.com', 'Rua cesar machado', '123270936', 'valdileia', 'Mario Estrela', '120', 'DIC', 'Jose', NULL, 'RJ');
 
-
-INSERT INTO `pacote` (`pacote_id`, `data_fim`, `data_inicio`, `nome`, `total_aulas_praticas`, `total_aulas_simulador`, `total_aulas_teoricas`, `total_simulados`, `valor`) VALUES
-(1, NULL, '2018-10-08', 'Pacote básico 1ª habilitação (carro)', 20, 5, 45, 0, '950.00'),
-(2, NULL, '2018-10-01', 'Pacote básico 1ª habilitação (moto)', 20, 0, 45, 0, '850.00');
-
 commit;

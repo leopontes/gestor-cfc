@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+<body>
+	<div class="container w_normal h_small"  layout:fragment="content">
+  		<h4 th:text="#{label.contrato}"></h4>
+   		<div class="content">
+   			<form method="post" th:action="@{/secao}" th:object="${secao}">
+				<div class="form-row">
+					<div class="form-cel-10">
+					    <label class="components-form" th:text="#{label.ordem}">:</label> 
+						<input type="text" th:field="*{ordem}" class="components-form" style="width: 95%;"/>
+					</div>
+					<div class="form-cel-90">
+					    <label class="components-form" th:text="#{label.secao}">:</label> 
+						<input type="text" th:field="*{descricao}" class="components-form" style="width: 95%;"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-control" style="float: right;padding: 10px;">
+						<input type="submit" th:value="#{label.btn.gravar}"/>
+					</div>
+				</div>
+			</form>
+   		</div>
+   	</div>
+</body>
+</html>

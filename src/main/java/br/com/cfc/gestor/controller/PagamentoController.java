@@ -143,14 +143,24 @@ public class PagamentoController {
 		
 		if(form.getDocumentos() != null && form.getDocumentos().length > 0) {
 			for(MultipartFile documento : form.getDocumentos()) {
-				File file = new File(path + "/docs/" + documento.getOriginalFilename());
-				documento.transferTo(file);
-				Documento doc = new Documento();
-				doc.setNome(documento.getOriginalFilename());
-				doc.setPath(relativePath + "/docs/" + documento.getOriginalFilename());
-				doc.setTipoDocumento(TipoDocumentoEnum.CONTRATO);
-				doc.setAluno(aluno);
-				documentoService.save(doc);
+				File directory = new File(path + "docs\\" + aluno.getIdentificador() + "\\");
+				
+				boolean isCreated = false;
+				
+				if(!directory.exists()) {
+					isCreated = directory.mkdirs();
+				}
+				
+				if(isCreated) {
+					File document = new File(path + "docs\\" + aluno.getIdentificador() + "\\" + documento.getOriginalFilename());
+					documento.transferTo(document);
+					Documento doc = new Documento();
+					doc.setNome(documento.getOriginalFilename());
+					doc.setPath(relativePath + "/docs/" + aluno.getIdentificador() + "/" + documento.getOriginalFilename());
+					doc.setTipoDocumento(TipoDocumentoEnum.CONTRATO);
+					doc.setAluno(aluno);
+					documentoService.save(doc);
+				}
 			}
 		}
 		

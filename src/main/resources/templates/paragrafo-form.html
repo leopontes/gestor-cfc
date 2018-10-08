@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+<body>
+	<div class="container w_normal h_medium"  layout:fragment="content">
+  		<h4 th:text="#{label.contrato}"></h4>
+   		<div class="content">
+   			<form method="post" th:action="@{'/contrato/clausula/' + ${clausula.id} + '/paragrafo' }" th:object="${paragrafo}">
+				<div class="form-row">
+					<div class="form-cel-10">
+					    <label class="components-form" th:text="#{label.numero}">:</label> 
+						<input type="number" th:field="*{ordem}" class="components-form" style="width: 87%;"/>
+					</div>
+					<div class="form-cel-40">
+					    <label class="components-form" th:text="#{label.paragrafo.unico}">:</label>
+					    <input type="checkbox" th:field="*{unico}" class="components-form"/> 
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-100">
+						<label class="components-form" th:text="#{label.texto}">:</label>
+						<textarea rows="10" cols="40" th:field="*{texto}"></textarea>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-control" style="float: right;padding: 10px;">
+						<input type="submit" th:value="#{label.btn.gravar}"/>
+					</div>
+				</div>
+			</form>
+   		</div>
+   	</div>
+</body>
+</html>

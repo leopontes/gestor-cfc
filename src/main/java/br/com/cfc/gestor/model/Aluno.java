@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.util.StringUtils;
 
 @Entity
 @Table(name="aluno", uniqueConstraints= {@UniqueConstraint(name="aluno_cpf_uk", columnNames="cpf")})
@@ -110,11 +111,16 @@ public class Aluno implements Serializable, Comparable<Aluno>{
 	
 	public Aluno() {
 		super();
-		this.cadastradoEm = LocalDate.now();
+		//this.cadastradoEm = LocalDate.now();
 	}
 	
 	public String getMatricula() {
-		return (this.id == null ? "" : this.id) + "/" + (this.cadastradoEm == null ? "" : this.cadastradoEm.getYear());
+		
+		if(this.id == null || this.cadastradoEm == null) {
+			return "";
+		}
+		
+		return this.id + "/" + this.cadastradoEm.getYear();		
 	}
 
 	public Long getId() {
@@ -295,6 +301,27 @@ public class Aluno implements Serializable, Comparable<Aluno>{
 
 	public void setPathFoto(String pathFoto) {
 		this.pathFoto = pathFoto;
+	}
+	
+	public String getIdentificador() {
+		
+		/**
+		 * Identificador: cpf_matricula
+		 * Exemplo: 088_470_917_56_1_2018
+		 */
+		String cpf = "SEM_CPF";
+		
+		if(!StringUtils.isEmpty(this.cpf)) {
+			cpf = this.cpf.replaceAll("\\.", "_").replaceAll("-", "_");
+		}
+		
+		String matricula = "SEM_MATRICULA";
+		
+		if(!StringUtils.isEmpty(getMatricula())) {
+			matricula = getMatricula().replaceAll("\\/", "_");
+		}
+		
+		return cpf + "_" + matricula;
 	}
 
 	@Override

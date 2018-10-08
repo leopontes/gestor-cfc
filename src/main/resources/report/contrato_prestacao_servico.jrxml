@@ -1,27 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contrato_prestacao_servico" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="78762d12-fcf7-49ee-ab50-0a242560b434">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contrato_prestacao_servico" language="groovy" pageWidth="595" pageHeight="842" columnWidth="425" leftMargin="85" rightMargin="85" topMargin="56" bottomMargin="85" uuid="78762d12-fcf7-49ee-ab50-0a242560b434">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="25"/>
+	<parameter name="nome_aluno" class="java.lang.String"/>
+	<parameter name="cpf_aluno" class="java.lang.String"/>
+	<parameter name="endereco_aluno" class="java.lang.String"/>
+	<parameter name="identidade_aluno" class="java.lang.String"/>
+	<parameter name="dia" class="java.lang.String"/>
+	<parameter name="mes" class="java.lang.String"/>
+	<parameter name="ano" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+    ctr.texto introducao,
+    sec.ordem secao_ordem,
+    sec.texto secao,
+    cls.ordem clausula_ordem,
+    cls.texto clausula,
+    prg.ordem paragrafo_ordem,
+    prg.texto paragrafo,
+    prg.unico unico
+  from contrato  ctr
+  join clausula  cls on ctr.contrato_id      = cls.contrato_id
+  join secao     sec on sec.secao_id         = cls.secao_id
+  left join paragrafo prg on cls.clausula_id = prg.clausula_id
+order by secao_ordem, clausula_ordem, paragrafo_ordem]]>
+	</queryString>
+	<field name="introducao" class="java.lang.String"/>
+	<field name="secao_ordem" class="java.lang.Integer"/>
+	<field name="secao" class="java.lang.String"/>
+	<field name="clausula_ordem" class="java.lang.Long"/>
+	<field name="clausula" class="java.lang.String"/>
+	<field name="paragrafo_ordem" class="java.lang.Integer"/>
+	<field name="paragrafo" class="java.lang.String"/>
+	<field name="unico" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="secao">
+		<groupExpression><![CDATA[$F{secao}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="425" height="15" uuid="60ec1e82-b115-4d60-9142-5e4600226dcc"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{secao}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="clausula">
+		<groupExpression><![CDATA[$F{clausula}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="425" height="15" uuid="7b12d69b-9b41-472a-8811-8c96276c113a"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{clausula} == null ? "" : ("Cláusula " + $F{clausula_ordem} + "ª. " + $F{clausula})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="paragrafo">
+		<groupExpression><![CDATA[$F{paragrafo}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="3" width="425" height="15" uuid="c13a78f1-db7f-47e3-87b9-528205cb3e19"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{paragrafo} == null ? null :
+(
+ ($F{unico} ? "Parágrafo único: ":
+             ("Parágrafo " + $F{paragrafo_ordem} + "º. ")
+ ) + $F{paragrafo}
+)]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="108" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="425" height="20" uuid="bea38bd6-4e1a-49b5-9c8f-84fc4485a2dc"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CONTRATO DE PRESTAÇÃO DE SERVIÇOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="425" height="15" uuid="1f6182b3-c6f6-4406-a24a-75e6c4c76a7c"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contratado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="35" width="425" height="32" uuid="76194afc-7338-4e81-ae4b-e0a07c33c883"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[CFC MARQUINHO DE JESUS LTDA, com sede à Estrada do Pacheco, 682 - Pacheco - São Gonçalo - RJ, inscrito no CNPJ sob o nº 045.460.61.0001-00]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="67" width="425" height="15" uuid="a46c350d-a0a9-44de-a9c5-f95ab5c125ca"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contratante:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="83" width="425" height="20" uuid="456f3fc3-f831-4080-9abb-dd0c4b334b0d"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nome_aluno} + ", Carteira de identidade nº:" + $P{identidade_aluno} +
+", CPF nº: " + $P{cpf_aluno}+ "residente e domiciliado na rua" + $P{endereco_aluno}]]></textFieldExpression>
+			</textField>
+		</band>
 	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="61" splitType="Stretch"/>
-	</columnHeader>
-	<detail>
-		<band height="125" splitType="Stretch"/>
-	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="96" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="8" width="425" height="15" uuid="e73b87dd-3165-4eb5-bff0-7717c5207849"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["São Gonçalo, " + $P{dia} + " de " + $P{mes} + " de " + $P{ano}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="45" width="210" height="1" uuid="05a2e65f-768a-44fd-989a-7952063b5c02"/>
+			</line>
+			<line>
+				<reportElement x="0" y="77" width="210" height="1" uuid="058d07ec-db7c-42af-99c5-560f34a40e9a"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="47" width="425" height="15" uuid="de8f42dd-e6f3-4e63-96d2-d1c33cfa00b0"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contratado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="79" width="425" height="15" uuid="5eae2bfc-fc95-4aaa-908b-00fde0e1be08"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contratante]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>

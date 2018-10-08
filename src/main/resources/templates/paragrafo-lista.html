@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorator="layout">
+
+    <body>
+    	<div class="container w_medium h_big"  layout:fragment="content">
+  			<h4 th:text="#{label.menu.contratos}"></h4>
+   			<div class="content">
+   				<div class="form-row">
+   					<div class="form-cel-20">
+   						<label th:text="#{label.clausula}"></label>
+   						<input type="text" th:value="${#strings.length(clausula.texto) > 10 ? (#strings.substring(clausula.texto, 0, 10)   + ' ...') : clausula.texto}" disabled="disabled" class="components-form" style="width: 95%;"/>	
+   					</div>
+   					<div class="form-cel-20">
+   						<a class="btn" th:text="#{label.paragrafo.novo}" th:href="@{'/contrato/clausula/' +${clausula.id} + '/paragrafo/new'}"></a>	
+   					</div>
+   				</div>
+	    		<div class="form-row">
+	    			<div class="form-cel-100">
+	    				<table style="width: 60%; margin-left:20%; margin-bottom: 20px;">
+							<thead>
+								<tr>
+									<th th:text="#{label.clausula}"></th>
+									<th th:text="#{label.texto}"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${paragrafos == null || paragrafos.empty}">
+									<td th:text="#{label.msg.registros.nao.encontrados}" colspan="3"></td>
+								</tr>
+								<tr th:each="paragrafo : ${paragrafos}">
+									<td th:text="${paragrafo.id}"></td>
+									<td>
+										<a class="link" th:text="${#strings.length(paragrafo.texto) > 10 ? (#strings.substring(paragrafo.texto, 0, 10)   + ' ...') : paragrafo.texto}" th:href="@{'/contrato/clausula/paragrafo/' + ${paragrafo.id}}"></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+	    			</div>
+				</div>
+   			</div>
+    	</div>
+    </body>
+</html>

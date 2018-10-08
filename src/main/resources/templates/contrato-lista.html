@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorator="layout">
+
+    <body>
+    	<div class="container w_medium h_big"  layout:fragment="content">
+  			<h4 th:text="#{label.menu.contratos}"></h4>
+   			<div class="content">
+   				<div class="form-row">
+   					<div class="form-cel-20">
+   						<a class="btn" th:text="#{label.contrato.novo}" th:href="@{/contrato/new}"></a>	
+   					</div>
+   					<div class="form-cel-20">
+   						<a class="btn" th:text="#{label.secoes}" th:href="@{/secao}"></a>	
+   					</div>
+   				</div>
+	    		<div class="form-row">
+	    			<div class="form-cel-100">
+	    				<table style="width: 60%; margin-left:20%; margin-bottom: 20px;">
+							<thead>
+								<tr>
+									<th th:text="#{label.codigo}"></th>
+									<th th:text="#{label.contrato}"></th>
+									<th colspan="1"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${contratos == null || contratos.empty}">
+									<td th:text="#{label.msg.registros.nao.encontrados}" colspan="3"></td>
+								</tr>
+								<tr th:each="contrato : ${contratos}">
+									<td th:text="${contrato.id}"></td>
+									<td>
+										<a class="link" th:text="${contrato.nome}" th:href="@{'/contrato/'+${contrato.id}}"></a>
+									</td>
+									<td>
+										<a class="link" th:text="#{label.clausulas}" th:href="@{'/contrato/'+${contrato.id}+'/clausula'}"></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+	    			</div>
+				</div>
+   			</div>
+    	</div>
+    </body>
+</html>
