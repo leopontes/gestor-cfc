@@ -22,15 +22,17 @@
 								<tr>
 									<th th:text="#{label.codigo}"></th>
 									<th th:text="#{label.contrato}"></th>
+									<th th:text="#{label.categoria}"></th>
 									<th colspan="1"></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:if="${contratos == null || contratos.empty}">
-									<td th:text="#{label.msg.registros.nao.encontrados}" colspan="3"></td>
+									<td th:text="#{label.msg.registros.nao.encontrados}" colspan="4"></td>
 								</tr>
 								<tr th:each="contrato : ${contratos}">
 									<td th:text="${contrato.id}"></td>
+									<td th:text="${contrato.categoria.descricao}"></td>
 									<td>
 										<a class="link" th:text="${contrato.nome}" th:href="@{'/contrato/'+${contrato.id}}"></a>
 									</td>

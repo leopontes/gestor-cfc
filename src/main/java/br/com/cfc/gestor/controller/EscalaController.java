@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeSet;
@@ -63,35 +62,39 @@ public class EscalaController {
 	@RequestMapping(value="/escala", method=RequestMethod.POST)
 	public String find(AgendamentoFiltro filtro, Model model) {
 		
-		DateTimeFormatter formatterDT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		
 		String[] mesAno = filtro.getMesAno().split("/");
 		
-		LocalDate dataReferencia = null;
+		return find(filtro, model, mesAno, null);
+	}
+
+	private String find(AgendamentoFiltro filtro, Model model, String[] mesAno, LocalDate dataReferencia) {
 		
-		if(!StringUtils.isEmpty(mesAno)) {
-			dataReferencia = LocalDate.of(Integer.valueOf(mesAno[1]), Integer.valueOf(mesAno[0]), 1);
-		}
-		
-		if(NavigationEnum.NEXT.equals(filtro.getNavigation())) {
-			dataReferencia = filtro.getFim().plusDays(1);
-		}
-		
-		if(NavigationEnum.PREVIOUS.equals(filtro.getNavigation())) {
-			dataReferencia = filtro.getInicio().minusDays(7);
+		if(dataReferencia == null) {
+			if(!StringUtils.isEmpty(mesAno)) {
+				dataReferencia = LocalDate.of(Integer.valueOf(mesAno[1]), Integer.valueOf(mesAno[0]), 1);
+			}
+			
+			if(NavigationEnum.NEXT.equals(filtro.getNavigation())) {
+				dataReferencia = filtro.getFim().plusDays(1);
+			}
+			
+			if(NavigationEnum.PREVIOUS.equals(filtro.getNavigation())) {
+				dataReferencia = filtro.getInicio().minusDays(7);
+			}
+			
+			while(!SemanaEnum.SEGUNDA.equals(SemanaEnum.fromCodigo(dataReferencia.getDayOfWeek().getValue()))){
+				dataReferencia = dataReferencia.minusDays(1);
+			}
 		}
 		
 		filtro.setInicio(dataReferencia);
-		
-		while(!SemanaEnum.SEGUNDA.equals(SemanaEnum.fromCodigo(dataReferencia.getDayOfWeek().getValue()))){
-			dataReferencia = dataReferencia.minusDays(1);
-		}
 		
 		Collection<LocalDate> periodo       = new ArrayList<>();
 		Collection<String>    periodoLabels = new ArrayList<>();
 		
 		Map<String, Collection<AulaProcessoVeiculo>> gradeHorarios = new HashMap<>();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		DateTimeFormatter formatterDT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
 		for(int i=0; i < 7; i++) {
 			periodoLabels.add(dataReferencia.format(formatterDT) + " (" + SemanaEnum.fromCodigo(dataReferencia.getDayOfWeek().getValue()).getSigla() + ")");
@@ -99,7 +102,7 @@ public class EscalaController {
 			dataReferencia = dataReferencia.plusDays(1);
 		}
 		
-		filtro.setFim(dataReferencia);
+		filtro.setFim(dataReferencia.minusDays(1));
 		
 		int hora = 8;
 		
@@ -179,7 +182,8 @@ public class EscalaController {
 			@RequestParam("aluno") Long alunoId, 
 			@RequestParam("data") String data, 
 			@RequestParam("veiculo") Long veiculoId, 
-			@RequestParam("mesAno") String mesAno, 
+			@RequestParam("mesAno") String mesAno,
+			@RequestParam("inicio") String inicio,
 			@RequestParam("instrutor") Long instrutorId) {
 		
 		AgendamentoFiltro   filtro    = new AgendamentoFiltro();
@@ -216,13 +220,16 @@ public class EscalaController {
 		aula.setInstrutor(instrutor);
 		
 		aulaProcessoVeiculoService.save(aula);
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dataReferencia = LocalDate.parse(inicio, formatter);
 		
-		return find(filtro, model);
+		return find(filtro, model, null, dataReferencia);
 	}
 	
 	@RequestMapping(value="/escala/desmarcar", method=RequestMethod.GET)
 	@Transactional
-	public String desmarcar(@RequestParam("agendamentoId") Long agendamentoId, @RequestParam("mesAno") String mesAno, Model model) {
+	public String desmarcar(@RequestParam("agendamentoId") Long agendamentoId, @RequestParam("mesAno") String mesAno, @RequestParam("inicio") String inicio, Model model) {
 		
 		AgendamentoFiltro   filtro = new AgendamentoFiltro();
 		AulaProcessoVeiculo aula   = aulaProcessoVeiculoService.get(agendamentoId);
@@ -233,8 +240,12 @@ public class EscalaController {
 		filtro.setMesAno(mesAno);
 		filtro.setVeiculo(aula.getVeiculo().getId());
 		filtro.setNome(aula.getProcesso().getAluno().getNome());
+		filtro.setInstrutor(aula.getInstrutor().getId());
 		
-		return find(filtro, model);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate dataReferencia = LocalDate.parse(inicio, formatter);
+		
+		return find(filtro, model, null, dataReferencia);
 	}
 	
 }

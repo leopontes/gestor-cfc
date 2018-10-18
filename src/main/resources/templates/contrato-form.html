@@ -14,6 +14,17 @@
 						<input type="text" th:field="*{nome}" class="components-form" style="width: 95%;"/>
 					</div>
 				</div>
+				<div class="form-row">
+					<div class="form-cel-100">
+						<label class="components-form"  th:text="#{label.categoria}">:</label> 
+					    <select class="components-form" style="width: 95%;" th:field="*{categoria}">
+					    	<option th:each="categoria : ${T(br.com.cfc.gestor.model.enuns.CategoriaEnum).values()}" 
+					    	        th:value="${categoria}" 
+					    	        th:text="${categoria.descricao}"
+					    	        th:selected="(${categoria} == *{categoria})"></option>
+					    </select>
+					</div>
+				</div>
 				<div class="form-row" style="height: 150px;">
 					<div class="form-cel-100">
 					    <label class="components-form" th:text="#{label.texto}">:</label> 

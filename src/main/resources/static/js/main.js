@@ -8,6 +8,10 @@ $(document).ready(function(){
 	
 	$("#previous").click(findPrevious);
 	
+	$(".agendamento-link").click(function(){
+		$(".loading").show();
+	});
+	
 	$( "#dialog-alert" ).dialog({
 		  resizable: false,
 	      height: "auto",
@@ -155,7 +159,7 @@ $(document).ready(function(){
 	
 	$("#cep").blur(function(){
 		
-		$("#loader").show();
+		$(".loading").show();
 		
 		$.ajax({
 			type: 'GET',
@@ -167,7 +171,7 @@ $(document).ready(function(){
 				$("#cidade").val(cep.localidade);
 				$("#uf").val(cep.uf);
 				
-				$("#loader").hide();
+				$(".loading").hide();
 			}
 		});
 	});

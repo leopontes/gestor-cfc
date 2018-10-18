@@ -50,10 +50,13 @@
 			</form>
 			<div class="form-row" th:if="${keys != null && !keys.empty}">
 				<div class="form-cel-100">
-					<nav class="navigation">
-						<a id="previous" href="#" th:text="label.anterior"></a>|
-						<a id="next" href="#" th:text="label.proximo"></a>
-					</nav>
+				
+					<div class="navigator">
+				    	<a id="previous" href="#">&#9664;</a>
+				        <a id="next" href="#">&#9654;</a>
+				        <span style="font-weight: bold;" th:text="${'(' + #temporals.format(filtro.inicio, 'dd/MM/yyyy') + ' - ' + #temporals.format(filtro.fim, 'dd/MM/yyyy') + ')'}"></span>
+					</div>
+				
 					<table id="tb-grade" style="width: 90%; margin-left: 5%; margin-bottom: 20px;">
 						<thead>
 							<tr style="background-color: #4f4f4f; ">
@@ -62,6 +65,7 @@
 							</tr>
 						</thead>
 						<tbody>
+						<!-- 093.860.967-06 -->
 							<tr th:each="horario : ${keys}">
 								<td th:text="${horario}"></td>
 								<td th:each="agendamento : ${grade.get(horario)}" th:class="${agendamento.processo != null ? 'agendado' : 'disponivel'}" style="text-align: center">
@@ -69,11 +73,11 @@
 									
 									<a th:if="${agendamento.id != null && agendamento.processo.aluno.id == filtro.matricula}" 
 									   th:text="#{label.desmarcar}" 
-									   th:href="@{/escala/desmarcar(agendamentoId=${agendamento.id}, mesAno=${filtro.mesAno})}" class="agendamento-link" ></a>
+									   th:href="@{/escala/desmarcar(agendamentoId=${agendamento.id}, mesAno=${filtro.mesAno}, inicio=${#temporals.format(filtro.inicio, 'dd/MM/yyyy')})}" class="agendamento-link" ></a>
 									
 									<a th:if="${agendamento.processo == null}" 
 									   th:text="#{label.agendar}" 
-									   th:href="@{/escala/agendar(aluno=${aluno.id}, data=${agendamento.data}, veiculo=${agendamento.veiculo.id}, instrutor=${instrutor.id}, mesAno=${filtro.mesAno})}" class="agendamento-link" ></a>
+									   th:href="@{/escala/agendar(aluno=${aluno.id}, data=${agendamento.data}, veiculo=${agendamento.veiculo.id}, instrutor=${instrutor.id}, mesAno=${filtro.mesAno}, inicio=${#temporals.format(filtro.inicio, 'dd/MM/yyyy')})}" class="agendamento-link" ></a>
 								</td>
 							</tr>
 						</tbody>

@@ -4,10 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import br.com.cfc.gestor.model.enuns.CategoriaEnum;
 
 @Entity
 @Table(name="contrato")
@@ -23,6 +27,10 @@ public class Contrato implements Serializable{
 	@Column(name="nome", length=90, nullable=false)
 	private String nome;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name="categoria", length=3, nullable=false)
+	private CategoriaEnum categoria;
+	
 	@Column(name="texto", length=500, nullable=false)
 	private String texto;
 	
@@ -48,5 +56,13 @@ public class Contrato implements Serializable{
 
 	public void setTexto(String texto) {
 		this.texto = texto;
+	}
+
+	public CategoriaEnum getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaEnum categoria) {
+		this.categoria = categoria;
 	}
 }
