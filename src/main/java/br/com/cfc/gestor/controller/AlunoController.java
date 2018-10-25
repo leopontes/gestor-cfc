@@ -42,8 +42,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.itextpdf.text.DocumentException;
-
 import br.com.cfc.gestor.controller.form.AlunoForm;
 import br.com.cfc.gestor.model.Aluno;
 import br.com.cfc.gestor.model.AulaProcessoVeiculo;
@@ -242,7 +240,7 @@ public class AlunoController {
 	@GetMapping(value="/aluno/{id}/comprovante")
 	public String gerarComprovante(Model model,
 			                       @PathVariable("id") Long id, 
-			                       HttpServletResponse response) throws FileNotFoundException, IOException, DocumentException {
+			                       HttpServletResponse response) throws FileNotFoundException, IOException{
 		
 		Aluno aluno = alunoService.get(id);
 		

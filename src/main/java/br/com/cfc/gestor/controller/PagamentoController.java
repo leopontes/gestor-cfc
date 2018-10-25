@@ -82,12 +82,19 @@ public class PagamentoController {
 	@RequestMapping(value="/aluno/{idAluno}/pagamento/new", method=RequestMethod.GET)
 	public String newPagamento(@PathVariable("idAluno") Long idAluno, Model model) {
 		
-		Aluno    aluno    = alunoService.get(idAluno);
-		Processo processo = processoService.getVigente(aluno);
+		Aluno            aluno    = alunoService.get(idAluno);
+		Processo         processo = processoService.getVigente(aluno);
+		Iterable<Pacote> pacotes  = pacoteService.findAll();
 		
-		model.addAttribute("aluno",    aluno);
-		model.addAttribute("processo", processo);
-		model.addAttribute("pagamento", new PagamentoForm());
+		PagamentoForm pagamento = new PagamentoForm();
+		pagamento.setAlunoId(idAluno);
+		pagamento.setNome(aluno.getNome());
+		pagamento.setMatricula(aluno.getMatricula());
+		
+		model.addAttribute("aluno",     aluno);
+		model.addAttribute("processo",  processo);
+		model.addAttribute("pagamento", pagamento);
+		model.addAttribute("pacotes",   pacotes);
 		
 		return "pagamento-form";
 	}
@@ -170,7 +177,7 @@ public class PagamentoController {
 	}
 	
 	@GetMapping("/aluno/{id}/pagamento/boleto")
-	public void emitirCarneDePagamento(@PathVariable("id") Long idAluno, HttpServletResponse response) throws JRException, IOException {
+	public void emitirCarneDePagamento(Model model, @PathVariable("id") Long idAluno, HttpServletResponse response) throws JRException, IOException {
 		
 		Aluno                             aluno      = alunoService.get(idAluno);
 		Processo                          processo   = processoService.getVigente(aluno);
@@ -192,6 +199,14 @@ public class PagamentoController {
 		}
 		
 		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("nome_aluno", aluno.getNome());
+		parameters.put("cpf",        aluno.getCpf());
+		parameters.put("aluno_id",   aluno.getId());
+		
+		/*
+		<parameter name="nome_aluno" class="java.lang.String"/>
+		<parameter name="cpf" class="java.lang.String"/>
+		<parameter name="aluno_id" class="java.lang.Long">*/
 		
 		InputStream  jasperStream = this.getClass().getResourceAsStream("/report/carne_pagamento.jasper");
 		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);

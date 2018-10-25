@@ -20,7 +20,9 @@
 					</div>
 					<div class="form-cel-30">
 					    <label class="components-form" th:text="#{label.servico}">:</label> 
-					    <input type="text" th:field="*{servico.descricao}" disabled="disabled" class="components-form" autocomplete="off"  style="width: 97%;"/>
+					    <select th:field="*{servico}" class="components-form" style="width: 95%;">
+					    	<option th:each="servico : ${T(br.com.cfc.gestor.model.enuns.ServicoEnum).values()}" th:value="${servico}" th:text="${servico.descricao}"></option>
+						</select>
 					</div>
 				</div>
 				<div class="form-row">
