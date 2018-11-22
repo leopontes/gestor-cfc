@@ -10,31 +10,25 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select pg.*
-  from processo_pagamento_pacote ppp
-  join processo p on ppp.processo_id = p.processo_id
-  join aluno a on p.aluno_id = a.aluno_id
-  join pagamento pg on ppp.pagamento_id = pg.pagamento_id
- where a.aluno_id = $P{aluno_id}
-   and p.data_termino is null;]]>
+		<![CDATA[]]>
 	</queryString>
-	<field name="pagamento_id" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="dataPagamento" class="org.joda.time.LocalDate">
+		<fieldDescription><![CDATA[dataPagamento]]></fieldDescription>
 	</field>
-	<field name="data_pagamento" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="dataVencimento" class="org.joda.time.LocalDate">
+		<fieldDescription><![CDATA[dataVencimento]]></fieldDescription>
 	</field>
-	<field name="data_vencimento" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="formaPagamento" class="br.com.cfc.gestor.model.enuns.FormaDePagamentoEnum">
+		<fieldDescription><![CDATA[formaPagamento]]></fieldDescription>
 	</field>
-	<field name="forma_pagamento" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
 	</field>
-	<field name="tipo_pagamento" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+	<field name="tipoPagamento" class="br.com.cfc.gestor.model.enuns.TipoPagamentoEnum">
+		<fieldDescription><![CDATA[tipoPagamento]]></fieldDescription>
 	</field>
 	<field name="valor" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[valor]]></fieldDescription>
 	</field>
 	<variable name="parcela" class="java.lang.Integer" incrementType="Report" calculation="Count">
 		<initialValueExpression><![CDATA[1]]></initialValueExpression>
@@ -116,14 +110,14 @@
 				<textElement textAlignment="Center">
 					<font size="7" isItalic="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{data_vencimento} != null) ? org.joda.time.LocalDate.fromDateFields($F{data_vencimento}).toString("dd/MM/yyyy"): ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{dataVencimento} != null) ? $F{dataVencimento}.toString("dd/MM/yyyy"): ""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="431" y="42" width="124" height="10" uuid="0e650ff1-4840-4fc6-b846-725ecc07df6c"/>
 				<textElement textAlignment="Center">
 					<font size="7" isItalic="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{data_vencimento} != null) ? org.joda.time.LocalDate.fromDateFields($F{data_vencimento}).toString("dd/MM/yyyy"): ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{dataVencimento} != null) ? $F{dataVencimento}.toString("dd/MM/yyyy"): ""]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="53" width="555" height="1" uuid="e76da872-774b-41e1-8296-748241631b8e"/>

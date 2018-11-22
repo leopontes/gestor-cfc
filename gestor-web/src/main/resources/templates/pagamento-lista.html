@@ -20,7 +20,7 @@
    						<a class="btn" th:text="#{label.pagamento.novo}" th:href="@{'/aluno/' + ${aluno.id} + '/pagamento/new'}"></a>	
    					</div>
    					<div class="form-cel-20">
-   						<a id="btnEmitirBoleto" class="btn" th:text="#{label.emitir.boleto}" th:href="@{'/aluno/' + ${aluno.id} + '/pagamento/boleto'}"></a>
+   						<a id="btnEmitirBoleto" target="_blank" class="btn" th:text="#{label.emitir.boleto}" th:href="@{'/aluno/' + ${aluno.id} + '/pagamento/boleto'}"></a>
    					</div>
    				</div>
 	    		<div class="form-row">
