@@ -35,6 +35,12 @@
 					    <label class="components-form"  th:text="#{label.renach}">:</label> 
 					    <input type="text" class="components-form"  autocomplete="off" style="width: 97%;" th:field="*{renach}"/>
 					</div>
+					<div class="form-cel-30">
+					    <label class="components-form"  th:text="#{label.contrato}">:</label> 
+					    <select class="components-form" style="width: 95%;" th:field="*{contrato}">
+					    	<option th:each="contrato : ${contratos}" th:value="${contrato.id}" th:text="${contrato.nome}"></option>
+					    </select>
+					</div>
 				</div>
 				<div class="form-row" th:if="${processo.id != null}">
 					<div class="form-cel-50">

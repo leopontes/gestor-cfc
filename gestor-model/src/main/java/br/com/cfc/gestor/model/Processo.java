@@ -56,6 +56,10 @@ public class Processo implements Serializable, Comparable<Processo>{
 	@JoinColumn(name="aluno_id")
 	private Aluno aluno;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="contrato_id")
+	private Contrato contrato;
+	
 	public Long getId() {
 		return id;
 	}
@@ -126,6 +130,14 @@ public class Processo implements Serializable, Comparable<Processo>{
 
 	public void setStatus(StatusProcessoEnum status) {
 		this.status = status;
+	}
+	
+	public Contrato getContrato() {
+		return contrato;
+	}
+
+	public void setContrato(Contrato contrato) {
+		this.contrato = contrato;
 	}
 
 	@Override

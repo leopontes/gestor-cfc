@@ -2,7 +2,7 @@ package br.com.cfc.gestor.model.vo;
 
 import java.io.Serializable;
 
-public class ContratoVO implements Serializable{
+public class ContratoVO implements Serializable, Comparable<ContratoVO>{
 
 	private static final long serialVersionUID = 8503360915168417042L;
 
@@ -84,5 +84,19 @@ public class ContratoVO implements Serializable{
 
 	public void setUnico(Boolean unico) {
 		this.unico = unico;
+	}
+
+	@Override
+	public int compareTo(ContratoVO other) {
+		
+		if(this.getSecaoOrdem().compareTo(other.getSecaoOrdem()) == 0) {
+			if(this.clausulaOrdem.compareTo(other.getClausulaOrdem()) == 0) {
+				return this.paragrafoOrdem.compareTo(other.getParagrafoOrdem());
+			}else {
+				return this.clausulaOrdem.compareTo(other.getClausulaOrdem());
+			}
+		}else {
+			return this.getSecaoOrdem().compareTo(other.getSecaoOrdem());
+		}
 	}
 }

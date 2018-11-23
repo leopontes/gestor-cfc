@@ -28,6 +28,7 @@
 									<th th:text="#{label.servico}"></th>
 									<th th:text="#{label.categoria}"></th>
 									<th th:text="#{label.renach}"></th>
+									<th th:text="#{label.contrato}"></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -41,6 +42,11 @@
 									<td th:text="${processo.categoria.descricao}"></td>
 									<td th:text="${processo.renach}"></td>
 									<td th:text="${processo.status.descricao}"></td>
+									<td   style="width: 5%;">
+		    							<a th:href="@{'/aluno/processo/'+${processo.id}+'/contrato'}">
+		    								<img alt="" th:src="@{/img/print.png}" width="20" height="20">
+		    							</a>
+			    				    </td>
 								</tr>
 							</tbody>
 						</table>
