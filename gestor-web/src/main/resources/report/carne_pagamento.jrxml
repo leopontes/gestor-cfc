@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carne_pagamento" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ca212551-6a10-4134-9aa3-c056469a9ab7">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="126"/>
 	<property name="aluno_id" value="$P{aluno_id}"/>
 	<parameter name="nome_aluno" class="java.lang.String"/>
 	<parameter name="cpf" class="java.lang.String"/>
@@ -30,7 +30,7 @@
 	<field name="valor" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[valor]]></fieldDescription>
 	</field>
-	<variable name="parcela" class="java.lang.Integer" incrementType="Report" calculation="Count">
+	<variable name="parcela" class="java.lang.Integer" resetType="Column" incrementType="Column" calculation="Count">
 		<initialValueExpression><![CDATA[1]]></initialValueExpression>
 	</variable>
 	<variable name="total" class="java.lang.Integer" resetType="Page" incrementType="Page" calculation="Count">

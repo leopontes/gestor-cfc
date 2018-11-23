@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contrato_prestacao_servico" language="groovy" pageWidth="595" pageHeight="842" columnWidth="425" leftMargin="85" rightMargin="85" topMargin="56" bottomMargin="85" uuid="78762d12-fcf7-49ee-ab50-0a242560b434">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="25"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="190"/>
+	<property name="ireport.y" value="185"/>
 	<parameter name="nome_aluno" class="java.lang.String"/>
 	<parameter name="cpf_aluno" class="java.lang.String"/>
 	<parameter name="endereco_aluno" class="java.lang.String"/>
@@ -26,15 +26,29 @@
   left join paragrafo prg on cls.clausula_id = prg.clausula_id
 order by secao_ordem, clausula_ordem, paragrafo_ordem]]>
 	</queryString>
-	<field name="introducao" class="java.lang.String"/>
-	<field name="secao_ordem" class="java.lang.Integer"/>
-	<field name="secao" class="java.lang.String"/>
-	<field name="clausula_ordem" class="java.lang.Long"/>
-	<field name="clausula" class="java.lang.String"/>
-	<field name="paragrafo_ordem" class="java.lang.Integer"/>
-	<field name="paragrafo" class="java.lang.String"/>
+	<field name="clausula" class="java.lang.String">
+		<fieldDescription><![CDATA[clausula]]></fieldDescription>
+	</field>
+	<field name="clausulaOrdem" class="java.lang.Integer">
+		<fieldDescription><![CDATA[clausulaOrdem]]></fieldDescription>
+	</field>
+	<field name="introducao" class="java.lang.String">
+		<fieldDescription><![CDATA[introducao]]></fieldDescription>
+	</field>
+	<field name="paragrafo" class="java.lang.String">
+		<fieldDescription><![CDATA[paragrafo]]></fieldDescription>
+	</field>
+	<field name="paragrafoOrdem" class="java.lang.Integer">
+		<fieldDescription><![CDATA[paragrafoOrdem]]></fieldDescription>
+	</field>
+	<field name="secao" class="java.lang.String">
+		<fieldDescription><![CDATA[secao]]></fieldDescription>
+	</field>
+	<field name="secaoOrdem" class="java.lang.Integer">
+		<fieldDescription><![CDATA[secaoOrdem]]></fieldDescription>
+	</field>
 	<field name="unico" class="java.lang.Boolean">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[unico]]></fieldDescription>
 	</field>
 	<group name="secao">
 		<groupExpression><![CDATA[$F{secao}]]></groupExpression>
@@ -59,7 +73,7 @@ order by secao_ordem, clausula_ordem, paragrafo_ordem]]>
 					<textElement textAlignment="Justified" verticalAlignment="Middle">
 						<font fontName="Arial" size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{clausula} == null ? "" : ("Cláusula " + $F{clausula_ordem} + "ª. " + $F{clausula})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{clausula} == null ? "" : ("Cláusula " + $F{clausulaOrdem} + "ª. " + $F{clausula})]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -76,7 +90,7 @@ order by secao_ordem, clausula_ordem, paragrafo_ordem]]>
 					<textFieldExpression><![CDATA[$F{paragrafo} == null ? null :
 (
  ($F{unico} ? "Parágrafo único: ":
-             ("Parágrafo " + $F{paragrafo_ordem} + "º. ")
+             ("Parágrafo " + $F{paragrafoOrdem} + "º. ")
  ) + $F{paragrafo}
 )]]></textFieldExpression>
 				</textField>

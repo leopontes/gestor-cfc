@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,9 +32,7 @@ import br.com.cfc.gestor.model.Pacote;
 import br.com.cfc.gestor.model.Pagamento;
 import br.com.cfc.gestor.model.Processo;
 import br.com.cfc.gestor.model.ProcessoPagamentoPacote;
-import br.com.cfc.gestor.model.enuns.FormaDePagamentoEnum;
 import br.com.cfc.gestor.model.enuns.TipoDocumentoEnum;
-import br.com.cfc.gestor.model.enuns.TipoPagamentoEnum;
 import br.com.cfc.gestor.model.vo.PagamentoVO;
 import br.com.cfc.gestor.service.AlunoService;
 import br.com.cfc.gestor.service.AulaProcessoVeiculoService;
@@ -211,47 +208,13 @@ public class PagamentoController {
 		parameters.put("aluno_id",   aluno.getId());
 		
 		
-		List<PagamentoVO> pagamentosReport = new ArrayList<PagamentoVO>();
+		List<PagamentoVO> report = new ArrayList<PagamentoVO>();
 		
-		PagamentoVO parcela1 = new PagamentoVO();
-		PagamentoVO parcela2 = new PagamentoVO();
-		PagamentoVO parcela3 = new PagamentoVO();
-		PagamentoVO parcela4 = new PagamentoVO();
+		for(ProcessoPagamentoPacote processoPagamento : pagamentos) {
+			report.add(new PagamentoVO(processoPagamento.getPagamento()));
+		}
 		
-		parcela1.setId(1l);
-		parcela1.setDataPagamento(org.joda.time.LocalDate.now());
-		parcela1.setDataVencimento(org.joda.time.LocalDate.now());
-		parcela1.setFormaPagamento(FormaDePagamentoEnum.PARCELADO);
-		parcela1.setTipoPagamento(TipoPagamentoEnum.CARNE);
-		parcela1.setValor(BigDecimal.valueOf(2234));
-		
-		parcela2.setId(2l);
-		parcela2.setDataPagamento(org.joda.time.LocalDate.now());
-		parcela2.setDataVencimento(org.joda.time.LocalDate.now());
-		parcela2.setFormaPagamento(FormaDePagamentoEnum.PARCELADO);
-		parcela2.setTipoPagamento(TipoPagamentoEnum.CARNE);
-		parcela2.setValor(BigDecimal.valueOf(2234));
-		
-		parcela3.setId(3l);
-		parcela3.setDataPagamento(org.joda.time.LocalDate.now());
-		parcela3.setDataVencimento(org.joda.time.LocalDate.now());
-		parcela3.setFormaPagamento(FormaDePagamentoEnum.PARCELADO);
-		parcela3.setTipoPagamento(TipoPagamentoEnum.CARNE);
-		parcela3.setValor(BigDecimal.valueOf(2234));
-		
-		parcela4.setId(4l);
-		parcela4.setDataPagamento(org.joda.time.LocalDate.now());
-		parcela4.setDataVencimento(org.joda.time.LocalDate.now());
-		parcela4.setFormaPagamento(FormaDePagamentoEnum.PARCELADO);
-		parcela4.setTipoPagamento(TipoPagamentoEnum.CARNE);
-		parcela4.setValor(BigDecimal.valueOf(2234));
-		
-		pagamentosReport.add(parcela1);
-		pagamentosReport.add(parcela2);
-		pagamentosReport.add(parcela3);
-		pagamentosReport.add(parcela4);
-		
-		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource( pagamentosReport );
+		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(report);
 		
 		InputStream  jasperStream = this.getClass().getResourceAsStream("/report/carne_pagamento.jasper");
 		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);

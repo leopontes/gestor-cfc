@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import org.joda.time.LocalDate;
 
+import br.com.cfc.gestor.model.Pagamento;
 import br.com.cfc.gestor.model.enuns.FormaDePagamentoEnum;
 import br.com.cfc.gestor.model.enuns.TipoPagamentoEnum;
 
@@ -23,6 +24,25 @@ public class PagamentoVO  implements Serializable{
 	private LocalDate dataPagamento;
 	
 	private BigDecimal valor;
+
+	public PagamentoVO() {
+		super();
+	}
+	
+	public PagamentoVO(final Pagamento pagamento) {
+		super();
+		
+		this.id = pagamento.getId();
+		this.tipoPagamento  = pagamento.getTipoPagamento();
+		this.formaPagamento = pagamento.getFormaPagamento();
+		this.dataVencimento = new org.joda.time.LocalDate(pagamento.getDataVencimento().getYear(), pagamento.getDataVencimento().getMonthValue(), pagamento.getDataVencimento().getDayOfMonth());
+		
+		if(pagamento.getDataPagamento() != null) {
+			this.dataPagamento  = new org.joda.time.LocalDate(pagamento.getDataPagamento().getYear(), pagamento.getDataPagamento().getMonthValue(), pagamento.getDataPagamento().getDayOfMonth());
+		}
+		
+		this.valor          = pagamento.getValor();
+	}
 
 	public Long getId() {
 		return id;
