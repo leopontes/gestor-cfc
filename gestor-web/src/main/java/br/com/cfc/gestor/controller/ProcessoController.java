@@ -264,7 +264,7 @@ public class ProcessoController {
 		JasperPrint  jasperPrint  = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 				
 		response.setContentType("application/pdf");
-		response.setHeader("Content-Disposition", "inline;filename=carne.pdf");
+		response.setHeader("Content-Disposition", "inline;filename=contrato_prestacao_servicos.pdf");
 				
 		final OutputStream outputStream = response.getOutputStream();
 		
