@@ -3,7 +3,7 @@
   <parent>
     <groupId>br.com.cfc</groupId>
     <artifactId>gestor</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
   </parent>
   <artifactId>gestor-web</artifactId>
   <packaging>war</packaging>
@@ -142,12 +142,29 @@
 	</dependencies>
 
 	<build>
-		<finalName>${artifactId}</finalName>
+		<finalName>${project.artifactId}-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-antrun-plugin</artifactId>
+	            <executions>
+	                <execution>
+	                    <phase>install</phase>
+	                    <configuration>
+	                        <target>
+	                            <copy file="target/${project.artifactId}-${project.version}.war" tofile="C:\\Desenvolvimento\\Projetos\\Gestao-CFC\\versoes\\${project.artifactId}\\${project.artifactId}-${project.version}.war"/>
+	                        </target>
+	                    </configuration>
+	                    <goals>
+	                        <goal>run</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	        </plugin>
 		</plugins>
 	</build>
 	
