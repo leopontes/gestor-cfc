@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorator="layout">
+
+    <body>
+    	<div class="container w_medium h_big"  layout:fragment="content">
+  			<h4 th:text="#{label.instrutores}"></h4>
+   			<div class="content">
+   				<div class="form-row">
+   					<div class="form-cel-20">
+   						<a class="btn" th:text="#{label.contrato.novo}" th:href="@{/instrutor/new}"></a>	
+   					</div>
+   					<div class="form-cel-20">
+   						<a class="btn" th:text="#{label.secoes}" th:href="@{/secao}"></a>	
+   					</div>
+   				</div>
+	    		<div class="form-row">
+	    			<div class="form-cel-100">
+	    				<table style="width: 60%; margin-left:20%; margin-bottom: 20px;">
+							<thead>
+								<tr>
+									<th th:text="#{label.nome}"></th>
+									<th th:text="#{label.credencial}"></th>
+									<th th:text="#{label.validade}"></th>
+									<th colspan="1"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${instrutores == null || instrutores.empty}">
+									<td th:text="#{label.msg.registros.nao.encontrados}" colspan="4"></td>
+								</tr>
+								<tr th:each="instrutor : ${instrutores}">
+									<td th:text="${instrutor.nome}"></td>
+									<td th:text="${instrutor.credencial}"></td>
+									<td th:text="${instrutor.validadeCredencial}"></td>
+									<td>
+										<a class="link" th:text="${instrutor.nome}" th:href="@{'/instrutor/'+${instrutor.id}}"></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+	    			</div>
+				</div>
+   			</div>
+    	</div>
+    </body>
+</html>

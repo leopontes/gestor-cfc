@@ -8,4 +8,6 @@ public interface InstrutorService {
 
 	Instrutor get(Long instrutorId);
 
+	void save(Instrutor instrutor);
+
 }

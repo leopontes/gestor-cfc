@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+<body>
+	<div class="container w_medium h_medium"  layout:fragment="content">
+  		<h4 th:text="#{label.contrato}"></h4>
+   		<div class="content">
+   			<form method="post" th:action="@{/contrato}" th:object="${contrato}">
+				<div class="form-row">
+					<div class="form-cel-100">
+					    <label class="components-form" th:text="#{label.contrato}">:</label> 
+						<input type="text" th:field="*{nome}" class="components-form" style="width: 95%;"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-100">
+						<label class="components-form"  th:text="#{label.categoria}">:</label> 
+					    <select class="components-form" style="width: 95%;" th:field="*{categoria}">
+					    	<option th:each="categoria : ${T(br.com.cfc.gestor.model.enuns.CategoriaEnum).values()}" 
+					    	        th:value="${categoria}" 
+					    	        th:text="${categoria.descricao}"
+					    	        th:selected="(${categoria} == *{categoria})"></option>
+					    </select>
+					</div>
+				</div>
+				<div class="form-row" style="height: 150px;">
+					<div class="form-cel-100">
+					    <label class="components-form" th:text="#{label.texto}">:</label> 
+						<textarea cols="40" rows="10" th:field="*{texto}" class="components-form" style="width: 95%;"></textarea>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-control" style="float: right;padding: 10px;">
+						<input type="submit" th:value="#{label.btn.gravar}"/>
+					</div>
+				</div>
+			</form>
+   		</div>
+   	</div>
+</body>
+</html>

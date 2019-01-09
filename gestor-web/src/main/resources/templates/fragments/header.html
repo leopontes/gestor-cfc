@@ -12,13 +12,35 @@
 				<span th:text="#{label.saudacao}"></span><span sec:authentication="name">Name</span> - <a th:href="@{/logout}" th:text="#{label.logout}"></a>
 			</div>
 		</div>
-		<nav class="menu" sec:authorize="isAuthenticated()">
-		  <a th:href="@{/aluno}"   th:text="#{label.menu.matriculas}"></a>
-		  <a th:href="@{/escala}"  th:text="#{label.menu.escalas}"></a>
-		  <!-- <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/financiero}" th:text="#{label.menu.financas}"></a> -->
-		  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/contrato}" th:text="#{label.menu.contratos}"></a>
-		  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/pacote}" th:text="#{label.titulo.cadastro.pacote}"></a>
-		</nav>
+		
+			<ul class="menu" sec:authorize="isAuthenticated()">
+				<li>
+					<span th:text="#{label.aluno}"></span>
+					<ul class="submenu">
+						<li>
+							<a th:href="@{/aluno}" th:text="#{label.menu.matriculas}"></a>
+						</li>
+						<li>
+						    <a th:href="@{/escala}" th:text="#{label.menu.escalas}"></a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<span th:text="#{label.administrativo}"></span>
+					<ul class="submenu">
+						<li>
+						  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/contrato}" th:text="#{label.menu.contratos}"></a>
+						</li>
+						<li>
+						  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/pacote}" th:text="#{label.titulo.cadastro.pacote}"></a>
+						</li>
+						<li>
+						  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/instrutor}" th:text="#{label.instrutores}"></a>
+						</li>
+					</ul>
+				</li>
+				<li><span th:text="#{label.financas}"></span></li>
+			</ul>
 	</header>
 
 </body>

@@ -32,4 +32,8 @@ public class InstrutorServiceImpl implements InstrutorService {
 		return null;
 	}
 
+	@Override
+	public void save(Instrutor instrutor) {
+		instrutorRepository.save(instrutor);
+	}
 }

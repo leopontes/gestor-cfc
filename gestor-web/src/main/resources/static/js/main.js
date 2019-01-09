@@ -2,6 +2,8 @@ var localStream;
 
 $(document).ready(function(){
 
+	/*$( "#menu" ).menu();*/
+	
 	$("#camera").click(ativarWebCam);
 	
 	$("#next").click(findNext);
@@ -185,6 +187,7 @@ $(document).ready(function(){
 		
 		$("#valorParcela").val(valorParcela.toFixed(2));
 	});
+	
 });
 
 var desativarWebCam = function(){

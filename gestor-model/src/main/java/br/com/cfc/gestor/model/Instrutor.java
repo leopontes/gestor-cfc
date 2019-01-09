@@ -1,4 +1,4 @@
-package br.com.cfc.gestor.model;
+	package br.com.cfc.gestor.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
