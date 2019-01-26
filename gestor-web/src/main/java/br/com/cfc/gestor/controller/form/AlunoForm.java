@@ -1,6 +1,5 @@
 package br.com.cfc.gestor.controller.form;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -12,7 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import br.com.cfc.gestor.model.Aluno;
 
-public class AlunoForm implements Serializable{
+public class AlunoForm extends Form<Aluno>{
 
 	private static final long serialVersionUID = 705451097516169645L;
 	
@@ -298,8 +297,8 @@ public class AlunoForm implements Serializable{
 		setPathFoto(aluno.getPathFoto());
 	}
 
-	public Aluno toAluno() {
-		
+	@Override
+	public Aluno toBean() {
 		Aluno aluno = new Aluno();
 		
 		aluno.setId(id);

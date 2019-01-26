@@ -10,4 +10,6 @@ public interface InstrutorService {
 
 	void save(Instrutor instrutor);
 
+	void delete(Instrutor instrutor);
+
 }

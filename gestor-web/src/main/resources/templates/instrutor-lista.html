@@ -34,9 +34,16 @@
 									<td th:text="${instrutor.nome}"></td>
 									<td th:text="${instrutor.credencial}"></td>
 									<td th:text="${instrutor.validadeCredencial}"></td>
-									<td>
-										<a class="link" th:text="${instrutor.nome}" th:href="@{'/instrutor/'+${instrutor.id}}"></a>
-									</td>
+									<td  style="width: 5%;">
+		    							<a th:href="@{'/instrutor/edit/' + ${instrutor.id}}">
+			    							<button th:text="#{label.btn.editar}"></button>
+		    							</a>
+		    						</td>
+		    						<td   style="width: 5%;">
+		    							<a th:href="@{'/instrutor/delete/' + ${instrutor.id}}">
+			    							<button th:text="#{label.btn.excluir}"></button>
+		    							</a>
+		    						</td>
 								</tr>
 							</tbody>
 						</table>

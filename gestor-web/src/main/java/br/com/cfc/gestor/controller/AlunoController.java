@@ -164,7 +164,7 @@ public class AlunoController {
 		
 		try {
 			
-			Aluno aluno = alunoForm.toAluno();
+			Aluno aluno = alunoForm.toBean();
 			aluno.setCadastradoEm(LocalDate.now());
 			
 			alunoService.save(aluno);

@@ -36,4 +36,9 @@ public class InstrutorServiceImpl implements InstrutorService {
 	public void save(Instrutor instrutor) {
 		instrutorRepository.save(instrutor);
 	}
+
+	@Override
+	public void delete(Instrutor instrutor) {
+		instrutorRepository.delete(instrutor);
+	}
 }
