@@ -43,16 +43,18 @@ span.title {
 
 .submenu{
 	display: none;
+	margin: -8px 0px 0px 0px;
 }
 
 ul.menu {
     float: right;
     color: #fff !important;
-    padding: 10px 0px 10px 0px;
+    padding: 20px 0px 10px 0px;
     display: inline;
     width: 100%;
     background-color: #646464;
     border: solid 1px #000;
+    z-index: 5000;
 }
 
 ul.menu a {

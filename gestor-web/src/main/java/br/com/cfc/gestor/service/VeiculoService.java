@@ -8,4 +8,8 @@ public interface VeiculoService {
 
 	Veiculo get(Long veiculo);
 
+	void save(Veiculo bean);
+
+	void delete(Veiculo veiculo);
+
 }

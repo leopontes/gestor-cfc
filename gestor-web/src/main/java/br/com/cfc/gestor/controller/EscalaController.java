@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeSet;
@@ -25,7 +26,9 @@ import br.com.cfc.gestor.controller.filtro.AgendamentoFiltro;
 import br.com.cfc.gestor.model.Aluno;
 import br.com.cfc.gestor.model.AulaProcessoVeiculo;
 import br.com.cfc.gestor.model.Instrutor;
+import br.com.cfc.gestor.model.Pacote;
 import br.com.cfc.gestor.model.Processo;
+import br.com.cfc.gestor.model.ProcessoPagamentoPacote;
 import br.com.cfc.gestor.model.Veiculo;
 import br.com.cfc.gestor.model.enuns.NavigationEnum;
 import br.com.cfc.gestor.model.enuns.SemanaEnum;
@@ -33,6 +36,7 @@ import br.com.cfc.gestor.model.enuns.TipoAulaEnum;
 import br.com.cfc.gestor.service.AlunoService;
 import br.com.cfc.gestor.service.AulaProcessoVeiculoService;
 import br.com.cfc.gestor.service.InstrutorService;
+import br.com.cfc.gestor.service.ProcessoPagamentoPacoteService;
 import br.com.cfc.gestor.service.ProcessoService;
 import br.com.cfc.gestor.service.VeiculoService;
 import br.com.cfc.gestor.utils.BusinessUtils;
@@ -57,6 +61,9 @@ public class EscalaController {
 	private InstrutorService instrutorService;
 	
 	@Resource
+	private ProcessoPagamentoPacoteService processoPagamentoPacoteService;
+	
+	@Resource
 	private MessageContext messageContext;
 	
 	@RequestMapping(value="/escala", method=RequestMethod.POST)
@@ -68,6 +75,26 @@ public class EscalaController {
 	}
 
 	private String find(AgendamentoFiltro filtro, Model model, String[] mesAno, LocalDate dataReferencia) {
+		
+		if(filtro.getMatricula() == 0) {
+			messageContext.add("Informe a matrícula do aluno!");
+			return init(model, Optional.ofNullable(null));
+		}
+		
+		if(filtro.getVeiculo() == 0) {
+			messageContext.add("Informe o veículo!");
+			return init(model, Optional.ofNullable(null));
+		}
+		
+		if(filtro.getInstrutor() == 0) {
+			messageContext.add("Informe o instrutor!");
+			return init(model, Optional.ofNullable(null));
+		}
+		
+		if(StringUtils.isEmpty(filtro.getMesAno())) {
+			messageContext.add("Informe o Mês/Ano!");
+			return init(model, Optional.ofNullable(null));
+		}
 		
 		if(dataReferencia == null) {
 			if(!StringUtils.isEmpty(mesAno)) {
@@ -203,6 +230,14 @@ public class EscalaController {
 		
 		AulaProcessoVeiculo aulaInstrutor = aulaProcessoVeiculoService.findByInstrutor(instrutor, dataAgendamento);
 		
+		Iterable<ProcessoPagamentoPacote> pagamentos = processoPagamentoPacoteService.findByProcesso(processo);
+		
+		Integer totalAulasPraticas = 20;
+		
+		for(ProcessoPagamentoPacote processoPagamentoPacote : pagamentos) {
+			totalAulasPraticas = processoPagamentoPacote.getPacote().getTotalAulasPraticas();
+		}
+		
 		if(aulaInstrutor != null) {
 			messageContext.add("O instrutor selecionado não esta disponível neste dia e horário!");
 			return find(filtro, model);
@@ -218,6 +253,15 @@ public class EscalaController {
 		aula.setTipo(TipoAulaEnum.PRATICA);
 		aula.setVeiculo(veiculo);
 		aula.setInstrutor(instrutor);
+		
+		Iterable<AulaProcessoVeiculo> aulas = aulaProcessoVeiculoService.findByAluno(aluno);
+		
+		Integer totalAulasAgendadas = aulas == null ? 0 : ((List)aulas).size();
+
+		if(totalAulasAgendadas.compareTo(totalAulasPraticas) >= 0) {
+			messageContext.add("O aluno já atingiu o limite de aulas agendadas!");
+			return find(filtro, model);
+		}
 		
 		aulaProcessoVeiculoService.save(aula);
 

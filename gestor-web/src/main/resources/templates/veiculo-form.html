@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+<body>
+	<div class="container w_normal h_normal"  layout:fragment="content">
+  		<h4 th:text="#{label.veiculo}"></h4>
+   		<div class="content">
+   			<form method="post" th:action="@{/veiculo}" th:object="${veiculo}">
+				<div class="form-row">
+					<div class="form-cel-25">
+					    <label class="components-form" th:text="#{label.marca}">:</label> 
+					    <select class="components-form" style="width: 95%;" th:field="*{marca}">
+					    	<option th:each="marca : ${T(br.com.cfc.gestor.model.enuns.MarcaEnum).values()}" th:value="${marca}" th:text="${marca.nome}"></option>
+					    </select>
+					</div>
+					<div class="form-cel-25">
+					    <label class="components-form" th:text="#{label.modelo}">:</label> 
+						<input type="text" th:field="*{modelo}" class="components-form" style="width: 95%;"/>
+					</div>
+					<div class="form-cel-25">
+					    <label class="components-form" th:text="#{label.cor}">:</label> 
+						<input type="text" th:field="*{cor}" class="components-form" style="width: 95%;"/>
+					</div>
+					<div class="form-cel-25">
+					    <label class="components-form" th:text="#{label.ano}">:</label> 
+						<input type="text" th:field="*{ano}" class="components-form" style="width: 95%;"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-25">
+						<label class="components-form"  th:text="#{label.placa}">:</label> 
+					    <input type="text" th:field="*{placa}" class="components-form" style="width: 95%;"/>
+					</div>
+					<div class="form-cel-50">
+					    <label class="components-form" th:text="#{label.renavan}">:</label> 
+						<input  type="text" th:field="*{renavan}" class="components-form" style="width: 95%;"/>
+					</div>
+					<div class="form-cel-25">
+					    <label class="components-form" th:text="#{label.combustivel}">:</label> 
+					    <select class="components-form" style="width: 95%;" th:field="*{combustivel}">
+					    	<option th:each="combustivel : ${T(br.com.cfc.gestor.model.enuns.CombustivelEnum).values()}" th:value="${combustivel}" th:text="${combustivel}"></option>
+					    </select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-control" style="float: right;padding: 10px;">
+						<input type="submit" th:value="#{label.btn.gravar}"/>
+					</div>
+				</div>
+			</form>
+   		</div>
+   	</div>
+</body>
+</html>

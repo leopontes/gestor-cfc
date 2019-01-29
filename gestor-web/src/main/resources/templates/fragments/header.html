@@ -37,6 +37,9 @@
 						<li>
 						  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/instrutor}" th:text="#{label.instrutores}"></a>
 						</li>
+						<li>
+						  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/veiculo}" th:text="#{label.veiculos}"></a>
+						</li>
 					</ul>
 				</li>
 				<li><span th:text="#{label.financas}"></span></li>

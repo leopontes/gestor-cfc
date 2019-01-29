@@ -4,7 +4,7 @@
 	layout:decorator="layout">
 
 <body>
-	<div class="container w_big h_big"  layout:fragment="content">
+	<div class="container w_big"  layout:fragment="content" style="height: 600px;">
   		<h4 th:text="#{label.titulo.aluno.agendamento}"></h4>
    		<div class="content">
    			<form method="post" th:action="@{/escala}" th:object="${filtro}">

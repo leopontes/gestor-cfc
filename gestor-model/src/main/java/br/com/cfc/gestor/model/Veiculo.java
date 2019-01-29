@@ -38,7 +38,7 @@ public class Veiculo implements Serializable{
 	private String versao;
 	
 	@Column(name="ano", nullable=false)
-	private Integer ano;
+	private String ano;
 	
 	@Column(name="placa", length=100, nullable=false)
 	private String placa;
@@ -89,11 +89,11 @@ public class Veiculo implements Serializable{
 		this.versao = versao;
 	}
 
-	public Integer getAno() {
+	public String getAno() {
 		return ano;
 	}
 
-	public void setAno(Integer ano) {
+	public void setAno(String ano) {
 		this.ano = ano;
 	}
 

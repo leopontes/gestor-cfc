@@ -118,6 +118,31 @@ public class PagamentoController {
 		return "pagamento-lista";
 	}
 	
+	@GetMapping(value="/aluno/{id}/pagamento/{idParcela}")
+	@Transactional
+	public String efetuarPagamento(Model model, @PathVariable("id") Long id, @PathVariable("idParcela") Long idParcela) {
+		
+		Aluno    aluno    = alunoService.get(id);
+		Processo processo = processoService.getVigente(aluno);
+
+		Iterable<ProcessoPagamentoPacote> pagamentos = processoPagamentoPacoteServive.findByProcesso(processo);
+		
+		for(ProcessoPagamentoPacote pagamento : pagamentos) {
+			if(pagamento.getPagamento().getId().equals(idParcela)) {
+				pagamento.getPagamento().setDataPagamento(LocalDate.now());
+				processoPagamentoPacoteServive.save(pagamento);
+				messageContext.add("Pagamento efetuado com sucesso!");
+				break;
+			}
+		}
+		
+		model.addAttribute("pagamentos", pagamentos);
+		model.addAttribute("aluno", aluno);
+		model.addAttribute("processo", processo);
+		
+		return "pagamento-lista";
+	}
+	
 	@PostMapping("/pagamento")
 	@Transactional
 	public String cadastrarPagamento(Model model, PagamentoForm form) throws IllegalStateException, IOException {

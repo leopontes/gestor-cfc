@@ -206,7 +206,7 @@ var ativarWebCam = function(){
 	// Put video listeners into place
     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia(mediaConfig).then(function(stream) {
-            video.src = window.URL.createObjectURL(stream);
+            video.srcObject = stream;
             video.play();
             localStream = stream;
         });
@@ -218,7 +218,7 @@ var ativarWebCam = function(){
 		}, errBack);
 	} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
 		navigator.webkitGetUserMedia(mediaConfig, function(stream){
-			video.src = window.webkitURL.createObjectURL(stream);
+			video.srcObject = stream;
 			video.play();
 			localStream = stream;
 		}, errBack);

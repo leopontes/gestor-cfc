@@ -32,4 +32,14 @@ public class VeiculoServiceImpl implements VeiculoService {
 		return null;
 	}
 
+	@Override
+	public void save(Veiculo veiculo) {
+		veiculoRepositiry.save(veiculo);
+	}
+
+	@Override
+	public void delete(Veiculo veiculo) {
+		veiculoRepositiry.delete(veiculo);
+	}
+
 }

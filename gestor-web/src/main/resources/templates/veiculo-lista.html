@@ -5,39 +5,39 @@
 
     <body>
     	<div class="container w_medium h_big"  layout:fragment="content">
-  			<h4 th:text="#{label.instrutores}"></h4>
+  			<h4 th:text="#{label.veiculos}"></h4>
    			<div class="content">
    				<div class="form-row">
    					<div class="form-cel-20">
-   						<a class="btn" th:text="#{label.contrato.novo}" th:href="@{/instrutor/new}"></a>	
+   						<a class="btn" th:text="#{label.contrato.novo}" th:href="@{/veiculo/new}"></a>	
    					</div>
    				</div>
 	    		<div class="form-row">
 	    			<div class="form-cel-100">
-	    				<table style="width: 60%; margin-left:20%; margin-bottom: 20px;">
+	    				<table style="width: 80%; margin-left:10%; margin-bottom: 20px;">
 							<thead>
 								<tr>
-									<th th:text="#{label.nome}"></th>
-									<th th:text="#{label.credencial}"></th>
-									<th th:text="#{label.validade}"></th>
+									<th th:text="#{label.codigo}"></th>
+									<th th:text="#{label.veiculo}"></th>
+									<th th:text="#{label.placa}"></th>
 									<th colspan="2"></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:if="${instrutores == null || instrutores.empty}">
+								<tr th:if="${veiculos == null || veiculos.empty}">
 									<td th:text="#{label.msg.registros.nao.encontrados}" colspan="4"></td>
 								</tr>
-								<tr th:each="instrutor : ${instrutores}">
-									<td th:text="${instrutor.nome}"></td>
-									<td th:text="${instrutor.credencial}"></td>
-									<td th:text="${#temporals.format(instrutor.validadeCredencial, 'dd/MM/yyyy')}"></td>
+								<tr th:each="veiculo : ${veiculos}">
+									<td th:text="${veiculo.id}"></td>
+									<td th:text="${veiculo.marca.nome} + '/' + ${veiculo.modelo} + ' - ' + ${veiculo.cor} + ' (' + ${veiculo.ano} + ')'"></td>
+									<td th:text="${veiculo.placa}"></td>
 									<td  style="width: 5%;">
-		    							<a th:href="@{'/instrutor/edit/' + ${instrutor.id}}">
+		    							<a th:href="@{'/veiculo/edit/' + ${veiculo.id}}">
 			    							<button th:text="#{label.btn.editar}"></button>
 		    							</a>
 		    						</td>
 		    						<td   style="width: 5%;">
-		    							<a th:href="@{'/instrutor/delete/' + ${instrutor.id}}">
+		    							<a th:href="@{'/veiculo/delete/' + ${veiculo.id}}">
 			    							<button th:text="#{label.btn.excluir}"></button>
 		    							</a>
 		    						</td>

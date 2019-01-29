@@ -2,10 +2,13 @@ package br.com.cfc.gestor.controller;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,15 +45,19 @@ public class InstrutorController {
 	}
 	
 	@PostMapping("/instrutor")
-	public String salvar(Model model, Instrutor instrutor) {
+	public String salvar(@ModelAttribute("instrutor") @Valid InstrutorForm instrutorForm, BindingResult bindResult, Model model) {
 		
-		instrutorService.save(instrutor);
+		if(bindResult.hasErrors()) {
+			return "instrutor-form";
+		}
+		
+		instrutorService.save(instrutorForm.toBean());
 		
 		model.addAttribute("instrutores", instrutorService.findAll());
 		
 		messageContext.add("Salvo com sucesso!");
 		
-		return "pacote-lista";
+		return "instrutor-lista";
 	}
 	
 	@RequestMapping(value="/instrutor/delete/{id}", method=RequestMethod.GET)
@@ -61,7 +68,7 @@ public class InstrutorController {
 		
 		instrutorService.delete(instrutor);
 		
-		return "aluno-lista";
+		return "instrutor-lista";
 	}
 	
 	@RequestMapping(value="/instrutor/edit/{id}", method=RequestMethod.GET)
@@ -74,6 +81,6 @@ public class InstrutorController {
 		
 		model.addAttribute("instrutor", form);
 		
-		return "aluno-form";
+		return "instrutor-form";
 	}
 }

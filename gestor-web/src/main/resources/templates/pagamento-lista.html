@@ -5,7 +5,7 @@
 
     <body>
     	<div class="container w_big h_big"  layout:fragment="content">
-  			<h4 th:text="#{label.processos}"></h4>
+  			<h4 th:text="#{label.pagamentos}"></h4>
    			<div class="content">
    				<div class="form-row">
    					<div class="form-cel-30">
@@ -15,9 +15,6 @@
    					<div class="form-cel-30">
    						<label th:text="#{label.nome}"></label>
    						<input th:value="${aluno.nome}" disabled="disabled" style="width: 85%;"/>
-   					</div>
-   					<div class="form-cel-20">
-   						<a class="btn" th:text="#{label.pagamento.novo}" th:href="@{'/aluno/' + ${aluno.id} + '/pagamento/new'}"></a>	
    					</div>
    					<div class="form-cel-20">
    						<a id="btnEmitirBoleto" target="_blank" class="btn" th:text="#{label.emitir.boleto}" th:href="@{'/aluno/' + ${aluno.id} + '/pagamento/boleto'}"></a>
@@ -31,6 +28,7 @@
 									<th th:text="#{label.parcela}"></th>
 									<th th:text="#{label.vencimento}"></th>
 									<th th:text="#{label.valor}"></th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -41,6 +39,12 @@
 									<td th:text="${(it.index + 1)}"></td>
 									<td th:text="${#temporals.format(processoPagamento.pagamento.dataVencimento, 'dd/MM/yyyy')}"></td>
 									<td th:text="${processoPagamento.pagamento.valor}"></td>
+									<td>
+										<a th:if="${processoPagamento.pagamento.dataPagamento == null}"
+										    th:text="#{label.efetuar.pagamento}" 
+										    th:href="@{'/aluno/' + ${aluno.id} + '/pagamento/' + ${processoPagamento.pagamento.id}}"></a>
+										<span th:if="${processoPagamento.pagamento.dataPagamento != null}" th:text="#{label.quitado}"></span>
+									</td>
 								</tr>
 							</tbody>
 						</table>
