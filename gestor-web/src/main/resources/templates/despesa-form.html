@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+<body>
+	<div class="container w_normal h_normal"  layout:fragment="content">
+  		<h4 th:text="#{label.despesa}"></h4>
+   		<div class="content">
+   			<form method="post" th:action="@{/contabilidade/despesa}" th:object="${despesa}">
+				<div class="form-row">
+					<div class="form-cel-100">
+					    <label class="components-form" th:text="#{label.tipo.despesa}">:</label> 
+					    <select class="components-form" style="width: 95%;" th:field="*{tipoDespesa}">
+					    	<option th:each="despesa : ${T(br.com.cfc.gestor.model.enuns.TipoDespesaEnum).values()}" th:value="${despesa}" th:text="${despesa.descricao}"></option>
+					    </select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-cel-100">
+					    <label class="components-form" th:text="#{label.descricao}">:</label> 
+						<input type="text" th:field="*{descricao}" class="components-form" style="width: 95%;"/>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-control" style="float: right;padding: 10px;">
+						<input type="submit" th:value="#{label.btn.gravar}"/>
+					</div>
+				</div>
+			</form>
+   		</div>
+   	</div>
+</body>
+</html>

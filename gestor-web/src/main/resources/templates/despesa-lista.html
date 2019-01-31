@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorator="layout">
+
+    <body>
+    	<div class="container w_medium h_big"  layout:fragment="content">
+  			<h4 th:text="#{label.menu.despesas}"></h4>
+   			<div class="content">
+   				<div class="form-row">
+   					<div class="form-cel-20">
+   						<a class="btn" th:text="#{label.despesa.novo}" th:href="@{/contabilidade/despesa/new}"></a>	
+   					</div>
+   				</div>
+	    		<div class="form-row">
+	    			<div class="form-cel-100">
+	    				<table style="width: 80%; margin-left:10%; margin-bottom: 20px;">
+							<thead>
+								<tr>
+									<th th:text="#{label.codigo}"></th>
+									<th th:text="#{label.despesa}"></th>
+									<th th:text="#{label.tipo.despesa}"></th>
+									<th colspan="3"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${despesas == null || despesas.empty}">
+									<td th:text="#{label.msg.registros.nao.encontrados}" colspan="4"></td>
+								</tr>
+								<tr th:each="despesa : ${despesas}">
+									<td th:text="${despesa.id}"></td>
+									<td th:text="${despesa.descricao}"></td>
+									<td th:text="${despesa.tipoDespesa.descricao}"></td>
+									<td  style="width: 5%;">
+		    							<a th:href="@{'/contabilidade/despesa/' + ${despesa.id} + '/edit'}">
+			    							<button th:text="#{label.btn.editar}"></button>
+		    							</a>
+		    						</td>
+		    						<td   style="width: 5%;">
+		    							<form th:method="delete" th:action="@{'/contabilidade/despesa/' + ${despesa.id}}">
+		    								<button th:text="#{label.btn.excluir}"></button>
+		    							</form>
+		    						</td>
+		    						<!-- <td  style="width: 5%;">
+		    							<a th:href="@{'/contabilidade/despesa/' + ${despesa.id} + '/conta'}">
+			    							<button th:text="#{label.contas}"></button>
+		    							</a>
+		    						</td> -->
+								</tr>
+							</tbody>
+						</table>
+	    			</div>
+				</div>
+   			</div>
+    	</div>
+    </body>
+</html>

@@ -7,7 +7,7 @@
 	<div class="container w_medium h_big"  layout:fragment="content">
   		<h4 th:text="#{label.titulo.cadastro.aluno}"></h4>
    		<div class="content">
-   			<form method="post" th:action="@{/aluno}" th:object="${aluno}" enctype="multipart/form-data">
+   			<form th:method="${edit} ? post : put" th:action="@{/aluno}" th:object="${aluno}" enctype="multipart/form-data">
 		   		<input type="hidden" th:field="*{foto}">
    				<div class="form-row" style="height: 139px;">
    					<div class="form-cel-25" style="height: 140px;">
@@ -19,7 +19,7 @@
 		   					<canvas id="canvas" width="300" height="250" style="width: 186px;height: 136px;"></canvas>
 		   					<nav>
 			   					<a href="#" id="camera" style="position: absolute;top: 128px;left: 348px;">
-			   						<img alt="Ativar câmera" src="/gestao-cfc/img/48-48-camera.png">
+			   						<img alt="Ativar cï¿½mera" src="/gestao-cfc/img/48-48-camera.png">
 								</a>
 			   					<a href="#" id="capturar"style="position: absolute;top: 128px;left: 348px;display: none">
 			   						<img alt="" width="48" height="48" src="/gestao-cfc/img/snap.png">

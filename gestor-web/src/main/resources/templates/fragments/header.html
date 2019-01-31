@@ -17,32 +17,30 @@
 				<li>
 					<span th:text="#{label.aluno}"></span>
 					<ul class="submenu">
-						<li>
-							<a th:href="@{/aluno}" th:text="#{label.menu.matriculas}"></a>
-						</li>
-						<li>
-						    <a th:href="@{/escala}" th:text="#{label.menu.escalas}"></a>
-						</li>
+						<li><a th:href="@{/aluno}" th:text="#{label.menu.matriculas}"></a></li>
+						<li><a th:href="@{/escala}" th:text="#{label.menu.escalas}"></a></li>
 					</ul>
 				</li>
 				<li>
 					<span th:text="#{label.administrativo}"></span>
 					<ul class="submenu">
-						<li>
-						  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/contrato}" th:text="#{label.menu.contratos}"></a>
-						</li>
-						<li>
-						  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/pacote}" th:text="#{label.titulo.cadastro.pacote}"></a>
-						</li>
-						<li>
-						  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/instrutor}" th:text="#{label.instrutores}"></a>
-						</li>
-						<li>
-						  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/veiculo}" th:text="#{label.veiculos}"></a>
-						</li>
+						<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/contrato}" th:text="#{label.menu.contratos}"></a></li>
+						<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/pacote}" th:text="#{label.titulo.cadastro.pacote}"></a></li>
+						<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/instrutor}" th:text="#{label.instrutores}"></a></li>
+						<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/veiculo}" th:text="#{label.veiculos}"></a></li>
 					</ul>
 				</li>
-				<li><span th:text="#{label.financas}"></span></li>
+				<li>
+					<span th:text="#{label.financas}"></span>
+					<ul class="submenu">
+						<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/contabilidade/despesa}" th:text="#{label.menu.despesas}"></a></li>
+						<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/contabilidade/despesa/conta}" th:text="#{label.contas}"></a></li>
+						<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/contabilidade/ativo}" th:text="#{label.menu.ativos}"></a></li>
+						<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/contabilidade/fluxoDeCaixa}" th:text="#{label.menu.fluxo.caixa}"></a></li>
+						<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/contabilidade/demonstrativoFinanceiro}" th:text="#{label.menu.demonstrativo.resultado}"></a></li>
+						<li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/contabilidade/balancoPatrimonial}" th:text="#{label.menu.balanco.patrimonial}"></a></li>
+					</ul>
+				</li>
 			</ul>
 	</header>
 

@@ -233,6 +233,7 @@ public class AlunoController {
 		alunoForm.toForm(aluno);
 		
 		model.addAttribute("aluno", alunoForm);
+		model.addAttribute("edit", Boolean.TRUE);
 		
 		return "aluno-form";
 	}

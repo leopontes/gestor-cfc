@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorator="layout">
+
+    <body>
+    	<div class="container w_medium h_big"  layout:fragment="content">
+  			<h4 th:text="#{label.menu.despesas}"></h4>
+   			<div class="content">
+   			
+   				<form method="post" th:action="@{/escala}" th:object="${filtro}">
+	   				<fieldset style="margin: 0px 0px 12px 0px;">
+	   					<legend th:text="#{label.filtros}"></legend>
+		   				<div class="form-row">
+							<div class="form-cel-50">
+								<label class="components-form" th:text="#{label.periodo}">:</label> 
+    							<div>
+									<input type="text"  th:field="*{inicio}" class="components-form data" style="width: 30%;" />	
+									<input type="text"  th:field="*{fim}" class="components-form data" style="width: 30%;" />		
+    							</div>
+							</div>
+							<div class="form-cel-50">
+							    <label class="components-form" th:text="#{label.tipo.despesa}">:</label> 
+							    <select class="components-form" style="width: 95%;" th:field="*{tipoDespesa}">
+							    	<option th:each="despesa : ${T(br.com.cfc.gestor.model.enuns.TipoDespesaEnum).values()}" th:value="${despesa}" th:text="${despesa.descricao}"></option>
+							    </select>
+							</div>
+						</div>
+						<div class="form-row">
+					        <div class="form-cel-100" style="text-align: right;margin: 0px 0px 0px -16px;">
+					        	<button id="findUsuario">Buscar</button>
+					        </div>
+					    </div>
+	   				</fieldset>
+				</form>
+   			
+   				<div class="form-row">
+   					<div class="form-cel-20">
+   						<a class="btn" th:text="#{label.despesa.novo}" th:href="@{/contabilidade/despesa/new}"></a>	
+   					</div>
+   				</div>
+	    		<div class="form-row">
+	    			<div class="form-cel-100">
+	    				<table style="width: 80%; margin-left:10%; margin-bottom: 20px;">
+							<thead>
+								<tr>
+									<th th:text="#{label.codigo}"></th>
+									<th th:text="#{label.despesa}"></th>
+									<th th:text="#{label.tipo.despesa}"></th>
+									<th th:text="#{label.vencimento}"></th>
+									<th th:text="#{label.valor}"></th>
+									<th colspan="2"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${contas == null || contas.empty}">
+									<td th:text="#{label.msg.registros.nao.encontrados}" colspan="7"></td>
+								</tr>
+								<tr th:each="conta : ${contas}">
+									<td th:text="${conta.id}"></td>
+									<td th:text="${conta.despesa.descricao}"></td>
+									<td th:text="${conta.despesa.tipoDespesa.descricao}"></td>
+									<td th:text="${conta.dataVencimento}"></td>
+									<td th:text="${conta.valor}"></td>
+									<td  style="width: 5%;">
+		    							<a th:href="@{'/contabilidade/despesa/conta/' + ${conta.id} + '/edit'}">
+			    							<button th:text="#{label.btn.editar}"></button>
+		    							</a>
+		    						</td>
+		    						<td   style="width: 5%;">
+		    							<form th:method="delete" th:action="@{'/contabilidade/despesa/conta' + ${conta.id}}">
+		    								<button th:text="#{label.btn.excluir}"></button>
+		    							</form>
+		    						</td>
+								</tr>
+							</tbody>
+						</table>
+	    			</div>
+				</div>
+   			</div>
+    	</div>
+    </body>
+</html>
