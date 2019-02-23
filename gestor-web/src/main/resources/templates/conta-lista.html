@@ -5,7 +5,7 @@
 
     <body>
     	<div class="container w_medium h_big"  layout:fragment="content">
-  			<h4 th:text="#{label.menu.despesas}"></h4>
+  			<h4 th:text="#{label.menu.contas}"></h4>
    			<div class="content">
    			
    				<form method="post" th:action="@{/escala}" th:object="${filtro}">
@@ -36,7 +36,7 @@
    			
    				<div class="form-row">
    					<div class="form-cel-20">
-   						<a class="btn" th:text="#{label.despesa.novo}" th:href="@{/contabilidade/despesa/new}"></a>	
+   						<a class="btn" th:text="#{label.conta.novo}" th:href="@{/contabilidade/despesa/new}"></a>	
    					</div>
    				</div>
 	    		<div class="form-row">

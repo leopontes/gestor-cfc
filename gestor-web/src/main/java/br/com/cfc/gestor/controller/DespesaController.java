@@ -24,13 +24,10 @@ import br.com.cfc.gestor.service.ContaService;
 import br.com.cfc.gestor.service.DespesaService;
 
 @Controller
-public class ContabilidadeController {
+public class DespesaController {
 	
 	@Resource
 	private DespesaService despesaService;
-	
-	@Resource
-	private ContaService contaService;
 	
 	@GetMapping("/contabilidade/despesa")
 	public String findDespesas(Model model) {
@@ -103,24 +100,4 @@ public class ContabilidadeController {
 		return findDespesas(model);
 	}
 	
-	/**
-	 * ###################### CONTAS ###################################################
-	 */
-	
-	@GetMapping("/contabilidade/despesa/conta")
-	public String findContas(Model model) {
-		
-		ContaFiltro filtro = new ContaFiltro();
-		
-		filtro.setInicio(LocalDate.now().withDayOfMonth(1));
-		filtro.setFim(LocalDate.now().plusMonths(1).withDayOfMonth(1).minusDays(1));
-		
-		Iterable<Conta> contas = contaService.findBy(filtro.getInicio(), filtro.getFim());
-		
-		model.addAttribute("filtro", filtro);
-		
-		model.addAttribute("contas", contas);
-		
-		return "conta-lista";
-	}
 }
